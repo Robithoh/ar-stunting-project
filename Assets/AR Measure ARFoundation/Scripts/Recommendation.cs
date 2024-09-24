@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Recommendation : MonoBehaviour
 {
     [Header("Rekomendasi 1")]
+    public string namaLengkap;
     public float beratBadan;
     public float tinggiBadan;
     public float IMT;
@@ -17,7 +18,7 @@ public class Recommendation : MonoBehaviour
 
     [Header("Rekomendasi 3")]
     public bool isHamil;
-    public bool isUkurLILA;
+    // public bool isUkurLILA;
     public float lilaValue;
 
     [Header("Rekomendasi 4")]
@@ -35,7 +36,7 @@ public class Recommendation : MonoBehaviour
     public float[] medianL;
     public float[] kananMedianL;
 
-    [Header("Rekomendasi Remaja")]
+    [Header("UI Rekomendasi Remaja")]
     public InputField ifNama;
     public InputField ifUmur;
     public InputField ifBeratBadan;
@@ -48,8 +49,8 @@ public class Recommendation : MonoBehaviour
     public InputField ifHemo;
     public Text tAnemia;
     public Button bRekomendasiRemaja;
-    public bool isBBValid, isTBValid, isHemoValid, isUmurValid;
-    bool isHemo;
+    public bool isNamaValid, isBBValid, isTBValid, isLilaValid, isHemoValid, isUmurValid;
+    bool isHemo, isLila;
 
     [Header("Rekomendasi Result")]
     public Text tNamaRekomendasi;
@@ -67,8 +68,9 @@ public class Recommendation : MonoBehaviour
     private void Start()
     {
         isHemo = true; // buat jadiin default value dropdown hemoglobin "YA"
-        isUkurLILA = true;
+        isLila = true;
 
+        ifNama.onEndEdit.AddListener(OnInputFieldNamaEdit);
         ifBeratBadan.onEndEdit.AddListener(OnInputFieldBBEdit);
         ifTinggiBadan.onEndEdit.AddListener(OnInputFieldTBEdit);
 
@@ -144,22 +146,25 @@ public class Recommendation : MonoBehaviour
         {
             tAnemia.text = "Tidak termasuk remaja";
             Debug.Log("Tidak termasuk remaja");
-            textRekomendasiAnemia = "";
+            textRekomendasiAnemia = "- Tidak termasuk remaja, silahkan cek kategori lain";
         }
         else if(usia == 0 && hbValue != 0)
         {
             tAnemia.text = "Harap masukkan usia anda";
             Debug.Log("Invalid Input");
             textRekomendasiAnemia = "";
+            isHemoValid = false;
         }
         else if(usia != 0 && isHemo && hbValue == 0)
         {
             tAnemia.text = "Harap masukkan nilai Hb anda";
+            isHemoValid = false;
         }
         else if(usia != 0 && !isHemo)
         {
             tAnemia.text = "Belum melakukan test Hb";
             textRekomendasiAnemia = "- Segera lakukan tes HB dengan konsultasi ke tenaga kesehatan";
+        
         }
         else
         {
@@ -173,9 +178,9 @@ public class Recommendation : MonoBehaviour
     {
         // if (isHamil)
         // {
-            if (isUkurLILA)
+            if (isLila)
             {
-                if (lilaValue <= 23.5)
+                if (lilaValue <= 23.5 && lilaValue != 0)
                 {
                     Debug.Log("LILA rendah");
                     textRekomendasiLILA = "LILA termasuk rendah, agar rutin periksa kehamilan";
@@ -187,6 +192,7 @@ public class Recommendation : MonoBehaviour
                 }
                 else
                 {
+                    isLilaValid = false;
                     Debug.Log("Invalid Input");
                     textRekomendasiLILA = "";
                 }
@@ -194,7 +200,7 @@ public class Recommendation : MonoBehaviour
             else
             {
                 Debug.Log("Belum diukur LILA");
-                textRekomendasiLILA = "Lakukan pengukuran lingkar lengan (LILA)";
+                textRekomendasiLILA = "- Lakukan pengukuran lingkar lengan (LILA)";
             }
         // }
         // else
@@ -265,11 +271,14 @@ public class Recommendation : MonoBehaviour
         if (ddLILA.options[dropdown.value].text == "YA")
         {
             ifLILA.interactable = true;
+            isLila = true;
             LILACount();
         }
         else
         {
             ifLILA.interactable = false;
+            isLila = false;
+            isLilaValid = true;
             LILACount();
         }
     }
@@ -286,8 +295,15 @@ public class Recommendation : MonoBehaviour
         {
             ifHemo.interactable = false;
             isHemo = false;
+            isHemoValid = true;
             AnemiaCount();
         }
+    }
+
+    public void OnInputFieldNamaEdit(string input)
+    {
+        namaLengkap = input;
+        isNamaValid = true;
     }
 
     public void OnInputFieldUmurEdit(string input)
@@ -298,23 +314,23 @@ public class Recommendation : MonoBehaviour
 
     public void OnInputFieldLILAEdit(string input)
     {
-        isUkurLILA = float.TryParse(input, out lilaValue);
+        isLilaValid = float.TryParse(input, out lilaValue);
         LILACount();
     }
 
     public void OnInputFieldHemoEdit(string input)
     {
-        isHemoValid = float.TryParse(input, out hbValue);
+        isHemoValid = float.TryParse(input, out hbValue);    
         AnemiaCount();
     }
 
-    public void RekomendasiRemaja() // NANTI LANJUT INI
+    public void RekomendasiRemaja()
     {
-        if (isBBValid && isTBValid && isUmurValid && isHemoValid)
+        if (isNamaValid && isBBValid && isTBValid && isUmurValid && isLilaValid && isHemoValid)
         {
             tRekomendasiResult.text = textRekomendasiIMT + "\n" + "\n" + textRekomendasiAnemia + "\n" + "\n" + textRekomendasiLILA;
-            tNamaRekomendasi.text = ifNama.text;
-            tUsiaRekomendasi.text = ifUmur + " Tahun";
+            tNamaRekomendasi.text = namaLengkap;
+            tUsiaRekomendasi.text = usia + " Tahun";
             tInfoStatusRekomendasi.text = "";
             panelManager.RemajaToResult();
         }
