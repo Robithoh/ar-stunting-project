@@ -18466,6 +18466,7 @@ MonoBehaviour:
   profile: {fileID: 981001701}
   mainMenu: {fileID: 1317067713}
   rekomendasiRemaja: {fileID: 994517810}
+  rekomendasiIbuHamil: {fileID: 1847876101}
   rekomendasiResult: {fileID: 989847626}
 --- !u!4 &1303452682
 Transform:
@@ -28871,7 +28872,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -100}
+  m_AnchoredPosition: {x: 0, y: -54.81982}
   m_SizeDelta: {x: 720, y: 904.31}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1908791206
@@ -29649,24 +29650,42 @@ MonoBehaviour:
   kiriMedianL: []
   medianL: []
   kananMedianL: []
-  ifNama: {fileID: 1197632832}
-  ifUmur: {fileID: 1674789569}
-  ifBeratBadan: {fileID: 119272540}
-  ifTinggiBadan: {fileID: 1486197131}
-  tIMT: {fileID: 397410495}
-  tKlasifikasiIMT: {fileID: 2021508526}
-  ddLILA: {fileID: 352079358}
-  ifLILA: {fileID: 2099082698}
-  ddHemo: {fileID: 32187212}
-  ifHemo: {fileID: 1372922963}
-  tAnemia: {fileID: 995251655}
+  ifNamaRemaja: {fileID: 0}
+  ifUmurRemaja: {fileID: 0}
+  ifBeratBadanRemaja: {fileID: 0}
+  ifTinggiBadanRemaja: {fileID: 0}
+  tIMTRemaja: {fileID: 0}
+  tKlasifikasiIMTRemaja: {fileID: 0}
+  ddLILARemaja: {fileID: 0}
+  ifLILARemaja: {fileID: 0}
+  ddHemoRemaja: {fileID: 0}
+  ifHemoRemaja: {fileID: 0}
+  tAnemiaRemaja: {fileID: 0}
   bRekomendasiRemaja: {fileID: 2045852069}
-  isNamaValid: 0
-  isBBValid: 0
-  isTBValid: 0
-  isLilaValid: 0
-  isHemoValid: 0
-  isUmurValid: 0
+  isNamaValidR: 0
+  isBBValidR: 0
+  isTBValidR: 0
+  isLilaValidR: 0
+  isHemoValidR: 0
+  isUmurValidR: 0
+  ifNamaIbuHamil: {fileID: 0}
+  ifUmurIbuHamil: {fileID: 0}
+  ifBeratBadanIbuHamil: {fileID: 0}
+  ifTinggiBadanIbuHamil: {fileID: 0}
+  tIMTIbuHamil: {fileID: 0}
+  tKlasifikasiIMTIbuHamil: {fileID: 0}
+  ddLILAIbuHamil: {fileID: 0}
+  ifLILAIbuHamil: {fileID: 0}
+  ddHemoIbuHamil: {fileID: 0}
+  ifHemoIbuHamil: {fileID: 0}
+  tAnemiaIbuHamil: {fileID: 0}
+  bRekomendasiIbuHamil: {fileID: 0}
+  isNamaValidIH: 0
+  isBBValidIH: 0
+  isTBValidIH: 0
+  isLilaValidIH: 0
+  isHemoValidIH: 0
+  isUmurValidIH: 0
   tNamaRekomendasi: {fileID: 2035637696}
   tUsiaRekomendasi: {fileID: 1962104789}
   tInfoStatusRekomendasi: {fileID: 522413503}

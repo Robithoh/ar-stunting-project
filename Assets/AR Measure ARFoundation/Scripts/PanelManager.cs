@@ -10,6 +10,7 @@ public class PanelManager : MonoBehaviour
     public GameObject profile;
     public GameObject mainMenu;
     public GameObject rekomendasiRemaja;
+    public GameObject rekomendasiIbuHamil;
     public GameObject rekomendasiResult;
 
     private void Start() 
@@ -58,9 +59,21 @@ public class PanelManager : MonoBehaviour
         rekomendasiRemaja.SetActive(true);
     }
 
+    public void MainMenuToIbuHamil()
+    {
+        mainMenu.SetActive(false);
+        rekomendasiIbuHamil.SetActive(true);
+    }
+
     public void RemajaToResult()
     {
         rekomendasiRemaja.SetActive(false);
+        rekomendasiResult.SetActive(true);
+    }
+
+    public void IbuHamilToResult()
+    {
+        rekomendasiIbuHamil.SetActive(false);
         rekomendasiResult.SetActive(true);
     }
 }
