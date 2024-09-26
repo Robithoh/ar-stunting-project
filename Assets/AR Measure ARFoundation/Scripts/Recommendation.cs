@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -68,6 +69,29 @@ public class Recommendation : MonoBehaviour
     public bool isNamaValidIH, isBBValidIH, isTBValidIH, isLilaValidIH, isHemoValidIH, isUmurValidIH;
     bool isHemoIH, isLilaIH;
 
+    [Header("UI Rekomendasi Anak Lakilaki")]
+    public InputField ifUmurLk;
+    public InputField ifTinggiBadanLk;
+    public Text tGiziLk;
+    public Button bRekomendasiAnakLk;
+    public bool isUmurValidLk, isTBValidLk;
+
+    [Header("UI Rekomendasi Anak Perempuan")]
+    public InputField ifUmurPr;
+    public InputField ifTinggiBadanPr;
+    public Text tGiziPr;
+    public Button bRekomendasiAnakPr;
+    public bool isUmurValidPr, isTBValidPr;
+
+    [Header("UI Rekomendasi Ibu Menyusui")]
+    public InputField ifNamaIbuMenyusui;
+    public InputField ifUmurIbuMenyusui;
+    public Dropdown ddASI;
+    public InputField ifBeratBadanBayi;
+    public bool isAsi;
+    public bool isNamaValidIM, isUmurValidIM, isBBValidIM;
+    public Button bRekomendasiIbuMenyusui;
+
     [Header("Rekomendasi Result")]
     public Text tNamaRekomendasi;
     public Text tUsiaRekomendasi;
@@ -76,6 +100,10 @@ public class Recommendation : MonoBehaviour
     public string textRekomendasiIMT;
     public string textRekomendasiAnemia;
     public string textRekomendasiLILA;
+    public string textRekomendasiTB;
+    public string textRekomendasiZScore;
+    public string textRekomendasiAsi;
+    public string textRekomendasiBBBayi;
 
 
     [Header("References")]
@@ -87,6 +115,7 @@ public class Recommendation : MonoBehaviour
         isLilaR = true;
         isHemoIH = true;
         isLilaIH = true;
+        isAsi = true;
 
         // Remaja
 
@@ -137,6 +166,31 @@ public class Recommendation : MonoBehaviour
         });
 
         DropdownValueHemoChanged(ddHemoIbuHamil);
+
+        // Anak Laki-laki 
+
+        ifUmurLk.onEndEdit.AddListener(OnInputFieldUmurEdit);
+        ifTinggiBadanLk.onEndEdit.AddListener(OnInputFieldTBEdit);
+        bRekomendasiAnakLk.onClick.AddListener(RekomendasiAnakLk);
+
+        // Anak Perempuan
+
+        ifUmurPr.onEndEdit.AddListener(OnInputFieldUmurEdit);
+        ifTinggiBadanPr.onEndEdit.AddListener(OnInputFieldTBEdit);
+        bRekomendasiAnakPr.onClick.AddListener(RekomendasiAnakPr);
+
+        // Ibu Menyusui
+        
+        ifNamaIbuMenyusui.onEndEdit.AddListener(OnInputFieldNamaEdit);
+        ifUmurIbuMenyusui.onEndEdit.AddListener(OnInputFieldUmurEdit);
+        ddASI.onValueChanged.AddListener(delegate
+        {
+            DropdownValueASIChanged(ddASI);
+        });
+
+        ifBeratBadanBayi.onEndEdit.AddListener(OnInputFieldBBEdit);
+        bRekomendasiIbuMenyusui.onClick.AddListener(RekomendasiIbuMenyusui);
+
     }
 
     private void IMTCount(float tb, float bb)
@@ -273,7 +327,7 @@ public class Recommendation : MonoBehaviour
             }
             else if (!isHemoIH)
             {
-                tAnemiaRemaja.text = "Belum melakukan test Hb";
+                tAnemiaIbuHamil.text = "Belum melakukan test Hb";
                 textRekomendasiAnemia = "- Segera lakukan tes HB dengan konsultasi ke tenaga kesehatan";
             }
             else
@@ -297,12 +351,12 @@ public class Recommendation : MonoBehaviour
                 if (lilaValue <= 23.5 && lilaValue != 0)
                 {
                     Debug.Log("LILA rendah");
-                    textRekomendasiLILA = "LILA termasuk rendah, agar rutin periksa kehamilan";
+                    textRekomendasiLILA = "- LILA termasuk rendah, agar rutin periksa kehamilan";
                 }
                 else if (lilaValue > 23.5)
                 {
                     Debug.Log("LILA Normal");
-                    textRekomendasiLILA = "LILA normal, pertahankan asupan gizi";
+                    textRekomendasiLILA = "- LILA normal, pertahankan asupan gizi";
                 }
                 else
                 {
@@ -317,19 +371,19 @@ public class Recommendation : MonoBehaviour
                 textRekomendasiLILA = "- Lakukan pengukuran lingkar lengan (LILA)";
             }
         }
-        else if(panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.activeSelf)
         {
             if (isLilaIH)
             {
                 if (lilaValue <= 23.5 && lilaValue != 0)
                 {
                     Debug.Log("LILA rendah");
-                    textRekomendasiLILA = "LILA termasuk rendah, agar rutin periksa kehamilan";
+                    textRekomendasiLILA = "- LILA termasuk rendah, agar rutin periksa kehamilan";
                 }
                 else if (lilaValue > 23.5)
                 {
                     Debug.Log("LILA Normal");
-                    textRekomendasiLILA = "LILA normal, pertahankan asupan gizi";
+                    textRekomendasiLILA = "- LILA normal, pertahankan asupan gizi";
                 }
                 else
                 {
@@ -357,7 +411,7 @@ public class Recommendation : MonoBehaviour
         if (tinggiBadan < 145)
         {
             Debug.Log("Tinggi badan kurang");
-            textRekomendasi4 = "Tinggi badan termasuk rendah, agar rutin periksa kehamilan";
+            textRekomendasiTB = "- Tinggi badan termasuk rendah, agar rutin periksa kehamilan";
         }
     }
 
@@ -366,10 +420,56 @@ public class Recommendation : MonoBehaviour
         if (tinggiBadanAnak > medianPr[usiaBulan])
         {
             float zScore = (tinggiBadanAnak - medianPr[usiaBulan]) / (kananMedianPr[usiaBulan] - medianPr[usiaBulan]);
+            if (tinggiBadanAnak != 0)
+            {
+                if (zScore < -3)
+                {
+                    tGiziPr.text = "Sangat Pendek";
+                    textRekomendasiZScore = "- Segera konsultasi ke Posyandu,Kader atau tenaga kesehatan";
+                }
+                else if (zScore < -2)
+                {
+                    tGiziPr.text = "Pendek";
+                    textRekomendasiZScore = "- Segera konsultasi ke Posyandu,Kader atau tenaga kesehatan";
+                }
+                else if (zScore <= 3)
+                {
+                    tGiziPr.text = "Normal";
+                    textRekomendasiZScore = "- Pertahankan status gizi, tetap memeriksakan tinggi badan dan berat badan setiap bulan di Posyandu";
+                }
+                else
+                {
+                    tGiziPr.text = "Tinggi";
+                    textRekomendasiZScore = "- Tetap memeriksakan tinggi badan dan berat badan setiap bulan di Posyandu";
+                }
+            }
         }
         else
         {
             float zScore = (tinggiBadanAnak - medianPr[usiaBulan]) / (medianPr[usiaBulan] - kiriMedianPr[usiaBulan]);
+            if (tinggiBadanAnak != 0)
+            {
+                if (zScore < -3)
+                {
+                    tGiziPr.text = "Sangat Pendek";
+                    textRekomendasiZScore = "- Segera konsultasi ke Posyandu,Kader atau tenaga kesehatan";
+                }
+                else if (zScore < -2)
+                {
+                    tGiziPr.text = "Pendek";
+                    textRekomendasiZScore = "- Segera konsultasi ke Posyandu,Kader atau tenaga kesehatan";
+                }
+                else if (zScore <= 3)
+                {
+                    tGiziPr.text = "Normal";
+                    textRekomendasiZScore = "- Pertahankan status gizi, tetap memeriksakan tinggi badan dan berat badan setiap bulan di Posyandu";
+                }
+                else
+                {
+                    tGiziPr.text = "Tinggi";
+                    textRekomendasiZScore = "- Tetap memeriksakan tinggi badan dan berat badan setiap bulan di Posyandu";
+                }
+            }
         }
     }
 
@@ -378,45 +478,109 @@ public class Recommendation : MonoBehaviour
         if (tinggiBadanAnak > medianL[usiaBulan])
         {
             float zScore = (tinggiBadanAnak - medianL[usiaBulan]) / (kananMedianL[usiaBulan] - medianL[usiaBulan]);
+            if (tinggiBadanAnak != 0)
+            {
+                if (zScore < -3)
+                {
+                    tGiziLk.text = "Sangat Pendek";
+                    textRekomendasiZScore = "- Segera konsultasi ke Posyandu,Kader atau tenaga kesehatan";
+                }
+                else if (zScore < -2)
+                {
+                    tGiziLk.text = "Pendek";
+                    textRekomendasiZScore = "- Segera konsultasi ke Posyandu,Kader atau tenaga kesehatan";
+                }
+                else if (zScore <= 3)
+                {
+                    tGiziLk.text = "Normal";
+                    textRekomendasiZScore = "- Pertahankan status gizi, tetap memeriksakan tinggi badan dan berat badan setiap bulan di Posyandu";
+                }
+                else
+                {
+                    tGiziLk.text = "Tinggi";
+                    textRekomendasiZScore = "- Tetap memeriksakan tinggi badan dan berat badan setiap bulan di Posyandu";
+                }
+            }
+
         }
         else
         {
             float zScore = (tinggiBadanAnak - medianL[usiaBulan]) / (medianL[usiaBulan] - kiriMedianL[usiaBulan]);
+            if (tinggiBadanAnak != 0)
+            {
+                if (zScore < -3)
+                {
+                    tGiziLk.text = "Sangat Pendek";
+                    textRekomendasiZScore = "- Segera konsultasi ke Posyandu,Kader atau tenaga kesehatan";
+                }
+                else if (zScore < -2)
+                {
+                    tGiziLk.text = "Pendek";
+                    textRekomendasiZScore = "- Segera konsultasi ke Posyandu,Kader atau tenaga kesehatan";
+                }
+                else if (zScore <= 3)
+                {
+                    tGiziLk.text = "Normal";
+                    textRekomendasiZScore = "- Pertahankan status gizi, tetap memeriksakan tinggi badan dan berat badan setiap bulan di Posyandu";
+                }
+                else
+                {
+                    tGiziLk.text = "Tinggi";
+                    textRekomendasiZScore = "- Tetap memeriksakan tinggi badan dan berat badan setiap bulan di Posyandu";
+                }
+            }
         }
+
     }
 
     public void OnInputFieldBBEdit(string input)
     {
-        if(panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.activeSelf)
         {
             isBBValidR = float.TryParse(input, out beratBadan);
             IMTFunc();
         }
-        else if(panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.activeSelf)
         {
             isBBValidIH = float.TryParse(input, out beratBadan);
             IMTFunc();
+        }
+        else if(panelManager.rekomendasiIbuMenyusui.activeSelf)
+        {
+            isBBValidIM = float.TryParse(input, out beratBadan);
+            BabyWeight();
         }
     }
 
     public void OnInputFieldTBEdit(string input)
     {
-        if(panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.activeSelf)
         {
             isTBValidR = float.TryParse(input, out tinggiBadan);
             IMTFunc();
         }
-        else if(panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.activeSelf)
         {
             isTBValidIH = float.TryParse(input, out tinggiBadan);
             IMTFunc();
+            TBCount();
         }
-        
+        else if (panelManager.rekomenasiAnakLK.activeSelf)
+        {
+            isTBValidLk = float.TryParse(input, out tinggiBadanAnak);
+            ZScoreLCount();
+        }
+        else if(panelManager.rekomendasiAnakPr.activeSelf)
+        {
+            isTBValidPr = float.TryParse(input, out tinggiBadanAnak);
+            ZScorePrCount();
+        }
+
     }
 
     private void IMTFunc()
     {
-        if(panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.activeSelf)
         {
             if (isBBValidR && isTBValidR)
             {
@@ -427,7 +591,7 @@ public class Recommendation : MonoBehaviour
                 Debug.Log("error broh");
             }
         }
-        else if(panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.activeSelf)
         {
             if (isBBValidIH && isTBValidIH)
             {
@@ -437,6 +601,30 @@ public class Recommendation : MonoBehaviour
             {
                 Debug.Log("error broh");
             }
+        }
+    }
+
+    private void AsiSixMonths()
+    {
+        if(isAsi)
+        {
+            textRekomendasiAsi = "";
+        }
+        else
+        {
+            textRekomendasiAsi = "- Berikan ASI saja sampai bayi berusia 6 bulan, karena ASI merupakan faktor penting dalam mengatasi stunting";
+        }
+    }
+
+    private void BabyWeight()
+    {
+        if (beratBadan < 2500)
+        {
+            textRekomendasiBBBayi = "- Berat badan lahir rendah (BBLR). Lakukan perbaikan gizi anak, ASI ekslusif, konsultasi tenaga kesehatan";
+        }
+        else
+        {
+            textRekomendasiBBBayi = "";
         }
     }
 
@@ -453,6 +641,7 @@ public class Recommendation : MonoBehaviour
             else
             {
                 ifLILARemaja.interactable = false;
+                ifLILARemaja.text = "";
                 isLilaR = false;
                 isLilaValidR = true;
                 LILACount();
@@ -469,6 +658,7 @@ public class Recommendation : MonoBehaviour
             else
             {
                 ifLILAIbuHamil.interactable = false;
+                ifLILAIbuHamil.text = "";
                 isLilaIH = false;
                 isLilaValidIH = true;
                 LILACount();
@@ -513,15 +703,33 @@ public class Recommendation : MonoBehaviour
         }
     }
 
+    private void DropdownValueASIChanged(Dropdown dropdown)
+    {
+        if (ddASI.options[dropdown.value].text == "YA")
+            {
+                isAsi = true;
+                AsiSixMonths();
+            }
+            else
+            {
+                isAsi = false;
+                AsiSixMonths();
+            }
+    }
+
     public void OnInputFieldNamaEdit(string input)
     {
-        if(panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.activeSelf)
         {
             isNamaValidR = true;
         }
-        else if(panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.activeSelf)
         {
             isNamaValidIH = true;
+        }
+        else if(panelManager.rekomendasiIbuMenyusui.activeSelf)
+        {
+            isNamaValidIM = true;
         }
 
         namaLengkap = input;
@@ -529,26 +737,40 @@ public class Recommendation : MonoBehaviour
 
     public void OnInputFieldUmurEdit(string input)
     {
-        if(panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.activeSelf)
         {
             isUmurValidR = int.TryParse(input, out usia);
             AnemiaCount();
         }
-        else if(panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.activeSelf)
         {
             isUmurValidIH = int.TryParse(input, out usia);
             AnemiaCount();
+        }
+        else if (panelManager.rekomenasiAnakLK.activeSelf)
+        {
+            isUmurValidLk = int.TryParse(input, out usiaBulan);
+            ZScoreLCount();
+        }
+        else if (panelManager.rekomendasiAnakPr.activeSelf)
+        {
+            isUmurValidPr = int.TryParse(input, out usiaBulan);
+            ZScoreLCount();
+        }
+        else if(panelManager.rekomendasiIbuMenyusui.activeSelf)
+        {
+            isUmurValidIM = int.TryParse(input, out usia);
         }
     }
 
     public void OnInputFieldLILAEdit(string input)
     {
-        if(panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.activeSelf)
         {
             isLilaValidR = float.TryParse(input, out lilaValue);
             LILACount();
         }
-        else if(panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.activeSelf)
         {
             isLilaValidIH = float.TryParse(input, out lilaValue);
             LILACount();
@@ -557,17 +779,17 @@ public class Recommendation : MonoBehaviour
 
     public void OnInputFieldHemoEdit(string input)
     {
-        if(panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.activeSelf)
         {
             isHemoValidR = float.TryParse(input, out hbValue);
             AnemiaCount();
         }
-        else if(panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.activeSelf)
         {
             isHemoValidIH = float.TryParse(input, out hbValue);
             AnemiaCount();
         }
-        
+
     }
 
     public void RekomendasiRemaja()
@@ -590,11 +812,60 @@ public class Recommendation : MonoBehaviour
     {
         if (isNamaValidIH && isBBValidIH && isTBValidIH && isUmurValidIH && isLilaValidIH && isHemoValidIH)
         {
-            tRekomendasiResult.text = textRekomendasiIMT + "\n" + "\n" + textRekomendasiAnemia + "\n" + "\n" + textRekomendasiLILA;
+            tRekomendasiResult.text = textRekomendasiIMT + "\n" + "\n" + textRekomendasiAnemia + "\n" + "\n" +  textRekomendasiLILA + "\n" + "\n" + textRekomendasiTB;
             tNamaRekomendasi.text = namaLengkap;
             tUsiaRekomendasi.text = usia + " Tahun";
             tInfoStatusRekomendasi.text = "";
             panelManager.IbuHamilToResult();
+        }
+        else
+        {
+            Debug.Log("error broh");
+        }
+    }
+
+    public void RekomendasiAnakLk()
+    {
+        if (isUmurValidLk && isTBValidLk)
+        {
+            tRekomendasiResult.text = textRekomendasiZScore;
+            tNamaRekomendasi.text = "Anak Laki-laki";
+            tUsiaRekomendasi.text = usiaBulan + " Bulan";
+            tInfoStatusRekomendasi.text = "";
+            panelManager.AnakLKToResult();
+        }
+        else
+        {
+            Debug.Log("error broh");
+        }
+    }
+
+    
+    public void RekomendasiAnakPr()
+    {
+        if (isUmurValidPr && isTBValidPr)
+        {
+            tRekomendasiResult.text = textRekomendasiZScore;
+            tNamaRekomendasi.text = "Anak Perempuan";
+            tUsiaRekomendasi.text = usiaBulan + " Bulan";
+            tInfoStatusRekomendasi.text = "";
+            panelManager.AnakPrToResult();
+        }
+        else
+        {
+            Debug.Log("error broh");
+        }
+    }
+
+    public void RekomendasiIbuMenyusui()
+    {
+        if(isNamaValidIM && isUmurValidIM && isBBValidIM)
+        {
+            tNamaRekomendasi.text = namaLengkap;
+            tUsiaRekomendasi.text = usia + " Tahun";
+            tInfoStatusRekomendasi.text = "Ibu Menyusui";
+            tRekomendasiResult.text = textRekomendasiAsi + "\n" + "\n" + textRekomendasiBBBayi;
+            panelManager.IbuMenyusuiToResult();
         }
         else
         {

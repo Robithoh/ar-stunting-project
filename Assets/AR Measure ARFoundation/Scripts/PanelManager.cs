@@ -11,6 +11,9 @@ public class PanelManager : MonoBehaviour
     public GameObject mainMenu;
     public GameObject rekomendasiRemaja;
     public GameObject rekomendasiIbuHamil;
+    public GameObject rekomenasiAnakLK;
+    public GameObject rekomendasiAnakPr;
+    public GameObject rekomendasiIbuMenyusui;
     public GameObject rekomendasiResult;
 
     private void Start() 
@@ -20,6 +23,10 @@ public class PanelManager : MonoBehaviour
         profile.SetActive(false);
         mainMenu.SetActive(false); 
         rekomendasiRemaja.SetActive(false);  
+        rekomendasiIbuHamil.SetActive(false);
+        rekomenasiAnakLK.SetActive(false);
+        rekomendasiAnakPr.SetActive(false);
+        rekomendasiIbuMenyusui.SetActive(false);
         rekomendasiResult.SetActive(false);
     }
 
@@ -65,6 +72,24 @@ public class PanelManager : MonoBehaviour
         rekomendasiIbuHamil.SetActive(true);
     }
 
+    public void MainMenuToAnakLK()
+    {
+        mainMenu.SetActive(false);
+        rekomenasiAnakLK.SetActive(true);
+    }
+
+    public void MainMenuToAnakPr()
+    {
+        mainMenu.SetActive(false);
+        rekomendasiAnakPr.SetActive(true);
+    }
+
+    public void MainMenuToIbuMenyusui()
+    {
+        mainMenu.SetActive(false);
+        rekomendasiIbuMenyusui.SetActive(true);
+    }
+
     public void RemajaToResult()
     {
         rekomendasiRemaja.SetActive(false);
@@ -74,6 +99,24 @@ public class PanelManager : MonoBehaviour
     public void IbuHamilToResult()
     {
         rekomendasiIbuHamil.SetActive(false);
+        rekomendasiResult.SetActive(true);
+    }
+
+    public void AnakLKToResult()
+    {
+        rekomenasiAnakLK.SetActive(false);
+        rekomendasiResult.SetActive(true);
+    }
+
+    public void AnakPrToResult()
+    {
+        rekomendasiAnakPr.SetActive(false);
+        rekomendasiResult.SetActive(true);
+    }
+
+    public void IbuMenyusuiToResult()
+    {
+        rekomendasiIbuMenyusui.SetActive(false);
         rekomendasiResult.SetActive(true);
     }
 }
