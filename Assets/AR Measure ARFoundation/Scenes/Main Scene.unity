@@ -19349,7 +19349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1103146093
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23058,6 +23058,11 @@ MonoBehaviour:
   rekomendasiAnakPr: {fileID: 96401851}
   rekomendasiIbuMenyusui: {fileID: 1840310106}
   rekomendasiResult: {fileID: 989847626}
+  buttonRemaja: {fileID: 935135302}
+  buttonIbuHamil: {fileID: 1966041905}
+  buttonIbuMenyusui: {fileID: 468739286}
+  buttonAnakLK: {fileID: 232585624}
+  buttonAnakPr: {fileID: 1828699015}
 --- !u!4 &1303452682
 Transform:
   m_ObjectHideFlags: 0
@@ -32602,8 +32607,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1303452681}
-        m_TargetAssemblyTypeName: PanelManager, Assembly-CSharp
+      - m_Target: {fileID: 1892702433}
+        m_TargetAssemblyTypeName: EditProfile, Assembly-CSharp
         m_MethodName: SimpanEditProfile
         m_Mode: 1
         m_Arguments:
@@ -35892,6 +35897,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1885172575}
   m_CullTransparentMesh: 1
+--- !u!1 &1892702432
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1892702434}
+  - component: {fileID: 1892702433}
+  m_Layer: 0
+  m_Name: Edit Profile
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1892702433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892702432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b64983cd21153c243943367179197ef5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  namaLengkap: 
+  usia: 0
+  isHamil: 0
+  isMenyusui: 0
+  ifNamaLengkap: {fileID: 1663338242}
+  ifUsia: {fileID: 160497496}
+  ddIsHamil: {fileID: 1445089169}
+  ddIsMenyusui: {fileID: 610032606}
+--- !u!4 &1892702434
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892702432}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1892940757
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PanelManager : MonoBehaviour
 {
@@ -16,6 +17,13 @@ public class PanelManager : MonoBehaviour
     public GameObject rekomendasiIbuMenyusui;
     public GameObject rekomendasiResult;
 
+    [Header("Button Menu")]
+    public Button buttonRemaja;
+    public Button buttonIbuHamil;
+    public Button buttonIbuMenyusui;
+    public Button buttonAnakLK;
+    public Button buttonAnakPr;
+
     private void Start() 
     {
         login.SetActive(true);
@@ -28,6 +36,12 @@ public class PanelManager : MonoBehaviour
         rekomendasiAnakPr.SetActive(false);
         rekomendasiIbuMenyusui.SetActive(false);
         rekomendasiResult.SetActive(false);
+
+        buttonRemaja.interactable = false;
+        buttonIbuHamil.interactable = false;
+        buttonIbuMenyusui.interactable = false;
+        buttonAnakLK.interactable = false;
+        buttonAnakPr.interactable = false;
     }
 
     public void LoginButton()
@@ -118,5 +132,22 @@ public class PanelManager : MonoBehaviour
     {
         rekomendasiIbuMenyusui.SetActive(false);
         rekomendasiResult.SetActive(true);
+    }
+
+    public void UpdateRemajaButton(bool isRemaja)
+    {
+        buttonRemaja.interactable = isRemaja;
+    }
+
+    public void UpdateIbuHamilButton(bool isIbuHamil)
+    {
+        buttonIbuHamil.interactable = isIbuHamil;
+    }
+
+    public void UpdateIbuMenyusuiButton(bool isIbuMenyusui)
+    {
+        buttonIbuMenyusui.interactable = isIbuMenyusui;
+        buttonAnakLK.interactable = isIbuMenyusui;
+        buttonAnakPr.interactable = isIbuMenyusui;
     }
 }
