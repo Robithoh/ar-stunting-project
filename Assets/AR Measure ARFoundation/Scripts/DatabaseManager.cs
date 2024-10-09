@@ -222,6 +222,9 @@ public class DatabaseManager : MonoBehaviour
                         DBreference.Child("users").Child(User.UserId).SetRawJsonValueAsync(json);
                         WarningText.text = "Pendaftaran berhasil!";
                         WarningText.color = Color.green;
+                        NamaText.text = _username;
+                        TanggalLahirText.text = _tanggalLahir;
+                        PendidikanTerakhirText.text = pendidikanTerakhir;
                         PanelManager.instance.SimpanEditProfile();
                         ClearRegisterFields();
                     }
