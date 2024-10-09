@@ -789,7 +789,6 @@ public class Recommendation : MonoBehaviour
             isHemoValidIH = float.TryParse(input, out hbValue);
             AnemiaCount();
         }
-
     }
 
     public void RekomendasiRemaja()
@@ -800,7 +799,7 @@ public class Recommendation : MonoBehaviour
             tNamaRekomendasi.text = namaLengkap;
             tUsiaRekomendasi.text = usia + " Tahun";
             tInfoStatusRekomendasi.text = "";
-            panelManager.RemajaToResult();
+            panelManager.ToResult();
         }
         else
         {
@@ -816,7 +815,7 @@ public class Recommendation : MonoBehaviour
             tNamaRekomendasi.text = namaLengkap;
             tUsiaRekomendasi.text = usia + " Tahun";
             tInfoStatusRekomendasi.text = "";
-            panelManager.IbuHamilToResult();
+            panelManager.ToResult();
         }
         else
         {
@@ -832,7 +831,7 @@ public class Recommendation : MonoBehaviour
             tNamaRekomendasi.text = "Anak Laki-laki";
             tUsiaRekomendasi.text = usiaBulan + " Bulan";
             tInfoStatusRekomendasi.text = "";
-            panelManager.AnakLKToResult();
+            panelManager.ToResult();
         }
         else
         {
@@ -849,7 +848,7 @@ public class Recommendation : MonoBehaviour
             tNamaRekomendasi.text = "Anak Perempuan";
             tUsiaRekomendasi.text = usiaBulan + " Bulan";
             tInfoStatusRekomendasi.text = "";
-            panelManager.AnakPrToResult();
+            panelManager.ToResult();
         }
         else
         {
@@ -865,7 +864,7 @@ public class Recommendation : MonoBehaviour
             tUsiaRekomendasi.text = usia + " Tahun";
             tInfoStatusRekomendasi.text = "Ibu Menyusui";
             tRekomendasiResult.text = textRekomendasiAsi + "\n" + "\n" + textRekomendasiBBBayi;
-            panelManager.IbuMenyusuiToResult();
+            panelManager.ToResult();
         }
         else
         {
