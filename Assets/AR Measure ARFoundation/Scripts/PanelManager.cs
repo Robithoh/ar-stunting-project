@@ -62,6 +62,12 @@ public class PanelManager : MonoBehaviour
         editProfile.SetActive(true);
     }
 
+    public void BatalEditProfile()
+    {
+        editProfile.SetActive(false);
+        profile.SetActive(true);
+    }
+
     public void MainMenu()
     {
         profile.SetActive(false);
