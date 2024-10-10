@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
+using System;
 
 public class DatabaseManager : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class DatabaseManager : MonoBehaviour
     public Dropdown tHamil;
     public Dropdown tMenyusui;
     public Text WarningText;
+    public GameObject EditButton;
 
     [Header("Text")]
     public Text NamaText;
@@ -144,6 +146,12 @@ public class DatabaseManager : MonoBehaviour
 
     private IEnumerator Register(string _username, string _password, string _passwordConfirm, string _tanggalLahir)
     {
+        DateTime tanggal;
+        bool isValid = DateTime.TryParseExact(_tanggalLahir, "dd-MM-yyyy",
+                                              System.Globalization.CultureInfo.InvariantCulture,
+                                              System.Globalization.DateTimeStyles.None,
+                                              out tanggal);
+
         if (string.IsNullOrEmpty(_username))
         {
             WarningText.text = "Nama tidak boleh kosong";
@@ -162,6 +170,11 @@ public class DatabaseManager : MonoBehaviour
         else if (string.IsNullOrEmpty(_tanggalLahir))
         {
             WarningText.text = "Tanggal Lahir tidak boleh kosong";
+            WarningText.color = Color.red;
+        }
+        else if (!isValid)
+        {
+            WarningText.text = "Format Tanggal Lahir harus dd-MM-yyyy!";
             WarningText.color = Color.red;
         }
         else
@@ -220,14 +233,178 @@ public class DatabaseManager : MonoBehaviour
                         string json = JsonUtility.ToJson(customUser);
 
                         DBreference.Child("users").Child(User.UserId).SetRawJsonValueAsync(json);
-                        WarningText.text = "Pendaftaran berhasil!";
-                        WarningText.color = Color.green;
+
+                        //TanggalLahirText.text = tanggal.ToString("dd-MM-yyyy");
+
+                        int umur = HitungUmur(tanggal);
+
                         NamaText.text = _username;
-                        TanggalLahirText.text = _tanggalLahir;
+
+                        if (menyusui == tMenyusui.options[0].text)
+                        {
+                            TanggalLahirText.text = umur + " tahun, Sedang Menyusui";
+                        }
+                        else
+                        {
+                            TanggalLahirText.text = umur + " tahun, Tidak Sedang Menyusui";
+                        }
+
                         PendidikanTerakhirText.text = pendidikanTerakhir;
                         PanelManager.instance.SimpanEditProfile();
                         ClearRegisterFields();
                     }
+                }
+            }
+        }
+    }
+
+    private int HitungUmur(DateTime tanggalLahir)
+    {
+        DateTime today = DateTime.Today;
+        int umur = today.Year - tanggalLahir.Year;
+
+        if (tanggalLahir.Date > today.AddYears(-umur))
+        {
+            umur--;
+        }
+
+        return umur;
+    }
+
+    public void EditDataProfile()
+    {
+        StartCoroutine(LoadUserData());
+    }
+
+    private IEnumerator LoadUserData()
+    {
+        EditButton.SetActive(true);
+        var DBTask = DBreference.Child("users").Child(User.UserId).GetValueAsync();
+
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning($"Failed to load user data: {DBTask.Exception}");
+        }
+        else
+        {
+            DataSnapshot snapshot = DBTask.Result;
+
+            Nama.text = snapshot.Child("nama").Value.ToString();
+            Password.text = snapshot.Child("password").Value.ToString();
+            PasswordConfirm.text = snapshot.Child("password").Value.ToString();
+            TanggalLahir.text = snapshot.Child("tanggalLahir").Value.ToString();
+
+            string hamil = snapshot.Child("statusHamil").Value.ToString();
+            if (hamil == "YA")
+            {
+                tMenyusui.value = 0;
+            }
+            else
+            {
+                tMenyusui.value = 1;
+            }
+
+            string menyusui = snapshot.Child("statusMenyusui").Value.ToString();
+            if (menyusui == "YA")
+            {
+                tMenyusui.value = 0;
+            }
+            else
+            {
+                tMenyusui.value = 1;
+            }
+        }
+    }
+
+    public void SimpanEdit()
+    {
+        StartCoroutine(UpdateUserProfile(Nama.text, Password.text, PasswordConfirm.text, TanggalLahir.text));
+    }
+
+    private IEnumerator UpdateUserProfile(string _username, string _password, string _passwordConfirm, string _tanggalLahir)
+    {
+        DateTime tanggal;
+        bool isValid = DateTime.TryParseExact(_tanggalLahir, "dd-MM-yyyy",
+                                              System.Globalization.CultureInfo.InvariantCulture,
+                                              System.Globalization.DateTimeStyles.None,
+                                              out tanggal);
+
+        if (string.IsNullOrEmpty(_username))
+        {
+            WarningText.text = "Nama tidak boleh kosong";
+            WarningText.color = Color.red;
+        }
+        else if (_password != _passwordConfirm)
+        {
+            WarningText.text = "Password dan Konfirmasi Password tidak cocok!";
+            WarningText.color = Color.red;
+        }
+        else if (string.IsNullOrEmpty(_password) || string.IsNullOrEmpty(_passwordConfirm))
+        {
+            WarningText.text = "Password tidak boleh kosong";
+            WarningText.color = Color.red;
+        }
+        else if (string.IsNullOrEmpty(_tanggalLahir))
+        {
+            WarningText.text = "Tanggal Lahir tidak boleh kosong";
+            WarningText.color = Color.red;
+        }
+        else if (!isValid)
+        {
+            WarningText.text = "Format Tanggal Lahir harus dd-MM-yyyy!";
+            WarningText.color = Color.red;
+        }
+        else
+        {
+            UserProfile profile = new UserProfile { DisplayName = _username };
+            Task ProfileTask = User.UpdateUserProfileAsync(profile);
+            yield return new WaitUntil(predicate: () => ProfileTask.IsCompleted);
+
+            if (ProfileTask.Exception != null)
+            {
+                Debug.LogWarning($"Failed to update username: {ProfileTask.Exception}");
+                WarningText.text = "Gagal memperbarui nama pengguna!";
+                WarningText.color = Color.red;
+            }
+            else
+            {
+                string _pendidikanTerakhir = PendidikanTerakhir.options[PendidikanTerakhir.value].text;
+                string _hamil = tHamil.options[tHamil.value].text;
+                string _menyusui = tMenyusui.options[tMenyusui.value].text;
+
+                User customUser = new User(_username, _password, _pendidikanTerakhir, _tanggalLahir, _hamil, _menyusui);
+                string json = JsonUtility.ToJson(customUser);
+
+                Task DBTask = DBreference.Child("users").Child(User.UserId).SetRawJsonValueAsync(json);
+                yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+                if (DBTask.Exception != null)
+                {
+                    Debug.LogWarning($"Failed to update user data: {DBTask.Exception}");
+                    WarningText.text = "Gagal memperbarui profil!";
+                    WarningText.color = Color.red;
+                }
+                else
+                {
+                    int umur = HitungUmur(tanggal);
+
+                    NamaText.text = _username;
+
+                    if (_menyusui == tMenyusui.options[0].text)
+                    {
+                        TanggalLahirText.text = umur + " tahun, Sedang Menyusui";
+                    }
+                    else
+                    {
+                        TanggalLahirText.text = umur + " tahun, Tidak Sedang Menyusui";
+                    }
+
+                    PendidikanTerakhirText.text = _pendidikanTerakhir;
+                    PanelManager.instance.SimpanEditProfile();
+                    EditButton.SetActive(false);
+                    ClearRegisterFields();
                 }
             }
         }
