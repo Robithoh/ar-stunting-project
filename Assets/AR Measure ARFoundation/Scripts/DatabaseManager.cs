@@ -111,15 +111,15 @@ public class DatabaseManager : MonoBehaviour
 
     public void SimpanRekomendasiRemaja()
     {
-        string nama = rekomendasi.ifNamaIbuHamil.text;
-        string umur = rekomendasi.ifUmurIbuHamil.text;
-        int bb = int.Parse(rekomendasi.ifBeratBadanIbuHamil.text);
-        int tb = int.Parse(rekomendasi.ifTinggiBadanIbuHamil.text);
-        float imt = float.Parse(rekomendasi.tIMTIbuHamil.text);
-        string klasIMT = rekomendasi.tKlasifikasiIMTIbuHamil.text;
-        int LiLa = int.Parse(rekomendasi.ifLILAIbuHamil.text);
-        int HB = int.Parse(rekomendasi.ifHemoIbuHamil.text);
-        string tAnemia = rekomendasi.tAnemiaIbuHamil.text;
+        string nama = rekomendasi.ifNamaRemaja.text;
+        string umur = rekomendasi.ifUmurRemaja.text;
+        int bb = int.Parse(rekomendasi.ifBeratBadanRemaja.text);
+        int tb = int.Parse(rekomendasi.ifTinggiBadanRemaja.text);
+        float imt = float.Parse(rekomendasi.tIMTRemaja.text);
+        string klasIMT = rekomendasi.tKlasifikasiIMTRemaja.text;
+        int LiLa = int.Parse(rekomendasi.ifLILARemaja.text);
+        int HB = int.Parse(rekomendasi.ifHemoRemaja.text);
+        string tAnemia = rekomendasi.tAnemiaRemaja.text;
         string rekomendasiRemaja = rekomendasi.tRekomendasiResult.text;
 
         StartCoroutine(RekomendasiRemaja(nama, umur, bb, tb, imt, klasIMT, LiLa, HB, tAnemia, rekomendasiRemaja));
@@ -422,12 +422,11 @@ public class DatabaseManager : MonoBehaviour
         if (dbTask.Exception != null)
         {
             Debug.LogError($"Gagal menyimpan rekomendasi ibu menyusui: {dbTask.Exception}");
-            WarningText.text = "Gagal menyimpan rekomendasi!";
         }
         else
         {
+            PanelManager.instance.ToResult();
             Debug.Log("Rekomendasi ibu menyusui berhasil disimpan.");
-            WarningText.text = "Rekomendasi ibu menyusui berhasil disimpan!";
         }
     }
 
@@ -443,12 +442,11 @@ public class DatabaseManager : MonoBehaviour
         if (dbTask.Exception != null)
         {
             Debug.LogError($"Gagal menyimpan rekomendasi ibu hamil: {dbTask.Exception}");
-            WarningText.text = "Gagal menyimpan rekomendasi!";
         }
         else
         {
+            PanelManager.instance.ToResult();
             Debug.Log("Rekomendasi ibu hamil berhasil disimpan.");
-            WarningText.text = "Rekomendasi ibu hamil berhasil disimpan!";
         }
     }
 
@@ -464,12 +462,11 @@ public class DatabaseManager : MonoBehaviour
         if (dbTask.Exception != null)
         {
             Debug.LogError($"Gagal menyimpan rekomendasi Remaja: {dbTask.Exception}");
-            WarningText.text = "Gagal menyimpan rekomendasi!";
         }
         else
         {
+            PanelManager.instance.ToResult();
             Debug.Log("Rekomendasi Remaja berhasil disimpan.");
-            WarningText.text = "Rekomendasi Remaja berhasil disimpan!";
         }
     }
 
@@ -485,12 +482,11 @@ public class DatabaseManager : MonoBehaviour
         if (dbTask.Exception != null)
         {
             Debug.LogError($"Gagal menyimpan rekomendasi Anak laki-laki: {dbTask.Exception}");
-            WarningText.text = "Gagal menyimpan rekomendasi!";
         }
         else
         {
+            PanelManager.instance.ToResult();
             Debug.Log("Rekomendasi Anak laki-laki berhasil disimpan.");
-            WarningText.text = "Rekomendasi Anak laki-laki berhasil disimpan!";
         }
     }
 
@@ -506,12 +502,11 @@ public class DatabaseManager : MonoBehaviour
         if (dbTask.Exception != null)
         {
             Debug.LogError($"Gagal menyimpan rekomendasi Anak Perempuan: {dbTask.Exception}");
-            WarningText.text = "Gagal menyimpan rekomendasi!";
         }
         else
         {
+            PanelManager.instance.ToResult();
             Debug.Log("Rekomendasi Anak Perempuan berhasil disimpan.");
-            WarningText.text = "Rekomendasi Anak Perempuan berhasil disimpan!";
         }
     }
 }

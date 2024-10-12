@@ -799,7 +799,7 @@ public class Recommendation : MonoBehaviour
             tNamaRekomendasi.text = namaLengkap;
             tUsiaRekomendasi.text = usia + " Tahun";
             tInfoStatusRekomendasi.text = "";
-            panelManager.ToResult();
+            
         }
         else
         {
@@ -815,7 +815,7 @@ public class Recommendation : MonoBehaviour
             tNamaRekomendasi.text = namaLengkap;
             tUsiaRekomendasi.text = usia + " Tahun";
             tInfoStatusRekomendasi.text = "";
-            panelManager.ToResult();
+            
         }
         else
         {
@@ -831,7 +831,7 @@ public class Recommendation : MonoBehaviour
             tNamaRekomendasi.text = "Anak Laki-laki";
             tUsiaRekomendasi.text = usiaBulan + " Bulan";
             tInfoStatusRekomendasi.text = "";
-            panelManager.ToResult();
+            
         }
         else
         {
@@ -848,7 +848,7 @@ public class Recommendation : MonoBehaviour
             tNamaRekomendasi.text = "Anak Perempuan";
             tUsiaRekomendasi.text = usiaBulan + " Bulan";
             tInfoStatusRekomendasi.text = "";
-            panelManager.ToResult();
+            
         }
         else
         {
@@ -864,7 +864,7 @@ public class Recommendation : MonoBehaviour
             tUsiaRekomendasi.text = usia + " Tahun";
             tInfoStatusRekomendasi.text = "Ibu Menyusui";
             tRekomendasiResult.text = textRekomendasiAsi + "\n" + "\n" + textRekomendasiBBBayi;
-            panelManager.ToResult();
+            
         }
         else
         {
