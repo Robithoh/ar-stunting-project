@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PanelManager : MonoBehaviour
 {
+    public static PanelManager instance;
+
     [Header("Panels")]
     public GameObject login;
     public GameObject editProfile;
@@ -16,9 +18,27 @@ public class PanelManager : MonoBehaviour
     public GameObject rekomendasiIbuMenyusui;
     public GameObject rekomendasiResult;
 
-    private void Start() 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != null)
+        {
+            Debug.Log("Instance already exists, destroying object!");
+            Destroy(this);
+        }
+    }
+
+    private void Start()
     {
         login.SetActive(true);
+    }
+
+    public void ClearScreen()
+    {
+        login.SetActive(false);
         editProfile.SetActive(false);
         profile.SetActive(false);
         mainMenu.SetActive(false); 
@@ -32,91 +52,67 @@ public class PanelManager : MonoBehaviour
 
     public void LoginButton()
     {
-        login.SetActive(false);
+        ClearScreen();
         editProfile.SetActive(true);
     }
 
     public void SimpanEditProfile()
     {
-        editProfile.SetActive(false);
+        ClearScreen();
         profile.SetActive(true);
     }
 
     public void EditProfileFromProfile()
     {
-        profile.SetActive(false);
+        ClearScreen();
         editProfile.SetActive(true);
     }
 
     public void MainMenu()
     {
-        profile.SetActive(false);
+        ClearScreen();
         mainMenu.SetActive(true);
     }
 
     public void ProfileFromMainMenu()
     {
-        mainMenu.SetActive(false);
+        ClearScreen();
         profile.SetActive(true);
     }
 
     public void MainMenuToRemaja()
     {
-        mainMenu.SetActive(false);
+        ClearScreen();
         rekomendasiRemaja.SetActive(true);
     }
 
     public void MainMenuToIbuHamil()
     {
-        mainMenu.SetActive(false);
+        ClearScreen();
         rekomendasiIbuHamil.SetActive(true);
     }
 
     public void MainMenuToAnakLK()
     {
-        mainMenu.SetActive(false);
+        ClearScreen();
         rekomenasiAnakLK.SetActive(true);
     }
 
     public void MainMenuToAnakPr()
     {
-        mainMenu.SetActive(false);
+        ClearScreen();
         rekomendasiAnakPr.SetActive(true);
     }
 
     public void MainMenuToIbuMenyusui()
     {
-        mainMenu.SetActive(false);
+        ClearScreen();
         rekomendasiIbuMenyusui.SetActive(true);
     }
 
-    public void RemajaToResult()
+    public void ToResult()
     {
-        rekomendasiRemaja.SetActive(false);
-        rekomendasiResult.SetActive(true);
-    }
-
-    public void IbuHamilToResult()
-    {
-        rekomendasiIbuHamil.SetActive(false);
-        rekomendasiResult.SetActive(true);
-    }
-
-    public void AnakLKToResult()
-    {
-        rekomenasiAnakLK.SetActive(false);
-        rekomendasiResult.SetActive(true);
-    }
-
-    public void AnakPrToResult()
-    {
-        rekomendasiAnakPr.SetActive(false);
-        rekomendasiResult.SetActive(true);
-    }
-
-    public void IbuMenyusuiToResult()
-    {
-        rekomendasiIbuMenyusui.SetActive(false);
+        ClearScreen();
         rekomendasiResult.SetActive(true);
     }
 }
