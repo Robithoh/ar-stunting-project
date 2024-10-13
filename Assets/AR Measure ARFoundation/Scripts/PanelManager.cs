@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO.Compression;
 using UnityEngine;
 
 public class PanelManager : MonoBehaviour
@@ -18,6 +19,18 @@ public class PanelManager : MonoBehaviour
     public GameObject rekomendasiIbuMenyusui;
     public GameObject rekomendasiResult;
 
+    [Header("Canvas")]
+    private Canvas cLogin;
+    private Canvas cEditProfile;
+    private Canvas cProfile;
+    private Canvas cMainMenu;
+    private Canvas cRekomendasiRemaja;
+    private Canvas cRekomendasiIbuHamil;
+    private Canvas cRekomendasiAnakLK;
+    private Canvas cRekomendasiAnakPr;
+    private Canvas cRekomendasiIbuMenyusui;
+    private Canvas cRekomendasiResult;
+
     private void Awake()
     {
         if (instance == null)
@@ -33,86 +46,102 @@ public class PanelManager : MonoBehaviour
 
     private void Start()
     {
-        login.SetActive(true);
+        InitializeCanvas();
+        ClearCanvas();
+        cLogin.enabled = true;
     }
 
-    public void ClearScreen()
+    public void InitializeCanvas()
     {
-        login.SetActive(false);
-        editProfile.SetActive(false);
-        profile.SetActive(false);
-        mainMenu.SetActive(false); 
-        rekomendasiRemaja.SetActive(false);  
-        rekomendasiIbuHamil.SetActive(false);
-        rekomenasiAnakLK.SetActive(false);
-        rekomendasiAnakPr.SetActive(false);
-        rekomendasiIbuMenyusui.SetActive(false);
-        rekomendasiResult.SetActive(false);
+        cLogin = login.GetComponent<Canvas>();
+        cEditProfile = editProfile.GetComponent<Canvas>();
+        cProfile = profile.GetComponent<Canvas>();
+        cMainMenu = mainMenu.GetComponent<Canvas>();
+        cRekomendasiRemaja = rekomendasiRemaja.GetComponent<Canvas>();
+        cRekomendasiIbuHamil = rekomendasiIbuHamil.GetComponent<Canvas>();
+        cRekomendasiAnakLK = rekomenasiAnakLK.GetComponent<Canvas>();
+        cRekomendasiAnakPr = rekomendasiAnakPr.GetComponent<Canvas>();
+        cRekomendasiIbuMenyusui = rekomendasiIbuMenyusui.GetComponent<Canvas>();
+        cRekomendasiResult = rekomendasiResult.GetComponent<Canvas>();
+    }
+
+    public void ClearCanvas()
+    {
+        cLogin.enabled = false;
+        cEditProfile.enabled = false;
+        cProfile.enabled = false;
+        cMainMenu.enabled = false;
+        cRekomendasiRemaja.enabled = false;
+        cRekomendasiIbuHamil.enabled = false;
+        cRekomendasiAnakLK.enabled = false;
+        cRekomendasiAnakPr.enabled = false;
+        cRekomendasiIbuMenyusui.enabled = false;
+        cRekomendasiResult.enabled = false;
     }
 
     public void LoginButton()
     {
-        ClearScreen();
-        editProfile.SetActive(true);
+        ClearCanvas();
+        cEditProfile.enabled = true;
     }
 
     public void SimpanEditProfile()
     {
-        ClearScreen();
-        profile.SetActive(true);
+        ClearCanvas();
+        cProfile.enabled = true;
     }
 
     public void EditProfileFromProfile()
     {
-        ClearScreen();
-        editProfile.SetActive(true);
+        ClearCanvas();
+        cEditProfile.enabled = true;
     }
 
     public void MainMenu()
     {
-        ClearScreen();
-        mainMenu.SetActive(true);
+        ClearCanvas();
+        cMainMenu.enabled = true;
     }
 
     public void ProfileFromMainMenu()
     {
-        ClearScreen();
-        profile.SetActive(true);
+        ClearCanvas();
+        cProfile.enabled = true;
     }
 
     public void MainMenuToRemaja()
     {
-        ClearScreen();
-        rekomendasiRemaja.SetActive(true);
+        ClearCanvas();
+        cRekomendasiRemaja.enabled = true;
     }
 
     public void MainMenuToIbuHamil()
     {
-        ClearScreen();
-        rekomendasiIbuHamil.SetActive(true);
+        ClearCanvas();
+        cRekomendasiIbuHamil.enabled = true;
     }
 
     public void MainMenuToAnakLK()
     {
-        ClearScreen();
-        rekomenasiAnakLK.SetActive(true);
+        ClearCanvas();
+        cRekomendasiAnakLK.enabled = true;
     }
 
     public void MainMenuToAnakPr()
     {
-        ClearScreen();
-        rekomendasiAnakPr.SetActive(true);
+        ClearCanvas();
+        cRekomendasiAnakPr.enabled = true;
     }
 
     public void MainMenuToIbuMenyusui()
     {
-        ClearScreen();
-        rekomendasiIbuMenyusui.SetActive(true);
+        ClearCanvas();
+        cRekomendasiIbuMenyusui.enabled = true;
     }
 
     public void ToResult()
     {
-        ClearScreen();
-        rekomendasiResult.SetActive(true);
+        ClearCanvas();
+        cRekomendasiResult.enabled = true;
     }
 }
