@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "327342314842",
+    "firebase_url": "https://ar-stunting-project-default-rtdb.firebaseio.com",
+    "project_id": "ar-stunting-project",
+    "storage_bucket": "ar-stunting-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327342314842:android:d14e885976bbbd5ff70f63",
+        "android_client_info": {
+          "package_name": "com.Nilawarsa.ARMeasuringObject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFemK-MGbwP1XSyDFSyRXiKrwsjrOTv4w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

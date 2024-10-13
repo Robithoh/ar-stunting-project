@@ -88,10 +88,7 @@ public class ARMeasuring : MonoBehaviour
                         actions.PerfromTouch(Input.mousePosition, physicHit.point, physicHit.normal, outHitGo);
                     }
                 }
-
-              
             }
         }
-        
     }
 }
