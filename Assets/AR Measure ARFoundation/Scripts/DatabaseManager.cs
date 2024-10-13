@@ -101,8 +101,8 @@ public class DatabaseManager : MonoBehaviour
         int tb = int.Parse(rekomendasi.ifTinggiBadanIbuHamil.text);
         float imt = float.Parse(rekomendasi.tIMTIbuHamil.text);
         string klasIMT = rekomendasi.tKlasifikasiIMTIbuHamil.text;
-        int LiLa = int.Parse(rekomendasi.ifLILAIbuHamil.text);
-        int HB = int.Parse(rekomendasi.ifHemoIbuHamil.text);
+        string LiLa = rekomendasi.ifLILAIbuHamil.text;
+        string HB = rekomendasi.ifHemoIbuHamil.text;
         string tAnemia = rekomendasi.tAnemiaIbuHamil.text;
         string rekomendasiIbuHamil = rekomendasi.tRekomendasiResult.text;
 
@@ -117,8 +117,8 @@ public class DatabaseManager : MonoBehaviour
         int tb = int.Parse(rekomendasi.ifTinggiBadanRemaja.text);
         float imt = float.Parse(rekomendasi.tIMTRemaja.text);
         string klasIMT = rekomendasi.tKlasifikasiIMTRemaja.text;
-        int LiLa = int.Parse(rekomendasi.ifLILARemaja.text);
-        int HB = int.Parse(rekomendasi.ifHemoRemaja.text);
+        string LiLa = rekomendasi.ifLILARemaja.text;
+        string HB = rekomendasi.ifHemoRemaja.text;
         string tAnemia = rekomendasi.tAnemiaRemaja.text;
         string rekomendasiRemaja = rekomendasi.tRekomendasiResult.text;
 
@@ -431,10 +431,12 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
-    private IEnumerator RekomendasiIbuHamil(string _nama, string _umur, int _beratBadan, int _tinggiBadan, float _imt, string _kIMT, int _lingkarLengan, int _hb, string _kAnemia, string _hasilRekomendasi)
+    private IEnumerator RekomendasiIbuHamil(string _nama, string _umur, int _beratBadan, int _tinggiBadan, float _imt, string _kIMT, string _lingkarLengan, string _hb, string _kAnemia, string _hasilRekomendasi)
     {
-        DataIbuHamil rekIbuHamil = new DataIbuHamil( _nama, _umur, _beratBadan, _tinggiBadan, _imt, _kIMT, _lingkarLengan, _hb, _kAnemia, _hasilRekomendasi);
+        string Lila = string.IsNullOrEmpty(_lingkarLengan) ? "unknown" : _lingkarLengan;
+        string habe = string.IsNullOrEmpty(_hb) ? "unknown" : _hb;
 
+        DataIbuHamil rekIbuHamil = new DataIbuHamil(_nama, _umur, _beratBadan, _tinggiBadan, _imt, _kIMT, Lila, habe, _kAnemia, _hasilRekomendasi);
         string json = JsonUtility.ToJson(rekIbuHamil);
 
         string tanggal = DateTime.Now.ToString("dd-MM-yyyy HH:mm");
@@ -452,10 +454,12 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
-    private IEnumerator RekomendasiRemaja(string _nama, string _umur, int _beratBadan, int _tinggiBadan, float _imt, string _kIMT, int _lingkarLengan, int _hb, string _kAnemia, string _hasilRekomendasi)
+    private IEnumerator RekomendasiRemaja(string _nama, string _umur, int _beratBadan, int _tinggiBadan, float _imt, string _kIMT, string _lingkarLengan, string _hb, string _kAnemia, string _hasilRekomendasi)
     {
-        DataRemaja rekRemaja = new DataRemaja(_nama, _umur, _beratBadan, _tinggiBadan, _imt, _kIMT, _lingkarLengan, _hb, _kAnemia, _hasilRekomendasi);
+        string Lila = string.IsNullOrEmpty(_lingkarLengan) ? "unknown" : _lingkarLengan;
+        string habe = string.IsNullOrEmpty(_hb) ? "unknown" : _hb;
 
+        DataRemaja rekRemaja = new DataRemaja(_nama, _umur, _beratBadan, _tinggiBadan, _imt, _kIMT, Lila, habe, _kAnemia, _hasilRekomendasi);
         string json = JsonUtility.ToJson(rekRemaja);
 
         string tanggal = DateTime.Now.ToString("dd-MM-yyyy HH:mm");

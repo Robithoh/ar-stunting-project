@@ -6,12 +6,13 @@ public class DataIbuHamil
     public int tinggiBadan;
     public float IMT;
     public string kIMT;
-    public int lingkarLengan;
-    public int hb;
+    public string lingkarLengan;
+    public string hb;
     public string kAnemia;
     public string hasilRekomendasi;
 
-    public DataIbuHamil(string _nama, string _umur, int _beratBadan, int _tinggiBadan, float _imt, string _kIMT, int _lingkarLengan, int _hb, string _kAnemia, string _hasilRekomendasi)
+    // Constructor dengan nilai nullable untuk lingkarLengan dan hb
+    public DataIbuHamil(string _nama, string _umur, int _beratBadan, int _tinggiBadan, float _imt, string _kIMT, string _lingkarLengan, string _hb, string _kAnemia, string _hasilRekomendasi)
     {
         this.nama = _nama;
         this.umur = _umur;
@@ -20,7 +21,7 @@ public class DataIbuHamil
         this.IMT = _imt;
         this.kIMT = _kIMT;
         this.lingkarLengan = _lingkarLengan;
-        this.hb = _hb;
+        this.hb = _hb;          
         this.kAnemia = _kAnemia;
         this.hasilRekomendasi = _hasilRekomendasi;
     }
