@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO.Compression;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PanelManager : MonoBehaviour
 {
     public static PanelManager instance;
+    public ARChecker arChecker;
 
     [Header("Panels")]
     public GameObject login;
+    public GameObject register;
     public GameObject editProfile;
     public GameObject profile;
     public GameObject mainMenu;
@@ -21,6 +24,7 @@ public class PanelManager : MonoBehaviour
 
     [Header("Canvas")]
     private Canvas cLogin;
+    private Canvas cRegister;
     private Canvas cEditProfile;
     private Canvas cProfile;
     private Canvas cMainMenu;
@@ -48,12 +52,24 @@ public class PanelManager : MonoBehaviour
     {
         InitializeCanvas();
         ClearCanvas();
-        cLogin.enabled = true;
+        if(arChecker.isLogin == true)
+        {
+            cLogin.enabled = false;
+            cMainMenu.enabled = true;
+            arChecker.isLogin = false;
+        }
+        else if(arChecker.isLogin == false)
+        {
+            cLogin.enabled = true;
+            arChecker.isLogin = false;
+        }
+        
     }
 
     public void InitializeCanvas()
     {
         cLogin = login.GetComponent<Canvas>();
+        cRegister = register.GetComponent<Canvas>();
         cEditProfile = editProfile.GetComponent<Canvas>();
         cProfile = profile.GetComponent<Canvas>();
         cMainMenu = mainMenu.GetComponent<Canvas>();
@@ -68,6 +84,7 @@ public class PanelManager : MonoBehaviour
     public void ClearCanvas()
     {
         cLogin.enabled = false;
+        cRegister.enabled = false;
         cEditProfile.enabled = false;
         cProfile.enabled = false;
         cMainMenu.enabled = false;
@@ -137,6 +154,12 @@ public class PanelManager : MonoBehaviour
     {
         ClearCanvas();
         cRekomendasiIbuMenyusui.enabled = true;
+    }
+
+    public void MainMenuToARFeature()
+    {
+        arChecker.isLogin = true;
+        SceneManager.LoadScene("PackageScene");
     }
 
     public void ToResult()

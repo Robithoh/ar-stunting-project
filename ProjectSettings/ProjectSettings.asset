@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Nilawarsa Studio
-  productName: AR Measurement
+  productName: Denting Cakra
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -129,8 +129,8 @@ PlayerSettings:
     Others: 1
   bundleVersion: 0.3
   preloadedAssets:
-  - {fileID: 6459179672788566166, guid: 999870ee9264b0346ade2fcdbdd068fe, type: 2}
   - {fileID: 4800000, guid: c9f956787b1d945e7b36e0516201fc76, type: 3}
+  - {fileID: 6459179672788566166, guid: 999870ee9264b0346ade2fcdbdd068fe, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -148,7 +148,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.Nilawarsa.ARMeasurement
+    Android: com.NilawarsaStudio.Percobaan1
     Standalone: com.Nilawarsa.ARMeasuringObject
   buildNumber:
     Standalone: 0
@@ -156,7 +156,7 @@ PlayerSettings:
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 24
+  AndroidMinSdkVersion: 30
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
   aotOptions: 
@@ -231,18 +231,18 @@ PlayerSettings:
   clonedFromGUID: c0afd0d1d80e3634a9dac47e8a0426ea
   templatePackageId: com.unity.template.3d@5.0.4
   templateDefaultScene: Assets/Scenes/SampleScene.unity
-  useCustomMainManifest: 0
+  useCustomMainManifest: 1
   useCustomLauncherManifest: 0
   useCustomMainGradleTemplate: 1
   useCustomLauncherGradleManifest: 0
-  useCustomBaseGradleTemplate: 0
+  useCustomBaseGradleTemplate: 1
   useCustomGradlePropertiesTemplate: 1
   useCustomProguardFile: 0
   AndroidTargetArchitectures: 2
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: D:/Belajar Mandiri/Unity/KEYSTORE/ar.keystore
-  AndroidKeyaliasName: ar stunting
+  AndroidKeystoreName: D:/Belajar Mandiri/Unity/KEYSTORE/arbaru.keystore
+  AndroidKeyaliasName: inibaru
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
   AndroidIsGame: 1
@@ -264,7 +264,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 9fd458be008693749bccb020c87bc997, type: 3}
+      m_Icon: {fileID: 2800000, guid: 3f2dc586626db2f438a1f3281f05423b, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
