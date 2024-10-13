@@ -416,7 +416,8 @@ public class DatabaseManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(rekIbuMenyusui);
 
-        Task dbTask = DBreference.Child("rekomendasi_ibu_menyusui").SetRawJsonValueAsync(json);
+        string tanggal = DateTime.Now.ToString("dd-MM-yyyy HH:mm");
+        Task dbTask = DBreference.Child("rekomendasi_ibu_menyusui").Child(tanggal).SetRawJsonValueAsync(json);
         yield return new WaitUntil(() => dbTask.IsCompleted);
 
         if (dbTask.Exception != null)
@@ -436,7 +437,8 @@ public class DatabaseManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(rekIbuHamil);
 
-        Task dbTask = DBreference.Child("rekomendasi_ibu_hamil").SetRawJsonValueAsync(json);
+        string tanggal = DateTime.Now.ToString("dd-MM-yyyy HH:mm");
+        Task dbTask = DBreference.Child("rekomendasi_ibu_hamil").Child(tanggal).SetRawJsonValueAsync(json);
         yield return new WaitUntil(() => dbTask.IsCompleted);
 
         if (dbTask.Exception != null)
@@ -456,7 +458,8 @@ public class DatabaseManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(rekRemaja);
 
-        Task dbTask = DBreference.Child("rekomendasi_remaja").SetRawJsonValueAsync(json);
+        string tanggal = DateTime.Now.ToString("dd-MM-yyyy HH:mm");
+        Task dbTask = DBreference.Child("rekomendasi_remaja").Child(tanggal).SetRawJsonValueAsync(json);
         yield return new WaitUntil(() => dbTask.IsCompleted);
 
         if (dbTask.Exception != null)
@@ -476,7 +479,8 @@ public class DatabaseManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(rekAnakLaki);
 
-        Task dbTask = DBreference.Child("rekomendasi_anak_laki-laki").SetRawJsonValueAsync(json);
+        string tanggal = DateTime.Now.ToString("dd-MM-yyyy HH:mm");
+        Task dbTask = DBreference.Child("rekomendasi_anak_laki-laki").Child(tanggal).SetRawJsonValueAsync(json);
         yield return new WaitUntil(() => dbTask.IsCompleted);
 
         if (dbTask.Exception != null)
@@ -496,7 +500,8 @@ public class DatabaseManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(rekAnakPerempuan);
 
-        Task dbTask = DBreference.Child("rekomendasi_anak_perempuan").SetRawJsonValueAsync(json);
+        string tanggal = DateTime.Now.ToString("dd-MM-yyyy HH:mm");
+        Task dbTask = DBreference.Child("rekomendasi_anak_perempuan").Child(tanggal).SetRawJsonValueAsync(json);
         yield return new WaitUntil(() => dbTask.IsCompleted);
 
         if (dbTask.Exception != null)
