@@ -167,7 +167,7 @@ PlayerSettings:
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 24
+  AndroidMinSdkVersion: 25
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
   aotOptions: 
@@ -260,8 +260,8 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: /home/tgar/Downloads/ar.keystore
-  AndroidKeyaliasName: ar stunting
+  AndroidKeystoreName: D:/Belajar Mandiri/Unity/KEYSTORE/arbaru.keystore
+  AndroidKeyaliasName: inibaru
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0

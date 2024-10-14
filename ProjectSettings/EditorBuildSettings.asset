@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/AR Measure ARFoundation/Scenes/!Final.unity
     guid: 9397a12f85e1ee54e9672e4802c2d657
+  - enabled: 1
+    path: Assets/AR Measure ARFoundation/Scenes/PackageScene.unity
+    guid: 41b2f53fab303ec4b86764a45769720a
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 9d0cddf5e163a8e91b615871939859e3, type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 71d6a97e41ce0064382430036f5acff5, type: 2}
