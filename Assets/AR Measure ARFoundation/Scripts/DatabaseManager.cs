@@ -256,13 +256,13 @@ public class DatabaseManager : MonoBehaviour
                         userData.hamil = hamil;
                         userData.menyusui = menyusui;
 
+                        int umur = HitungUmur(tanggal);
+                        userData.umur = umur;
+
                         User customUser = new User(userData.username, userData.password, userData.tanggalLahir, userData.pendidikanTerakhir, userData.hamil, userData.menyusui);
                         string json = JsonUtility.ToJson(customUser);
 
                         DBreference.Child("users").Child(User.UserId).SetRawJsonValueAsync(json);
-
-                        int umur = HitungUmur(tanggal);
-                        userData.umur = umur;
 
                         //TanggalLahirText.text = tanggal.ToString("dd-MM-yyyy");
 
@@ -401,7 +401,6 @@ public class DatabaseManager : MonoBehaviour
                 string json = JsonUtility.ToJson(customUser);
 
                 DBreference.Child("users").Child(User.UserId).SetRawJsonValueAsync(json);
-
 
                 Task DBTask = DBreference.Child("users").Child(User.UserId).SetRawJsonValueAsync(json);
                 yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
