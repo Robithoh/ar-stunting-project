@@ -32,10 +32,11 @@ public class DatabaseManager : MonoBehaviour
     public Text NamaText;
     public Text TanggalLahirText;
     public Text PendidikanTerakhirText;
-    public Text tHamilText;
-    public Text tMenyusuiText;
+    public Text NamaMenuText;
+    public Text KeteranganMenuText;
 
-    public Recommendation rekomendasi;
+    private Recommendation rekomendasi;
+    public DataProfile userData;
 
     void Awake()
     {
@@ -60,6 +61,25 @@ public class DatabaseManager : MonoBehaviour
         {
             Debug.LogError("Recommendation object not found in the scene!");
         }
+    }
+
+    private void Update()
+    {
+        NamaText.text = userData.username;
+        NamaMenuText.text = userData.username;
+
+        if (userData.menyusui == tMenyusui.options[0].text)
+        {
+            TanggalLahirText.text = userData.umur + " tahun, Sedang Menyusui";
+            KeteranganMenuText.text = "Sedang Menyusui";
+        }
+        else
+        {
+            TanggalLahirText.text = userData.umur + " tahun, Tidak Sedang Menyusui";
+            KeteranganMenuText.text = "Tidak Sedang Menyusui";
+        }
+
+        PendidikanTerakhirText.text = userData.pendidikanTerakhir;
     }
 
     private void InitializeFirebase()
@@ -229,27 +249,23 @@ public class DatabaseManager : MonoBehaviour
                         string hamil = tHamil.options[tHamil.value].text;
                         string menyusui = tMenyusui.options[tMenyusui.value].text;
 
-                        User customUser = new User(_username, _password, _tanggalLahir, pendidikanTerakhir, hamil, menyusui);
+                        userData.username = _username;
+                        userData.password = _password;
+                        userData.tanggalLahir = _tanggalLahir;
+                        userData.pendidikanTerakhir = pendidikanTerakhir;
+                        userData.hamil = hamil;
+                        userData.menyusui = menyusui;
+
+                        User customUser = new User(userData.username, userData.password, userData.tanggalLahir, userData.pendidikanTerakhir, userData.hamil, userData.menyusui);
                         string json = JsonUtility.ToJson(customUser);
 
                         DBreference.Child("users").Child(User.UserId).SetRawJsonValueAsync(json);
 
+                        int umur = HitungUmur(tanggal);
+                        userData.umur = umur;
+
                         //TanggalLahirText.text = tanggal.ToString("dd-MM-yyyy");
 
-                        int umur = HitungUmur(tanggal);
-
-                        NamaText.text = _username;
-
-                        if (menyusui == tMenyusui.options[0].text)
-                        {
-                            TanggalLahirText.text = umur + " tahun, Sedang Menyusui";
-                        }
-                        else
-                        {
-                            TanggalLahirText.text = umur + " tahun, Tidak Sedang Menyusui";
-                        }
-
-                        PendidikanTerakhirText.text = pendidikanTerakhir;
                         PanelManager.instance.SimpanEditProfile();
                         ClearRegisterFields();
                     }
@@ -374,8 +390,18 @@ public class DatabaseManager : MonoBehaviour
                 string _hamil = tHamil.options[tHamil.value].text;
                 string _menyusui = tMenyusui.options[tMenyusui.value].text;
 
-                User customUser = new User(_username, _password, _pendidikanTerakhir, _tanggalLahir, _hamil, _menyusui);
+                userData.username = _username;
+                userData.password = _password;
+                userData.tanggalLahir = _tanggalLahir;
+                userData.pendidikanTerakhir = _pendidikanTerakhir;
+                userData.hamil = _hamil;
+                userData.menyusui = _menyusui;
+
+                User customUser = new User(userData.username, userData.password, userData.tanggalLahir, userData.pendidikanTerakhir, userData.hamil, userData.menyusui);
                 string json = JsonUtility.ToJson(customUser);
+
+                DBreference.Child("users").Child(User.UserId).SetRawJsonValueAsync(json);
+
 
                 Task DBTask = DBreference.Child("users").Child(User.UserId).SetRawJsonValueAsync(json);
                 yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
@@ -389,16 +415,20 @@ public class DatabaseManager : MonoBehaviour
                 else
                 {
                     int umur = HitungUmur(tanggal);
+                    userData.umur = umur;
 
                     NamaText.text = _username;
+                    NamaMenuText.text = _username;
 
                     if (_menyusui == tMenyusui.options[0].text)
                     {
                         TanggalLahirText.text = umur + " tahun, Sedang Menyusui";
+                        KeteranganMenuText.text = "Sedang Menyusui";
                     }
                     else
                     {
                         TanggalLahirText.text = umur + " tahun, Tidak Sedang Menyusui";
+                        KeteranganMenuText.text = "Tidak Sedang Menyusui";
                     }
 
                     PendidikanTerakhirText.text = _pendidikanTerakhir;

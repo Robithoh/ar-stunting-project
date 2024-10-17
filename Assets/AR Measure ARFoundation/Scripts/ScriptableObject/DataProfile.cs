@@ -1,0 +1,14 @@
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "DataProfile", menuName = "DataProfile", order = 1)]
+public class DataProfile : ScriptableObject
+{
+    public string username;
+    public string password;
+    public string tanggalLahir;
+    public string pendidikanTerakhir;
+    public string hamil;
+    public string menyusui;
+
+    public int umur;
+}
