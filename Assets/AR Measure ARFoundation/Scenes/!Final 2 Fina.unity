@@ -4884,7 +4884,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -20318.168}
+  m_AnchoredPosition: {x: 0, y: -38876.914}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &164745280
@@ -12903,7 +12903,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -20318.217}
+  m_AnchoredPosition: {x: 0, y: -38876.96}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &442602229
@@ -17433,7 +17433,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -20318.217}
+  m_AnchoredPosition: {x: 0, y: -38876.96}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &611889121
@@ -21013,7 +21013,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -20318.168}
+  m_AnchoredPosition: {x: 0, y: -38876.914}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &797832875
@@ -21078,7 +21078,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -20318.168}
+  m_AnchoredPosition: {x: 0, y: -38876.914}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &800926025
@@ -22543,7 +22543,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -138.06607}
+  m_AnchoredPosition: {x: 0, y: -9125.564}
   m_SizeDelta: {x: 720, y: 1596.132}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &849276722
@@ -25198,7 +25198,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -20318.168}
+  m_AnchoredPosition: {x: 0, y: -38876.914}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1010594423
@@ -31905,18 +31905,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44178a851b488f446a2e46b7459e9c08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arChecker: {fileID: 0}
-  login: {fileID: 0}
-  editProfile: {fileID: 0}
-  register: {fileID: 0}
-  profile: {fileID: 0}
-  mainMenu: {fileID: 0}
-  rekomendasiRemaja: {fileID: 0}
-  rekomendasiIbuHamil: {fileID: 0}
-  rekomenasiAnakLK: {fileID: 0}
-  rekomendasiAnakPr: {fileID: 0}
-  rekomendasiIbuMenyusui: {fileID: 0}
-  rekomendasiResult: {fileID: 0}
+  arChecker: {fileID: 11400000, guid: 33f50ee617aac054d885545a7b38c4af, type: 2}
+  login: {fileID: 779284665}
+  editProfile: {fileID: 1302135573}
+  register: {fileID: 422079925}
+  profile: {fileID: 1248035529}
+  mainMenu: {fileID: 98671149}
+  rekomendasiRemaja: {fileID: 369179485}
+  rekomendasiIbuHamil: {fileID: 15872515}
+  rekomenasiAnakLK: {fileID: 1328084529}
+  rekomendasiAnakPr: {fileID: 1708269715}
+  rekomendasiIbuMenyusui: {fileID: 732370862}
+  rekomendasiResult: {fileID: 607218769}
 --- !u!4 &1303452682
 Transform:
   m_ObjectHideFlags: 0
@@ -34411,19 +34411,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dependencyStatus: 0
-  Nama: {fileID: 0}
-  Password: {fileID: 0}
-  PasswordConfirm: {fileID: 0}
-  TanggalLahir: {fileID: 0}
-  PendidikanTerakhir: {fileID: 0}
-  tHamil: {fileID: 0}
-  tMenyusui: {fileID: 0}
-  WarningText: {fileID: 0}
-  warningBox: {fileID: 0}
-  EditButton: {fileID: 0}
-  NamaText: {fileID: 0}
-  TanggalLahirText: {fileID: 0}
-  PendidikanTerakhirText: {fileID: 0}
+  Nama: {fileID: 1964152265}
+  Password: {fileID: 1453686878}
+  PasswordConfirm: {fileID: 710070564}
+  TanggalLahir: {fileID: 192895873}
+  PendidikanTerakhir: {fileID: 1161954765}
+  tHamil: {fileID: 1262581206}
+  tMenyusui: {fileID: 996894972}
+  WarningText: {fileID: 1463057599}
+  warningBox: {fileID: 1694009103}
+  EditButton: {fileID: 2144414823}
+  NamaText: {fileID: 1685644089}
+  TanggalLahirText: {fileID: 452908172}
+  PendidikanTerakhirText: {fileID: 1070311856}
   tHamilText: {fileID: 0}
   tMenyusuiText: {fileID: 0}
   rekomendasi: {fileID: 0}
@@ -42232,7 +42232,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1430040838}
         m_TargetAssemblyTypeName: DatabaseManager, Assembly-CSharp
         m_MethodName: CloseWarningBox
         m_Mode: 1
@@ -44532,73 +44532,223 @@ MonoBehaviour:
   textRekomendasi5: 
   usiaBulan: 0
   tinggiBadanAnak: 0
-  kiriMedianPr: []
-  medianPr: []
-  kananMedianPr: []
-  kiriMedianL: []
-  medianL: []
-  kananMedianL: []
-  ifNamaRemaja: {fileID: 0}
-  ifUmurRemaja: {fileID: 0}
-  ifBeratBadanRemaja: {fileID: 0}
-  ifTinggiBadanRemaja: {fileID: 0}
-  tIMTRemaja: {fileID: 0}
-  tKlasifikasiIMTRemaja: {fileID: 0}
-  ddLILARemaja: {fileID: 0}
-  ifLILARemaja: {fileID: 0}
-  ddHemoRemaja: {fileID: 0}
-  ifHemoRemaja: {fileID: 0}
-  tAnemiaRemaja: {fileID: 0}
-  bRekomendasiRemaja: {fileID: 0}
+  kiriMedianPr:
+  - 47.3
+  - 51.7
+  - 55
+  - 57.7
+  - 59.9
+  - 61.8
+  - 63.5
+  - 65
+  - 66.4
+  - 67.7
+  - 69
+  - 70.3
+  - 71.4
+  - 72.6
+  - 73.7
+  - 74.8
+  - 75.8
+  - 76.8
+  - 76.8
+  - 78.8
+  - 79.7
+  - 80.6
+  - 81.5
+  - 82.3
+  - 83.2
+  medianPr:
+  - 49.1
+  - 53.7
+  - 57.1
+  - 59.8
+  - 62.1
+  - 64
+  - 65.7
+  - 67.3
+  - 68.7
+  - 70.1
+  - 71.5
+  - 72.8
+  - 74
+  - 75.2
+  - 76.4
+  - 77.5
+  - 78.6
+  - 79.7
+  - 79.7
+  - 81.7
+  - 82.7
+  - 83.7
+  - 84.6
+  - 85.5
+  - 86.4
+  kananMedianPr:
+  - 51
+  - 55.6
+  - 59.1
+  - 61.9
+  - 64.3
+  - 66.2
+  - 68
+  - 69.6
+  - 71.1
+  - 72.6
+  - 73.9
+  - 75.3
+  - 76.6
+  - 77.8
+  - 79.1
+  - 80.2
+  - 81.4
+  - 82.5
+  - 82.5
+  - 84.7
+  - 85.7
+  - 86.7
+  - 87.7
+  - 88.7
+  - 89.6
+  kiriMedianL:
+  - 48
+  - 52.8
+  - 56.4
+  - 59.4
+  - 61.8
+  - 63.8
+  - 65.5
+  - 67
+  - 68.4
+  - 69.7
+  - 71
+  - 72.2
+  - 73.4
+  - 74.5
+  - 75.6
+  - 76.6
+  - 77.6
+  - 78.6
+  - 79.6
+  - 80.5
+  - 81.4
+  - 82.3
+  - 83.1
+  - 83.9
+  - 84.8
+  medianL:
+  - 49.9
+  - 54.7
+  - 58.4
+  - 61.4
+  - 63.9
+  - 65.9
+  - 67.6
+  - 69.2
+  - 70.6
+  - 72
+  - 73.3
+  - 74.5
+  - 75.7
+  - 76.9
+  - 78
+  - 79.1
+  - 80.2
+  - 81.2
+  - 82.3
+  - 83.2
+  - 84.2
+  - 85.1
+  - 86
+  - 86.9
+  - 87.8
+  kananMedianL:
+  - 51.8
+  - 56.7
+  - 60.4
+  - 63.5
+  - 66
+  - 68
+  - 69.8
+  - 71.3
+  - 72.8
+  - 74.2
+  - 75.6
+  - 76.9
+  - 78.1
+  - 79.3
+  - 80.5
+  - 81.7
+  - 82.8
+  - 83.9
+  - 85
+  - 86
+  - 87
+  - 88
+  - 89
+  - 89.9
+  - 90.9
+  ifNamaRemaja: {fileID: 1238493798}
+  ifUmurRemaja: {fileID: 1309658722}
+  ifBeratBadanRemaja: {fileID: 1992160267}
+  ifTinggiBadanRemaja: {fileID: 484874974}
+  tIMTRemaja: {fileID: 2073716947}
+  tKlasifikasiIMTRemaja: {fileID: 939721793}
+  ddLILARemaja: {fileID: 996821303}
+  ifLILARemaja: {fileID: 629412401}
+  ddHemoRemaja: {fileID: 1925619832}
+  ifHemoRemaja: {fileID: 762053003}
+  tAnemiaRemaja: {fileID: 469992649}
+  bRekomendasiRemaja: {fileID: 435397631}
   isNamaValidR: 0
   isBBValidR: 0
   isTBValidR: 0
   isLilaValidR: 0
   isHemoValidR: 0
   isUmurValidR: 0
-  ifNamaIbuHamil: {fileID: 0}
-  ifUmurIbuHamil: {fileID: 0}
-  ifBeratBadanIbuHamil: {fileID: 0}
-  ifTinggiBadanIbuHamil: {fileID: 0}
-  tIMTIbuHamil: {fileID: 0}
-  tKlasifikasiIMTIbuHamil: {fileID: 0}
-  ddLILAIbuHamil: {fileID: 0}
-  ifLILAIbuHamil: {fileID: 0}
-  ddHemoIbuHamil: {fileID: 0}
-  ifHemoIbuHamil: {fileID: 0}
-  tAnemiaIbuHamil: {fileID: 0}
-  bRekomendasiIbuHamil: {fileID: 0}
+  ifNamaIbuHamil: {fileID: 374293005}
+  ifUmurIbuHamil: {fileID: 2138234739}
+  ifBeratBadanIbuHamil: {fileID: 146492527}
+  ifTinggiBadanIbuHamil: {fileID: 44374540}
+  tIMTIbuHamil: {fileID: 328833202}
+  tKlasifikasiIMTIbuHamil: {fileID: 1205745154}
+  ddLILAIbuHamil: {fileID: 1283712712}
+  ifLILAIbuHamil: {fileID: 342164111}
+  ddHemoIbuHamil: {fileID: 2062539834}
+  ifHemoIbuHamil: {fileID: 802123915}
+  tAnemiaIbuHamil: {fileID: 1398272409}
+  bRekomendasiIbuHamil: {fileID: 1360239988}
   isNamaValidIH: 0
   isBBValidIH: 0
   isTBValidIH: 0
   isLilaValidIH: 0
   isHemoValidIH: 0
   isUmurValidIH: 0
-  ifUmurLk: {fileID: 0}
-  ifTinggiBadanLk: {fileID: 0}
-  tGiziLk: {fileID: 0}
-  bRekomendasiAnakLk: {fileID: 0}
+  ifUmurLk: {fileID: 510400248}
+  ifTinggiBadanLk: {fileID: 583099162}
+  tGiziLk: {fileID: 1424744744}
+  bRekomendasiAnakLk: {fileID: 546516962}
   isUmurValidLk: 0
   isTBValidLk: 0
-  ifUmurPr: {fileID: 0}
-  ifTinggiBadanPr: {fileID: 0}
-  tGiziPr: {fileID: 0}
-  bRekomendasiAnakPr: {fileID: 0}
+  ifUmurPr: {fileID: 2110423713}
+  ifTinggiBadanPr: {fileID: 1652326376}
+  tGiziPr: {fileID: 651648728}
+  bRekomendasiAnakPr: {fileID: 1972494655}
   isUmurValidPr: 0
   isTBValidPr: 0
-  ifNamaIbuMenyusui: {fileID: 0}
-  ifUmurIbuMenyusui: {fileID: 0}
-  ddASI: {fileID: 0}
-  ifBeratBadanBayi: {fileID: 0}
+  ifNamaIbuMenyusui: {fileID: 314326902}
+  ifUmurIbuMenyusui: {fileID: 1698623270}
+  ddASI: {fileID: 1990128267}
+  ifBeratBadanBayi: {fileID: 1603069399}
   isAsi: 0
   isNamaValidIM: 0
   isUmurValidIM: 0
   isBBValidIM: 0
-  bRekomendasiIbuMenyusui: {fileID: 0}
-  tNamaRekomendasi: {fileID: 0}
-  tUsiaRekomendasi: {fileID: 0}
-  tInfoStatusRekomendasi: {fileID: 0}
-  tRekomendasiResult: {fileID: 0}
+  bRekomendasiIbuMenyusui: {fileID: 1743923496}
+  tNamaRekomendasi: {fileID: 1436004240}
+  tUsiaRekomendasi: {fileID: 19835866}
+  tInfoStatusRekomendasi: {fileID: 382361782}
+  tRekomendasiResult: {fileID: 300666186}
   textRekomendasiIMT: 
   textRekomendasiAnemia: 
   textRekomendasiLILA: 
@@ -44606,7 +44756,7 @@ MonoBehaviour:
   textRekomendasiZScore: 
   textRekomendasiAsi: 
   textRekomendasiBBBayi: 
-  panelManager: {fileID: 0}
+  panelManager: {fileID: 1303452681}
 --- !u!4 &1936631574
 Transform:
   m_ObjectHideFlags: 0
@@ -45272,7 +45422,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -9344.044}
+  m_AnchoredPosition: {x: 0, y: -17878.88}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1953678100
@@ -49860,7 +50010,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -47699.887}
+  m_AnchoredPosition: {x: 0, y: -105656.38}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2142947039
