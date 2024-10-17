@@ -26,6 +26,7 @@ public class DatabaseManager : MonoBehaviour
     public Dropdown tHamil;
     public Dropdown tMenyusui;
     public Text WarningText;
+    public GameObject warningBox;
     public GameObject EditButton;
 
     [Header("Text")]
@@ -36,6 +37,13 @@ public class DatabaseManager : MonoBehaviour
     public Text tMenyusuiText;
 
     public Recommendation rekomendasi;
+
+    [Header("Button Main Menu")]
+    public Button bRemaja;
+    public Button bIbuHamil;
+    public Button bIbuMenyusui;
+    public Button bAnakLK;
+    public Button bAnakPr;
 
     void Awake()
     {
@@ -60,6 +68,8 @@ public class DatabaseManager : MonoBehaviour
         {
             Debug.LogError("Recommendation object not found in the scene!");
         }
+
+        warningBox.SetActive(false);
     }
 
     private void InitializeFirebase()
@@ -156,26 +166,31 @@ public class DatabaseManager : MonoBehaviour
         {
             WarningText.text = "Nama tidak boleh kosong";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else if (_password != _passwordConfirm)
         {
             WarningText.text = "Password dan Konfirmasi Password tidak cocok!";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else if (string.IsNullOrEmpty(_password) || string.IsNullOrEmpty(_passwordConfirm))
         {
             WarningText.text = "Password tidak boleh kosong";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else if (string.IsNullOrEmpty(_tanggalLahir))
         {
             WarningText.text = "Tanggal Lahir tidak boleh kosong";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else if (!isValid)
         {
             WarningText.text = "Format Tanggal Lahir harus dd-MM-yyyy!";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else
         {
@@ -206,6 +221,7 @@ public class DatabaseManager : MonoBehaviour
                 }
                 WarningText.text = message;
                 WarningText.color = Color.red;
+                warningBox.SetActive(true);
             }
             else
             {
@@ -222,6 +238,7 @@ public class DatabaseManager : MonoBehaviour
                         Debug.LogWarning($"Failed to set username: {ProfileTask.Exception}");
                         WarningText.text = "Username gagal disimpan!";
                         WarningText.color = Color.red;
+                        warningBox.SetActive(true);
                     }
                     else
                     {
@@ -335,26 +352,31 @@ public class DatabaseManager : MonoBehaviour
         {
             WarningText.text = "Nama tidak boleh kosong";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else if (_password != _passwordConfirm)
         {
             WarningText.text = "Password dan Konfirmasi Password tidak cocok!";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else if (string.IsNullOrEmpty(_password) || string.IsNullOrEmpty(_passwordConfirm))
         {
             WarningText.text = "Password tidak boleh kosong";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else if (string.IsNullOrEmpty(_tanggalLahir))
         {
             WarningText.text = "Tanggal Lahir tidak boleh kosong";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else if (!isValid)
         {
             WarningText.text = "Format Tanggal Lahir harus dd-MM-yyyy!";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else
         {
@@ -367,6 +389,7 @@ public class DatabaseManager : MonoBehaviour
                 Debug.LogWarning($"Failed to update username: {ProfileTask.Exception}");
                 WarningText.text = "Gagal memperbarui nama pengguna!";
                 WarningText.color = Color.red;
+                warningBox.SetActive(true);
             }
             else
             {
@@ -385,6 +408,7 @@ public class DatabaseManager : MonoBehaviour
                     Debug.LogWarning($"Failed to update user data: {DBTask.Exception}");
                     WarningText.text = "Gagal memperbarui profil!";
                     WarningText.color = Color.red;
+                    warningBox.SetActive(true);
                 }
                 else
                 {
@@ -517,5 +541,10 @@ public class DatabaseManager : MonoBehaviour
             PanelManager.instance.ToResult();
             Debug.Log("Rekomendasi Anak Perempuan berhasil disimpan.");
         }
+    }
+
+    public void CloseWarningBox()
+    {
+        warningBox.SetActive(false);
     }
 }
