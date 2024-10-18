@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DataProfile", menuName = "Profile", order = 1)]
+[CreateAssetMenu(fileName = "DataProfile", menuName = "Profile")]
 public class DataProfile : ScriptableObject
 {
     public string username;
