@@ -31,6 +31,8 @@ public class Actions : MonoBehaviour
 
     public GameObject[] selectors;
 
+    public PanelManager panelManager;
+
     void Start()
     {
         //initialize the variables
@@ -149,7 +151,10 @@ public class Actions : MonoBehaviour
 
     public void BacktoMenu()
     {
-        SceneManager.LoadScene("!Final");
+        // SceneManager.LoadScene("!Final");
+        panelManager.augmentedReality.SetActive(false);
+        panelManager.ClearCanvas();
+        panelManager.cMainMenu.enabled = true;
     }
    
 }

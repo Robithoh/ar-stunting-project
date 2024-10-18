@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class PanelManager : MonoBehaviour
 {
     public static PanelManager instance;
-    public ARChecker arChecker;
+    //public ARChecker arChecker;
 
     [Header("Panels")]
     public GameObject login;
@@ -21,13 +21,14 @@ public class PanelManager : MonoBehaviour
     public GameObject rekomendasiAnakPr;
     public GameObject rekomendasiIbuMenyusui;
     public GameObject rekomendasiResult;
+    public GameObject augmentedReality;
 
     [Header("Canvas")]
     private Canvas cLogin;
     private Canvas cEditProfile;
     private Canvas cRegister;
     private Canvas cProfile;
-    private Canvas cMainMenu;
+    public Canvas cMainMenu;
     private Canvas cRekomendasiRemaja;
     private Canvas cRekomendasiIbuHamil;
     private Canvas cRekomendasiAnakLK;
@@ -50,19 +51,21 @@ public class PanelManager : MonoBehaviour
 
     private void Start()
     {
+        augmentedReality.SetActive(false);
         InitializeCanvas();
         ClearCanvas();
-        if(arChecker.isLogin == true)
-        {
-            cLogin.enabled = false;
-            cMainMenu.enabled = true;
-            arChecker.isLogin = false;
-        }
-        else if(arChecker.isLogin == false)
-        {
-            cLogin.enabled = true;
-            arChecker.isLogin = false;
-        }
+        cLogin.enabled = true;
+        // if(arChecker.isLogin == true)
+        // {
+        //     cLogin.enabled = false;
+        //     cMainMenu.enabled = true;
+        //     arChecker.isLogin = false;
+        // }
+        // else if(arChecker.isLogin == false)
+        // {
+        //     cLogin.enabled = true;
+        //     arChecker.isLogin = false;
+        // }
     }
 
     public void InitializeCanvas()
@@ -163,7 +166,9 @@ public class PanelManager : MonoBehaviour
 
     public void MainMenuToARFeature()
     {
-        arChecker.isLogin = true;
-        SceneManager.LoadScene("PackageScene");
+        ClearCanvas();
+        augmentedReality.SetActive(true);
+        //arChecker.isLogin = true;
+        //SceneManager.LoadScene("PackageScene");
     }
 }
