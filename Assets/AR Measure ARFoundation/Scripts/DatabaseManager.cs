@@ -24,6 +24,7 @@ public class DatabaseManager : MonoBehaviour
     public Dropdown tHamil;
     public Dropdown tMenyusui;
     public Text WarningText;
+    public GameObject warningBox;
     public GameObject EditButton;
 
     [Header("Text")]
@@ -33,6 +34,12 @@ public class DatabaseManager : MonoBehaviour
     public Text NamaMenuText;
     public Text KeteranganMenuText;
 
+    [Header("Button Main Menu")]
+    public Button bRemaja;
+    public Button bIbuHamil;
+    public Button bIbuMenyusui;
+    public Button bAnakLK;
+    public Button bAnakPr;
     private Recommendation rekomendasi;
     public DataProfile userData;
 
@@ -180,26 +187,31 @@ public class DatabaseManager : MonoBehaviour
         {
             WarningText.text = "Nama tidak boleh kosong";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else if (_password != _passwordConfirm)
         {
             WarningText.text = "Password dan Konfirmasi Password tidak cocok!";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else if (string.IsNullOrEmpty(_password) || string.IsNullOrEmpty(_passwordConfirm))
         {
             WarningText.text = "Password tidak boleh kosong";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else if (string.IsNullOrEmpty(_tanggalLahir))
         {
             WarningText.text = "Tanggal Lahir tidak boleh kosong";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else if (!isValid)
         {
             WarningText.text = "Format Tanggal Lahir harus dd-MM-yyyy!";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else
         {
@@ -211,6 +223,7 @@ public class DatabaseManager : MonoBehaviour
                 Debug.LogWarning($"Failed to register task with {RegisterTask.Exception}");
                 FirebaseException firebaseEx = RegisterTask.Exception.GetBaseException() as FirebaseException;
                 AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
+                warningBox.SetActive(true);
 
                 string message = "Register Failed!";
                 switch (errorCode)
@@ -443,6 +456,7 @@ public class DatabaseManager : MonoBehaviour
 
     private void SetWarning(string message)
     {
+        warningBox.SetActive(true);
         WarningText.text = message;
         WarningText.color = Color.red;
     }
@@ -555,5 +569,10 @@ public class DatabaseManager : MonoBehaviour
             PanelManager.instance.ToResult();
             Debug.Log("Rekomendasi Anak Perempuan berhasil disimpan.");
         }
+    }
+
+    public void CloseWarningBox()
+    {
+        warningBox.SetActive(false);
     }
 }
