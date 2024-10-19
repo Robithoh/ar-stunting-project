@@ -31,7 +31,7 @@ public class Actions : MonoBehaviour
 
     public GameObject[] selectors;
 
-    public PanelManager panelManager;
+    // public PanelManager panelManager;
 
     void Start()
     {
@@ -151,10 +151,12 @@ public class Actions : MonoBehaviour
 
     public void BacktoMenu()
     {
-        panelManager.augmentedReality.SetActive(false);
-        panelManager.ClearCanvas();
-        panelManager.cMainMenu.enabled = true;
+        // panelManager.augmentedReality.SetActive(false);
+        // panelManager.ClearCanvas();
+        // panelManager.cMainMenu.enabled = true;
         // SceneManager.LoadScene("!Final");
+        SceneManager.UnloadSceneAsync("PackageScene");
+
     }
    
 }

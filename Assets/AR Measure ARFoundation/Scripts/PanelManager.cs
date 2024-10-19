@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class PanelManager : MonoBehaviour
 {
     public static PanelManager instance;
-    // public ARChecker arChecker;
+    public ARChecker arChecker;
 
     [Header("Panels")]
     public GameObject login;
@@ -21,7 +21,7 @@ public class PanelManager : MonoBehaviour
     public GameObject rekomendasiAnakPr;
     public GameObject rekomendasiIbuMenyusui;
     public GameObject rekomendasiResult;
-    public GameObject augmentedReality;
+    // public GameObject augmentedReality;
 
     [Header("Canvas")]
     private Canvas cLogin;
@@ -35,6 +35,7 @@ public class PanelManager : MonoBehaviour
     private Canvas cRekomendasiAnakPr;
     private Canvas cRekomendasiIbuMenyusui;
     private Canvas cRekomendasiResult;
+    
 
     private void Awake()
     {
@@ -51,21 +52,10 @@ public class PanelManager : MonoBehaviour
 
     private void Start()
     {
-        augmentedReality.SetActive(false);
         InitializeCanvas();
         ClearCanvas();
         cLogin.enabled = true;
-        // if(arChecker.isLogin == true)
-        // {
-        //     cLogin.enabled = false;
-        //     cMainMenu.enabled = true;
-        //     arChecker.isLogin = false;
-        // }
-        // else if(arChecker.isLogin == false)
-        // {
-        //     cLogin.enabled = true;
-        //     arChecker.isLogin = false;
-        // }
+        
     }
 
     public void InitializeCanvas()
@@ -167,7 +157,10 @@ public class PanelManager : MonoBehaviour
     public void MainMenuToARFeature()
     {
         ClearCanvas();
-        augmentedReality.SetActive(true);
+        arChecker.isLogin = true;
+        SceneManager.LoadScene("PackageScene", LoadSceneMode.Additive);
+        
+        // augmentedReality.SetActive(true);
         // arChecker.isLogin = true;
         // SceneManager.LoadScene("PackageScene");
     }
