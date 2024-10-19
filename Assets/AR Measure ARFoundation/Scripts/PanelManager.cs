@@ -21,14 +21,13 @@ public class PanelManager : MonoBehaviour
     public GameObject rekomendasiAnakPr;
     public GameObject rekomendasiIbuMenyusui;
     public GameObject rekomendasiResult;
-    // public GameObject augmentedReality;
 
     [Header("Canvas")]
     private Canvas cLogin;
     private Canvas cEditProfile;
     private Canvas cRegister;
     private Canvas cProfile;
-    public Canvas cMainMenu;
+    public static Canvas cMainMenu;
     private Canvas cRekomendasiRemaja;
     private Canvas cRekomendasiIbuHamil;
     private Canvas cRekomendasiAnakLK;
@@ -159,9 +158,5 @@ public class PanelManager : MonoBehaviour
         ClearCanvas();
         arChecker.isLogin = true;
         SceneManager.LoadScene("PackageScene", LoadSceneMode.Additive);
-        
-        // augmentedReality.SetActive(true);
-        // arChecker.isLogin = true;
-        // SceneManager.LoadScene("PackageScene");
     }
 }
