@@ -148,8 +148,9 @@ public class Actions : MonoBehaviour
     }
 
     public void BacktoMenu()
-    {
-        SceneManager.LoadScene("!Final");
+    {   
+        SceneManager.UnloadSceneAsync("PackageScene");
+        PanelManager.cMainMenu.enabled = true;
     }
    
 }

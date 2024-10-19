@@ -28,13 +28,14 @@ public class PanelManager : MonoBehaviour
     private Canvas cEditProfile;
     private Canvas cRegister;
     private Canvas cProfile;
-    private Canvas cMainMenu;
+    public static Canvas cMainMenu;
     private Canvas cRekomendasiRemaja;
     private Canvas cRekomendasiIbuHamil;
     private Canvas cRekomendasiAnakLK;
     private Canvas cRekomendasiAnakPr;
     private Canvas cRekomendasiIbuMenyusui;
     private Canvas cRekomendasiResult;
+    
 
     private void Awake()
     {
@@ -53,17 +54,8 @@ public class PanelManager : MonoBehaviour
     {
         InitializeCanvas();
         ClearCanvas();
-        if(arChecker.isLogin == true)
-        {
-            cLogin.enabled = false;
-            cMainMenu.enabled = true;
-            arChecker.isLogin = false;
-        }
-        else if(arChecker.isLogin == false)
-        {
-            cLogin.enabled = true;
-            arChecker.isLogin = false;
-        }
+        cLogin.enabled = true;
+        
     }
 
     public void InitializeCanvas()
@@ -164,7 +156,8 @@ public class PanelManager : MonoBehaviour
 
     public void MainMenuToARFeature()
     {
+        ClearCanvas();
         arChecker.isLogin = true;
-        SceneManager.LoadScene("PackageScene");
+        SceneManager.LoadScene("PackageScene", LoadSceneMode.Additive);
     }
 }
