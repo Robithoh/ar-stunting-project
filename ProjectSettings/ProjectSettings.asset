@@ -256,8 +256,8 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: '{dedicated}: Downloads/ar.keystore'
-  AndroidKeyaliasName: ar stunting
+  AndroidKeystoreName: D:/Belajar Mandiri/Unity/KEYSTORE/arbaru.keystore
+  AndroidKeyaliasName: inibaru
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
