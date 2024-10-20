@@ -35,6 +35,8 @@ public class PanelManager : MonoBehaviour
     private Canvas cRekomendasiAnakPr;
     private Canvas cRekomendasiIbuMenyusui;
     private Canvas cRekomendasiResult;
+
+    
     
 
     private void Awake()

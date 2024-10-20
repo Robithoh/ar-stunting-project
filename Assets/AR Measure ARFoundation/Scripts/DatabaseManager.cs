@@ -40,6 +40,16 @@ public class DatabaseManager : MonoBehaviour
     public Button bIbuMenyusui;
     public Button bAnakLK;
     public Button bAnakPr;
+
+    [Header("Pop Up")]
+    public GameObject popUpMainMenu;
+    private bool isFirstTimePopUp = false;
+    public Text popUpTextHeader;
+    public Text popUpTextContent;
+   
+
+    [Header("References")]
+    private PanelManager PanelManager;
     private Recommendation rekomendasi;
     public DataProfile userData;
 
@@ -62,16 +72,75 @@ public class DatabaseManager : MonoBehaviour
     private void Start()
     {
         rekomendasi = FindObjectOfType<Recommendation>();
+        PanelManager = FindObjectOfType<PanelManager>();
         if (rekomendasi == null)
         {
             Debug.LogError("Recommendation object not found in the scene!");
         }
         LoadProfileData();
+
+         bIbuMenyusui.interactable = false;
+        bIbuHamil.interactable = false;
+        bAnakLK.interactable = false;
+        bAnakPr.interactable = false;
+        bRemaja.interactable = false;
     }
 
     private void Update()
     {
         LoadProfileData();
+
+        if(PanelManager.mainMenu.GetComponent<Canvas>().enabled)
+        {
+            EnableButtonMainMenu();
+            
+            if(!isFirstTimePopUp)
+            {
+                popUpMainMenu.SetActive(true);
+                isFirstTimePopUp = true;
+
+                if(userData.menyusui == tMenyusui.options[0].text && userData.hamil == tHamil.options[0].text && userData.umur <= 15)
+                {
+                    popUpTextHeader.text = "Status Anda adalah Remaja, ibu Hamil, dan Ibu Menyusui, Anda bisa mengakses menu:";
+                    popUpTextContent.text = "Remaja\nIbu Hamil\nIbu Menyusui\nAnak Laki-laki\nAnak Perempuan";
+                }
+                else if(userData.menyusui == tMenyusui.options[0].text && userData.hamil == tHamil.options[0].text && userData.umur > 15)
+                {
+                    popUpTextHeader.text = "Status Anda adalah ibu Hamil, dan Ibu Menyusui, Anda bisa mengakses menu:";
+                    popUpTextContent.text = "Ibu Hamil\nIbu Menyusui\nAnak Laki-laki\nAnak Perempuan";
+                }
+                else if(userData.menyusui == tMenyusui.options[0].text && userData.hamil != tHamil.options[0].text && userData.umur <= 15)
+                {
+                    popUpTextHeader.text = "Status Anda adalah Ibu Menyusui dan Remaja, Anda bisa mengakses menu:";
+                    popUpTextContent.text = "Remaja\nIbu Menyusui\nAnak Laki-laki\nAnak Perempuan";
+                }
+                else if(userData.menyusui == tMenyusui.options[0].text && userData.hamil != tHamil.options[0].text && userData.umur > 15)
+                {
+                    popUpTextHeader.text = "Status Anda adalah Ibu Menyusui, Anda hanya bisa mengakses menu:";
+                    popUpTextContent.text = "Ibu Menyusui\nAnak Laki-laki\nAnak Perempuan";
+                }
+                else if(userData.menyusui != tMenyusui.options[0].text && userData.hamil == tHamil.options[0].text && userData.umur < 15)
+                {
+                    popUpTextHeader.text = "Status Anda adalah Ibu Hamil dan Remaja, Anda bisa mengakses menu:";
+                    popUpTextContent.text = "Ibu Hamil\nRemaja";
+                }
+                else if(userData.menyusui != tMenyusui.options[0].text && userData.hamil == tHamil.options[0].text && userData.umur > 15)
+                {
+                    popUpTextHeader.text = "Status Anda adalah Ibu Hamil, Anda hanya bisa mengakses menu:";
+                    popUpTextContent.text = "Ibu Hamil";
+                }
+                else if(userData.menyusui != tMenyusui.options[0].text && userData.hamil != tHamil.options[0].text && userData.umur < 15)
+                {
+                    popUpTextHeader.text = "Status Anda adalah Remaja, Anda hanya bisa mengakses menu:";
+                    popUpTextContent.text = "Remaja";
+                }
+                else if(userData.menyusui != tMenyusui.options[0].text && userData.hamil != tHamil.options[0].text && userData.umur > 15)
+                {
+                    popUpTextHeader.text = "Status Anda tidak ada dalam daftar, Anda hanya bisa mengakses menu:";
+                    popUpTextContent.text = "Ukur Tinggi Badan";
+                }
+            }
+        }
     }
 
     public void LoadProfileData()
@@ -574,5 +643,50 @@ public class DatabaseManager : MonoBehaviour
     public void CloseWarningBox()
     {
         warningBox.SetActive(false);
+    }
+
+    public void EnableButtonMainMenu()
+    {
+        // bIbuMenyusui.interactable = false;
+        // bIbuHamil.interactable = false;
+        // bAnakLK.interactable = false;
+        // bAnakPr.interactable = false;
+        // bRemaja.interactable = false;
+
+        if(userData.menyusui == tMenyusui.options[0].text)
+        {
+            bIbuMenyusui.interactable = true;
+            bAnakLK.interactable = true;
+            bAnakPr.interactable = true;
+        }
+        else
+        {
+            bIbuMenyusui.interactable = false;
+            bAnakLK.interactable = false;
+            bAnakPr.interactable = false;
+        }
+
+        if(userData.hamil == tHamil.options[0].text)
+        {
+            bIbuHamil.interactable = true;
+        }
+        else
+        {
+            bIbuHamil.interactable = false;
+        }
+
+        if(userData.umur <= 15 )
+        {
+            bRemaja.interactable = true;
+        }
+        else
+        {
+            bRemaja.interactable = false;
+        }
+    }
+
+    public void ClosePopUpMainMenu()
+    {
+        popUpMainMenu.SetActive(false);
     }
 }
