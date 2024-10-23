@@ -9,13 +9,11 @@ using System;
 
 public class DatabaseManager : MonoBehaviour
 {
-    // Firebase variables
     [Header("Firebase")]
     public DependencyStatus dependencyStatus;
     public FirebaseAuth auth;
     public FirebaseUser User;
     public DatabaseReference DBreference;
-    //private string UserId;
 
     [Header("Register")]
     public InputField Nama;
@@ -26,16 +24,34 @@ public class DatabaseManager : MonoBehaviour
     public Dropdown tHamil;
     public Dropdown tMenyusui;
     public Text WarningText;
+    public GameObject warningBox;
     public GameObject EditButton;
 
     [Header("Text")]
     public Text NamaText;
     public Text TanggalLahirText;
     public Text PendidikanTerakhirText;
-    public Text tHamilText;
-    public Text tMenyusuiText;
+    public Text NamaMenuText;
+    public Text KeteranganMenuText;
 
-    public Recommendation rekomendasi;
+    [Header("Button Main Menu")]
+    public Button bRemaja;
+    public Button bIbuHamil;
+    public Button bIbuMenyusui;
+    public Button bAnakLK;
+    public Button bAnakPr;
+
+    [Header("Pop Up")]
+    public GameObject popUpMainMenu;
+    private bool isFirstTimePopUp = false;
+    public Text popUpTextHeader;
+    public Text popUpTextContent;
+   
+
+    [Header("References")]
+    private PanelManager PanelManager;
+    private Recommendation rekomendasi;
+    public DataProfile userData;
 
     void Awake()
     {
@@ -56,10 +72,94 @@ public class DatabaseManager : MonoBehaviour
     private void Start()
     {
         rekomendasi = FindObjectOfType<Recommendation>();
+        PanelManager = FindObjectOfType<PanelManager>();
         if (rekomendasi == null)
         {
             Debug.LogError("Recommendation object not found in the scene!");
         }
+        LoadProfileData();
+
+         bIbuMenyusui.interactable = false;
+        bIbuHamil.interactable = false;
+        bAnakLK.interactable = false;
+        bAnakPr.interactable = false;
+        bRemaja.interactable = false;
+    }
+
+    private void Update()
+    {
+        LoadProfileData();
+
+        if(PanelManager.mainMenu.GetComponent<Canvas>().enabled)
+        {
+            EnableButtonMainMenu();
+            
+            if(!isFirstTimePopUp)
+            {
+                popUpMainMenu.SetActive(true);
+                isFirstTimePopUp = true;
+
+                if(userData.menyusui == tMenyusui.options[0].text && userData.hamil == tHamil.options[0].text && userData.umur <= 15)
+                {
+                    popUpTextHeader.text = "Status Anda adalah Remaja, ibu Hamil, dan Ibu Menyusui, Anda bisa mengakses menu:";
+                    popUpTextContent.text = "Remaja\nIbu Hamil\nIbu Menyusui\nAnak Laki-laki\nAnak Perempuan";
+                }
+                else if(userData.menyusui == tMenyusui.options[0].text && userData.hamil == tHamil.options[0].text && userData.umur > 15)
+                {
+                    popUpTextHeader.text = "Status Anda adalah ibu Hamil, dan Ibu Menyusui, Anda bisa mengakses menu:";
+                    popUpTextContent.text = "Ibu Hamil\nIbu Menyusui\nAnak Laki-laki\nAnak Perempuan";
+                }
+                else if(userData.menyusui == tMenyusui.options[0].text && userData.hamil != tHamil.options[0].text && userData.umur <= 15)
+                {
+                    popUpTextHeader.text = "Status Anda adalah Ibu Menyusui dan Remaja, Anda bisa mengakses menu:";
+                    popUpTextContent.text = "Remaja\nIbu Menyusui\nAnak Laki-laki\nAnak Perempuan";
+                }
+                else if(userData.menyusui == tMenyusui.options[0].text && userData.hamil != tHamil.options[0].text && userData.umur > 15)
+                {
+                    popUpTextHeader.text = "Status Anda adalah Ibu Menyusui, Anda hanya bisa mengakses menu:";
+                    popUpTextContent.text = "Ibu Menyusui\nAnak Laki-laki\nAnak Perempuan";
+                }
+                else if(userData.menyusui != tMenyusui.options[0].text && userData.hamil == tHamil.options[0].text && userData.umur < 15)
+                {
+                    popUpTextHeader.text = "Status Anda adalah Ibu Hamil dan Remaja, Anda bisa mengakses menu:";
+                    popUpTextContent.text = "Ibu Hamil\nRemaja";
+                }
+                else if(userData.menyusui != tMenyusui.options[0].text && userData.hamil == tHamil.options[0].text && userData.umur > 15)
+                {
+                    popUpTextHeader.text = "Status Anda adalah Ibu Hamil, Anda hanya bisa mengakses menu:";
+                    popUpTextContent.text = "Ibu Hamil";
+                }
+                else if(userData.menyusui != tMenyusui.options[0].text && userData.hamil != tHamil.options[0].text && userData.umur < 15)
+                {
+                    popUpTextHeader.text = "Status Anda adalah Remaja, Anda hanya bisa mengakses menu:";
+                    popUpTextContent.text = "Remaja";
+                }
+                else if(userData.menyusui != tMenyusui.options[0].text && userData.hamil != tHamil.options[0].text && userData.umur > 15)
+                {
+                    popUpTextHeader.text = "Status Anda tidak ada dalam daftar, Anda hanya bisa mengakses menu:";
+                    popUpTextContent.text = "Ukur Tinggi Badan";
+                }
+            }
+        }
+    }
+
+    public void LoadProfileData()
+    {
+        NamaText.text = userData.username;
+        NamaMenuText.text = userData.username;
+
+        if (userData.menyusui == tMenyusui.options[0].text)
+        {
+            TanggalLahirText.text = userData.umur + " tahun, Sedang Menyusui";
+            KeteranganMenuText.text = "Sedang Menyusui";
+        }
+        else
+        {
+            TanggalLahirText.text = userData.umur + " tahun, Tidak Sedang Menyusui";
+            KeteranganMenuText.text = "Tidak Sedang Menyusui";
+        }
+
+        PendidikanTerakhirText.text = userData.pendidikanTerakhir;
     }
 
     private void InitializeFirebase()
@@ -156,26 +256,31 @@ public class DatabaseManager : MonoBehaviour
         {
             WarningText.text = "Nama tidak boleh kosong";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else if (_password != _passwordConfirm)
         {
             WarningText.text = "Password dan Konfirmasi Password tidak cocok!";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else if (string.IsNullOrEmpty(_password) || string.IsNullOrEmpty(_passwordConfirm))
         {
             WarningText.text = "Password tidak boleh kosong";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else if (string.IsNullOrEmpty(_tanggalLahir))
         {
             WarningText.text = "Tanggal Lahir tidak boleh kosong";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else if (!isValid)
         {
             WarningText.text = "Format Tanggal Lahir harus dd-MM-yyyy!";
             WarningText.color = Color.red;
+            warningBox.SetActive(true);
         }
         else
         {
@@ -187,6 +292,7 @@ public class DatabaseManager : MonoBehaviour
                 Debug.LogWarning($"Failed to register task with {RegisterTask.Exception}");
                 FirebaseException firebaseEx = RegisterTask.Exception.GetBaseException() as FirebaseException;
                 AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
+                warningBox.SetActive(true);
 
                 string message = "Register Failed!";
                 switch (errorCode)
@@ -229,27 +335,21 @@ public class DatabaseManager : MonoBehaviour
                         string hamil = tHamil.options[tHamil.value].text;
                         string menyusui = tMenyusui.options[tMenyusui.value].text;
 
-                        User customUser = new User(_username, _password, _tanggalLahir, pendidikanTerakhir, hamil, menyusui);
+                        userData.username = _username;
+                        userData.password = _password;
+                        userData.tanggalLahir = _tanggalLahir;
+                        userData.pendidikanTerakhir = pendidikanTerakhir;
+                        userData.hamil = hamil;
+                        userData.menyusui = menyusui;
+
+                        int umur = HitungUmur(tanggal);
+                        userData.umur = umur;
+
+                        User customUser = new User(userData.username, userData.password, userData.tanggalLahir, userData.pendidikanTerakhir, userData.hamil, userData.menyusui);
                         string json = JsonUtility.ToJson(customUser);
 
                         DBreference.Child("users").Child(User.UserId).SetRawJsonValueAsync(json);
 
-                        //TanggalLahirText.text = tanggal.ToString("dd-MM-yyyy");
-
-                        int umur = HitungUmur(tanggal);
-
-                        NamaText.text = _username;
-
-                        if (menyusui == tMenyusui.options[0].text)
-                        {
-                            TanggalLahirText.text = umur + " tahun, Sedang Menyusui";
-                        }
-                        else
-                        {
-                            TanggalLahirText.text = umur + " tahun, Tidak Sedang Menyusui";
-                        }
-
-                        PendidikanTerakhirText.text = pendidikanTerakhir;
                         PanelManager.instance.SimpanEditProfile();
                         ClearRegisterFields();
                     }
@@ -279,8 +379,8 @@ public class DatabaseManager : MonoBehaviour
     private IEnumerator LoadUserData()
     {
         EditButton.SetActive(true);
-        var DBTask = DBreference.Child("users").Child(User.UserId).GetValueAsync();
 
+        var DBTask = DBreference.Child("users").Child(User.UserId).GetValueAsync();
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
 
         if (DBTask.Exception != null)
@@ -291,29 +391,43 @@ public class DatabaseManager : MonoBehaviour
         {
             DataSnapshot snapshot = DBTask.Result;
 
-            Nama.text = snapshot.Child("nama").Value.ToString();
-            Password.text = snapshot.Child("password").Value.ToString();
-            PasswordConfirm.text = snapshot.Child("password").Value.ToString();
-            TanggalLahir.text = snapshot.Child("tanggalLahir").Value.ToString();
-
-            string hamil = snapshot.Child("statusHamil").Value.ToString();
-            if (hamil == "YA")
+            if (snapshot.Exists)
             {
-                tMenyusui.value = 0;
+                Nama.text = userData.username;
+                Password.text = userData.password;
+                PasswordConfirm.text = userData.password;
+                TanggalLahir.text = userData.tanggalLahir;
+
+                userData.username = snapshot.Child("nama").Value.ToString();
+                userData.password = snapshot.Child("password").Value.ToString();
+                userData.tanggalLahir = snapshot.Child("tanggalLahir").Value.ToString();
+                userData.pendidikanTerakhir = snapshot.Child("pendidikanTerakhir").Value.ToString();
+
+                string hamil = snapshot.Child("statusHamil").Value.ToString();
+                userData.hamil = hamil;
+                if (hamil == "YA")
+                {
+                    tHamil.value = 0;
+                }
+                else
+                {
+                    tHamil.value = 1;
+                }
+
+                string menyusui = snapshot.Child("statusMenyusui").Value.ToString();
+                userData.menyusui = menyusui; 
+                if (menyusui == "YA")
+                {
+                    tMenyusui.value = 0; 
+                }
+                else
+                {
+                    tMenyusui.value = 1;
+                }
             }
             else
             {
-                tMenyusui.value = 1;
-            }
-
-            string menyusui = snapshot.Child("statusMenyusui").Value.ToString();
-            if (menyusui == "YA")
-            {
-                tMenyusui.value = 0;
-            }
-            else
-            {
-                tMenyusui.value = 1;
+                Debug.LogWarning("No data found for this user.");
             }
         }
     }
@@ -331,42 +445,37 @@ public class DatabaseManager : MonoBehaviour
                                               System.Globalization.DateTimeStyles.None,
                                               out tanggal);
 
+        // Validasi input
         if (string.IsNullOrEmpty(_username))
         {
-            WarningText.text = "Nama tidak boleh kosong";
-            WarningText.color = Color.red;
+            SetWarning("Nama tidak boleh kosong");
         }
         else if (_password != _passwordConfirm)
         {
-            WarningText.text = "Password dan Konfirmasi Password tidak cocok!";
-            WarningText.color = Color.red;
+            SetWarning("Password dan Konfirmasi Password tidak cocok!");
         }
         else if (string.IsNullOrEmpty(_password) || string.IsNullOrEmpty(_passwordConfirm))
         {
-            WarningText.text = "Password tidak boleh kosong";
-            WarningText.color = Color.red;
+            SetWarning("Password tidak boleh kosong");
         }
         else if (string.IsNullOrEmpty(_tanggalLahir))
         {
-            WarningText.text = "Tanggal Lahir tidak boleh kosong";
-            WarningText.color = Color.red;
+            SetWarning("Tanggal Lahir tidak boleh kosong");
         }
         else if (!isValid)
         {
-            WarningText.text = "Format Tanggal Lahir harus dd-MM-yyyy!";
-            WarningText.color = Color.red;
+            SetWarning("Format Tanggal Lahir harus dd-MM-yyyy!");
         }
         else
         {
             UserProfile profile = new UserProfile { DisplayName = _username };
             Task ProfileTask = User.UpdateUserProfileAsync(profile);
-            yield return new WaitUntil(predicate: () => ProfileTask.IsCompleted);
+            yield return new WaitUntil(() => ProfileTask.IsCompleted);
 
             if (ProfileTask.Exception != null)
             {
                 Debug.LogWarning($"Failed to update username: {ProfileTask.Exception}");
-                WarningText.text = "Gagal memperbarui nama pengguna!";
-                WarningText.color = Color.red;
+                SetWarning("Gagal memperbarui nama pengguna!");
             }
             else
             {
@@ -374,34 +483,38 @@ public class DatabaseManager : MonoBehaviour
                 string _hamil = tHamil.options[tHamil.value].text;
                 string _menyusui = tMenyusui.options[tMenyusui.value].text;
 
-                User customUser = new User(_username, _password, _pendidikanTerakhir, _tanggalLahir, _hamil, _menyusui);
+                userData.username = _username;
+                userData.password = _password;
+                userData.tanggalLahir = _tanggalLahir;
+                userData.pendidikanTerakhir = _pendidikanTerakhir;
+                userData.hamil = _hamil;
+                userData.menyusui = _menyusui;
+
+                User customUser = new User(userData.username, userData.password, userData.tanggalLahir, userData.pendidikanTerakhir, userData.hamil, userData.menyusui);
                 string json = JsonUtility.ToJson(customUser);
 
-                Task DBTask = DBreference.Child("users").Child(User.UserId).SetRawJsonValueAsync(json);
-                yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+                var DBTask = DBreference.Child("users").Child(User.UserId).SetRawJsonValueAsync(json);
+                yield return new WaitUntil(() => DBTask.IsCompleted);
 
                 if (DBTask.Exception != null)
                 {
                     Debug.LogWarning($"Failed to update user data: {DBTask.Exception}");
-                    WarningText.text = "Gagal memperbarui profil!";
-                    WarningText.color = Color.red;
+                    SetWarning("Gagal memperbarui profil!");
                 }
                 else
                 {
                     int umur = HitungUmur(tanggal);
+                    userData.umur = umur;
 
                     NamaText.text = _username;
+                    NamaMenuText.text = _username;
 
-                    if (_menyusui == tMenyusui.options[0].text)
-                    {
-                        TanggalLahirText.text = umur + " tahun, Sedang Menyusui";
-                    }
-                    else
-                    {
-                        TanggalLahirText.text = umur + " tahun, Tidak Sedang Menyusui";
-                    }
+                    string menyusuiText = (_menyusui == tMenyusui.options[0].text) ? "Sedang Menyusui" : "Tidak Sedang Menyusui";
+                    TanggalLahirText.text = $"{umur} tahun, {menyusuiText}";
+                    KeteranganMenuText.text = menyusuiText;
 
                     PendidikanTerakhirText.text = _pendidikanTerakhir;
+
                     PanelManager.instance.SimpanEditProfile();
                     EditButton.SetActive(false);
                     ClearRegisterFields();
@@ -409,6 +522,14 @@ public class DatabaseManager : MonoBehaviour
             }
         }
     }
+
+    private void SetWarning(string message)
+    {
+        warningBox.SetActive(true);
+        WarningText.text = message;
+        WarningText.color = Color.red;
+    }
+
 
     private IEnumerator RekomendasiIbuMenyusui(string _nama, string _umur, string _tAsi, int _beratBadan, string _hasilRekomendasi)
     {
@@ -517,5 +638,55 @@ public class DatabaseManager : MonoBehaviour
             PanelManager.instance.ToResult();
             Debug.Log("Rekomendasi Anak Perempuan berhasil disimpan.");
         }
+    }
+
+    public void CloseWarningBox()
+    {
+        warningBox.SetActive(false);
+    }
+
+    public void EnableButtonMainMenu()
+    {
+        // bIbuMenyusui.interactable = false;
+        // bIbuHamil.interactable = false;
+        // bAnakLK.interactable = false;
+        // bAnakPr.interactable = false;
+        // bRemaja.interactable = false;
+
+        if(userData.menyusui == tMenyusui.options[0].text)
+        {
+            bIbuMenyusui.interactable = true;
+            bAnakLK.interactable = true;
+            bAnakPr.interactable = true;
+        }
+        else
+        {
+            bIbuMenyusui.interactable = false;
+            bAnakLK.interactable = false;
+            bAnakPr.interactable = false;
+        }
+
+        if(userData.hamil == tHamil.options[0].text)
+        {
+            bIbuHamil.interactable = true;
+        }
+        else
+        {
+            bIbuHamil.interactable = false;
+        }
+
+        if(userData.umur <= 15 )
+        {
+            bRemaja.interactable = true;
+        }
+        else
+        {
+            bRemaja.interactable = false;
+        }
+    }
+
+    public void ClosePopUpMainMenu()
+    {
+        popUpMainMenu.SetActive(false);
     }
 }

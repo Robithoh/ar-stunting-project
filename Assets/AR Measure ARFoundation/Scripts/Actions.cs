@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class Actions : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -148,8 +148,9 @@ public class Actions : MonoBehaviour
     }
 
     public void BacktoMenu()
-    {
-        SceneManager.LoadScene("!Final");
-        
+    {   
+        SceneManager.UnloadSceneAsync("PackageScene");
+        PanelManager.cMainMenu.enabled = true;
     }
+   
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO.Compression;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PanelManager : MonoBehaviour
 {
@@ -11,8 +12,8 @@ public class PanelManager : MonoBehaviour
 
     [Header("Panels")]
     public GameObject login;
-    public GameObject register;
     public GameObject editProfile;
+    public GameObject register;
     public GameObject profile;
     public GameObject mainMenu;
     public GameObject rekomendasiRemaja;
@@ -24,16 +25,19 @@ public class PanelManager : MonoBehaviour
 
     [Header("Canvas")]
     private Canvas cLogin;
-    private Canvas cRegister;
     private Canvas cEditProfile;
+    private Canvas cRegister;
     private Canvas cProfile;
-    private Canvas cMainMenu;
+    public static Canvas cMainMenu;
     private Canvas cRekomendasiRemaja;
     private Canvas cRekomendasiIbuHamil;
     private Canvas cRekomendasiAnakLK;
     private Canvas cRekomendasiAnakPr;
     private Canvas cRekomendasiIbuMenyusui;
     private Canvas cRekomendasiResult;
+
+    
+    
 
     private void Awake()
     {
@@ -52,17 +56,7 @@ public class PanelManager : MonoBehaviour
     {
         InitializeCanvas();
         ClearCanvas();
-        if(arChecker.isLogin == true)
-        {
-            cLogin.enabled = false;
-            cMainMenu.enabled = true;
-            arChecker.isLogin = false;
-        }
-        else if(arChecker.isLogin == false)
-        {
-            cLogin.enabled = true;
-            arChecker.isLogin = false;
-        }
+        cLogin.enabled = true;
         
     }
 
@@ -156,15 +150,16 @@ public class PanelManager : MonoBehaviour
         cRekomendasiIbuMenyusui.enabled = true;
     }
 
-    public void MainMenuToARFeature()
-    {
-        arChecker.isLogin = true;
-        SceneManager.LoadScene("PackageScene");
-    }
-
     public void ToResult()
     {
         ClearCanvas();
         cRekomendasiResult.enabled = true;
+    }
+
+    public void MainMenuToARFeature()
+    {
+        ClearCanvas();
+        arChecker.isLogin = true;
+        SceneManager.LoadScene("PackageScene", LoadSceneMode.Additive);
     }
 }

@@ -200,7 +200,7 @@ public class Recommendation : MonoBehaviour
 
         IMT = bb / squared;
 
-        if (panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.GetComponent<Canvas>().enabled == true)
         {
             tIMTRemaja.text = IMT.ToString();
             if (IMT < 18.5)
@@ -228,7 +228,7 @@ public class Recommendation : MonoBehaviour
                 textRekomendasiIMT = "";
             }
         }
-        else if (panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.GetComponent<Canvas>().enabled == true)
         {
             tIMTIbuHamil.text = IMT.ToString();
             if (IMT < 18.5)
@@ -261,7 +261,7 @@ public class Recommendation : MonoBehaviour
 
     private void AnemiaCount()
     {
-        if (panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.GetComponent<Canvas>().enabled == true)
         {
             if (usia <= 11 && usia != 0 && hbValue <= 11.4 && hbValue != 0)
             {
@@ -306,7 +306,7 @@ public class Recommendation : MonoBehaviour
                 textRekomendasiAnemia = "- Tetap mengkonsumsi tablet tambah darah, terutama setelah masa haid";
             }
         }
-        else if (panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.GetComponent<Canvas>().enabled == true)
         {
             if (hbValue <= 11.4 && hbValue != 0)
             {
@@ -344,7 +344,7 @@ public class Recommendation : MonoBehaviour
     {
         // if (isHamil)
         // {
-        if (panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.GetComponent<Canvas>().enabled == true)
         {
             if (isLilaR)
             {
@@ -371,7 +371,7 @@ public class Recommendation : MonoBehaviour
                 textRekomendasiLILA = "- Lakukan pengukuran lingkar lengan (LILA)";
             }
         }
-        else if (panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.GetComponent<Canvas>().enabled == true)
         {
             if (isLilaIH)
             {
@@ -535,17 +535,17 @@ public class Recommendation : MonoBehaviour
 
     public void OnInputFieldBBEdit(string input)
     {
-        if (panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.GetComponent<Canvas>().enabled == true)
         {
             isBBValidR = float.TryParse(input, out beratBadan);
             IMTFunc();
         }
-        else if (panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.GetComponent<Canvas>().enabled == true)
         {
             isBBValidIH = float.TryParse(input, out beratBadan);
             IMTFunc();
         }
-        else if(panelManager.rekomendasiIbuMenyusui.activeSelf)
+        else if(panelManager.rekomendasiIbuMenyusui.GetComponent<Canvas>().enabled == true)
         {
             isBBValidIM = float.TryParse(input, out beratBadan);
             BabyWeight();
@@ -554,23 +554,23 @@ public class Recommendation : MonoBehaviour
 
     public void OnInputFieldTBEdit(string input)
     {
-        if (panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.GetComponent<Canvas>().enabled == true)
         {
             isTBValidR = float.TryParse(input, out tinggiBadan);
             IMTFunc();
         }
-        else if (panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.GetComponent<Canvas>().enabled == true)
         {
             isTBValidIH = float.TryParse(input, out tinggiBadan);
             IMTFunc();
             TBCount();
         }
-        else if (panelManager.rekomenasiAnakLK.activeSelf)
+        else if (panelManager.rekomenasiAnakLK.GetComponent<Canvas>().enabled == true)
         {
             isTBValidLk = float.TryParse(input, out tinggiBadanAnak);
             ZScoreLCount();
         }
-        else if(panelManager.rekomendasiAnakPr.activeSelf)
+        else if(panelManager.rekomendasiAnakPr.GetComponent<Canvas>().enabled == true)
         {
             isTBValidPr = float.TryParse(input, out tinggiBadanAnak);
             ZScorePrCount();
@@ -580,7 +580,7 @@ public class Recommendation : MonoBehaviour
 
     private void IMTFunc()
     {
-        if (panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.GetComponent<Canvas>().enabled == true)
         {
             if (isBBValidR && isTBValidR)
             {
@@ -591,7 +591,7 @@ public class Recommendation : MonoBehaviour
                 Debug.Log("error broh");
             }
         }
-        else if (panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.GetComponent<Canvas>().enabled == true)
         {
             if (isBBValidIH && isTBValidIH)
             {
@@ -630,7 +630,7 @@ public class Recommendation : MonoBehaviour
 
     private void DropdownValueLILAChanged(Dropdown dropdown)
     {
-        if (panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.GetComponent<Canvas>().enabled == true)
         {
             if (ddLILARemaja.options[dropdown.value].text == "YA")
             {
@@ -647,7 +647,7 @@ public class Recommendation : MonoBehaviour
                 LILACount();
             }
         }
-        else if (panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.GetComponent<Canvas>().enabled == true)
         {
             if (ddLILAIbuHamil.options[dropdown.value].text == "YA")
             {
@@ -669,7 +669,7 @@ public class Recommendation : MonoBehaviour
 
     private void DropdownValueHemoChanged(Dropdown dropdown)
     {
-        if (panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.GetComponent<Canvas>().enabled == true)
         {
             if (ddHemoRemaja.options[dropdown.value].text == "YA")
             {
@@ -685,7 +685,7 @@ public class Recommendation : MonoBehaviour
                 AnemiaCount();
             }
         }
-        else if (panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.GetComponent<Canvas>().enabled == true)
         {
             if (ddHemoIbuHamil.options[dropdown.value].text == "YA")
             {
@@ -719,15 +719,15 @@ public class Recommendation : MonoBehaviour
 
     public void OnInputFieldNamaEdit(string input)
     {
-        if (panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.GetComponent<Canvas>().enabled == true)
         {
             isNamaValidR = true;
         }
-        else if (panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.GetComponent<Canvas>().enabled == true)
         {
             isNamaValidIH = true;
         }
-        else if(panelManager.rekomendasiIbuMenyusui.activeSelf)
+        else if(panelManager.rekomendasiIbuMenyusui.GetComponent<Canvas>().enabled == true)
         {
             isNamaValidIM = true;
         }
@@ -737,27 +737,27 @@ public class Recommendation : MonoBehaviour
 
     public void OnInputFieldUmurEdit(string input)
     {
-        if (panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.GetComponent<Canvas>().enabled == true)
         {
             isUmurValidR = int.TryParse(input, out usia);
             AnemiaCount();
         }
-        else if (panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.GetComponent<Canvas>().enabled == true)
         {
             isUmurValidIH = int.TryParse(input, out usia);
             AnemiaCount();
         }
-        else if (panelManager.rekomenasiAnakLK.activeSelf)
+        else if (panelManager.rekomenasiAnakLK.GetComponent<Canvas>().enabled == true)
         {
             isUmurValidLk = int.TryParse(input, out usiaBulan);
             ZScoreLCount();
         }
-        else if (panelManager.rekomendasiAnakPr.activeSelf)
+        else if (panelManager.rekomendasiAnakPr.GetComponent<Canvas>().enabled == true)
         {
             isUmurValidPr = int.TryParse(input, out usiaBulan);
             ZScoreLCount();
         }
-        else if(panelManager.rekomendasiIbuMenyusui.activeSelf)
+        else if(panelManager.rekomendasiIbuMenyusui.GetComponent<Canvas>().enabled == true)
         {
             isUmurValidIM = int.TryParse(input, out usia);
         }
@@ -765,12 +765,12 @@ public class Recommendation : MonoBehaviour
 
     public void OnInputFieldLILAEdit(string input)
     {
-        if (panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.GetComponent<Canvas>().enabled == true)
         {
             isLilaValidR = float.TryParse(input, out lilaValue);
             LILACount();
         }
-        else if (panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.GetComponent<Canvas>().enabled == true)
         {
             isLilaValidIH = float.TryParse(input, out lilaValue);
             LILACount();
@@ -779,12 +779,12 @@ public class Recommendation : MonoBehaviour
 
     public void OnInputFieldHemoEdit(string input)
     {
-        if (panelManager.rekomendasiRemaja.activeSelf)
+        if (panelManager.rekomendasiRemaja.GetComponent<Canvas>().enabled == true)
         {
             isHemoValidR = float.TryParse(input, out hbValue);
             AnemiaCount();
         }
-        else if (panelManager.rekomendasiIbuHamil.activeSelf)
+        else if (panelManager.rekomendasiIbuHamil.GetComponent<Canvas>().enabled == true)
         {
             isHemoValidIH = float.TryParse(input, out hbValue);
             AnemiaCount();
