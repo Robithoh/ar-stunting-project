@@ -6,11 +6,14 @@ using UnityEngine;
 public class DataProfile : ScriptableObject
 {
     public string username;
+    public string email;
     public string password;
     public string tanggalLahir;
     public string pendidikanTerakhir;
     public string hamil;
     public string menyusui;
+    public string toilet;
+    public string aksesAir;
 
     public int umur;
 }
