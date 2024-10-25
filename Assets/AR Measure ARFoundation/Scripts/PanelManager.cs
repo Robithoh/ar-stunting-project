@@ -112,6 +112,12 @@ public class PanelManager : MonoBehaviour
         cEditProfile.enabled = true;
     }
 
+    public void LoginScreen()
+    {
+        ClearCanvas();
+        cLogin.enabled = true;
+    }
+
     public void SimpanEditProfile()
     {
         ClearCanvas();
