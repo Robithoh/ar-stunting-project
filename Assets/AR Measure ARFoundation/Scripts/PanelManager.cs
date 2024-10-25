@@ -90,6 +90,22 @@ public class PanelManager : MonoBehaviour
         cRekomendasiResult.enabled = false;
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (cMainMenu.enabled)
+            {
+                Application.Quit();
+            }
+            else
+            {
+                ClearCanvas();
+                cMainMenu.enabled = true;
+            }
+        }
+    }
+
     public void LoginButton()
     {
         ClearCanvas();
