@@ -26,6 +26,11 @@ public class DatabaseManager : MonoBehaviour
     public Text WarningText;
     public GameObject EditButton;
 
+    [Header("Login")]
+    public InputField LuserName;
+    public InputField Lpassword;
+    public Text Message;
+
     [Header("Text")]
     public Text NamaText;
     public Text TanggalLahirText;
@@ -168,6 +173,72 @@ public class DatabaseManager : MonoBehaviour
         StartCoroutine(RekomendasiAnakPerempuan(umur, tb, statGizi, rekomendasiAnakPerempuan));
     }
 
+    public void StartLogin()
+    {
+        StartCoroutine(Login(LuserName.text, Lpassword.text));
+    }
+
+    private IEnumerator Login(string _usernameOrEmail, string _password)
+    {
+        if (string.IsNullOrEmpty(_usernameOrEmail))
+        {
+            Message.text = "Username atau Email tidak boleh kosong";
+            Message.color = Color.red;
+        }
+        else if (string.IsNullOrEmpty(_password))
+        {
+            Message.text = "Password tidak boleh kosong";
+            Message.color = Color.red;
+        }
+        else
+        {
+            string loginEmail = _usernameOrEmail.Contains("@") ? _usernameOrEmail : _usernameOrEmail + "@dummy.com";
+
+            Task<AuthResult> LoginTask = auth.SignInWithEmailAndPasswordAsync(loginEmail, _password);
+            yield return new WaitUntil(predicate: () => LoginTask.IsCompleted);
+
+            if (LoginTask.Exception != null)
+            {
+                Debug.LogWarning($"Failed to login task with {LoginTask.Exception}");
+                FirebaseException firebaseEx = LoginTask.Exception.GetBaseException() as FirebaseException;
+                AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
+
+                string message = "Login Failed!";
+                switch (errorCode)
+                {
+                    case AuthError.MissingEmail:
+                        message = "Email is missing";
+                        break;
+                    case AuthError.MissingPassword:
+                        message = "Password is missing";
+                        break;
+                    case AuthError.WrongPassword:
+                        message = "Incorrect password";
+                        break;
+                    case AuthError.InvalidEmail:
+                        message = "Invalid email format";
+                        break;
+                    case AuthError.UserNotFound:
+                        message = "No user with this email";
+                        break;
+                }
+                Message.text = message;
+                Message.color = Color.red;
+            }
+            else
+            {
+                User = LoginTask.Result.User;
+                if (User != null)
+                {
+                    Debug.Log("User logged in successfully");
+
+                    StartCoroutine(LoadUserData());
+                    PanelManager.instance.SimpanEditProfile();
+                }
+            }
+        }
+    }
+
     private IEnumerator Register(string _username, string _password, string _passwordConfirm, string _tanggalLahir)
     {
         DateTime tanggal;
@@ -268,7 +339,7 @@ public class DatabaseManager : MonoBehaviour
 
                         DBreference.Child("users").Child(User.UserId).SetRawJsonValueAsync(json);
 
-                        PanelManager.instance.SimpanEditProfile();
+                        PanelManager.instance.LoginScreen();
                         ClearRegisterFields();
                     }
                 }
