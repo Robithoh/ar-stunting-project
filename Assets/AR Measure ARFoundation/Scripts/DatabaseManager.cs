@@ -17,14 +17,18 @@ public class DatabaseManager : MonoBehaviour
 
     [Header("Register")]
     public InputField Nama;
+    public InputField Email;
     public InputField Password;
     public InputField PasswordConfirm;
     public InputField TanggalLahir;
     public Dropdown PendidikanTerakhir;
     public Dropdown tHamil;
     public Dropdown tMenyusui;
+    public Dropdown tToilet;
+    public Dropdown tAir;
     public Text WarningText;
     public GameObject EditButton;
+    public GameObject BatalEditButton;
 
     [Header("Login")]
     public InputField LuserName;
@@ -37,6 +41,9 @@ public class DatabaseManager : MonoBehaviour
     public Text PendidikanTerakhirText;
     public Text NamaMenuText;
     public Text KeteranganMenuText;
+    public Text ToiletText;
+    public Text AirText;
+    public Text emailText;
 
     private Recommendation rekomendasi;
     public DataProfile userData;
@@ -89,6 +96,10 @@ public class DatabaseManager : MonoBehaviour
         }
 
         PendidikanTerakhirText.text = userData.pendidikanTerakhir;
+
+        ToiletText.text = userData.toilet;
+        AirText.text = userData.aksesAir;
+        emailText.text = userData.email;
     }
 
     private void InitializeFirebase()
@@ -108,7 +119,7 @@ public class DatabaseManager : MonoBehaviour
 
     public void StartRegister()
     {
-        StartCoroutine(Register(Nama.text, Password.text, PasswordConfirm.text, TanggalLahir.text));
+        StartCoroutine(Register(Nama.text, Email.text, Password.text, PasswordConfirm.text, TanggalLahir.text));
     }
 
     public void SimpanRekomendasiIbuMenyusui()
@@ -192,7 +203,7 @@ public class DatabaseManager : MonoBehaviour
         }
         else
         {
-            string loginEmail = _usernameOrEmail.Contains("@") ? _usernameOrEmail : _usernameOrEmail + "@dummy.com";
+            string loginEmail = _usernameOrEmail.Contains("@") ? _usernameOrEmail : _usernameOrEmail + "@gmail.com";
 
             Task<AuthResult> LoginTask = auth.SignInWithEmailAndPasswordAsync(loginEmail, _password);
             yield return new WaitUntil(predicate: () => LoginTask.IsCompleted);
@@ -239,7 +250,7 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
-    private IEnumerator Register(string _username, string _password, string _passwordConfirm, string _tanggalLahir)
+    private IEnumerator Register(string _username, string _email, string _password, string _passwordConfirm, string _tanggalLahir)
     {
         DateTime tanggal;
         bool isValid = DateTime.TryParseExact(_tanggalLahir, "dd-MM-yyyy",
@@ -274,7 +285,7 @@ public class DatabaseManager : MonoBehaviour
         }
         else
         {
-            Task<AuthResult> RegisterTask = auth.CreateUserWithEmailAndPasswordAsync(_username + "@dummy.com", _password);
+            Task<AuthResult> RegisterTask = auth.CreateUserWithEmailAndPasswordAsync(_email, _password);
             yield return new WaitUntil(predicate: () => RegisterTask.IsCompleted);
 
             if (RegisterTask.Exception != null)
@@ -323,18 +334,23 @@ public class DatabaseManager : MonoBehaviour
                         string pendidikanTerakhir = PendidikanTerakhir.options[PendidikanTerakhir.value].text;
                         string hamil = tHamil.options[tHamil.value].text;
                         string menyusui = tMenyusui.options[tMenyusui.value].text;
+                        string toilet = tToilet.options[tToilet.value].text;
+                        string air = tAir.options[tAir.value].text;
 
                         userData.username = _username;
+                        userData.email = _email;
                         userData.password = _password;
                         userData.tanggalLahir = _tanggalLahir;
                         userData.pendidikanTerakhir = pendidikanTerakhir;
                         userData.hamil = hamil;
                         userData.menyusui = menyusui;
+                        userData.toilet = toilet;
+                        userData.aksesAir = air;
 
                         int umur = HitungUmur(tanggal);
                         userData.umur = umur;
 
-                        User customUser = new User(userData.username, userData.password, userData.tanggalLahir, userData.pendidikanTerakhir, userData.hamil, userData.menyusui);
+                        User customUser = new User(userData.username, userData.email, userData.password, userData.tanggalLahir, userData.pendidikanTerakhir, userData.hamil, userData.menyusui, userData.toilet, userData.aksesAir);
                         string json = JsonUtility.ToJson(customUser);
 
                         DBreference.Child("users").Child(User.UserId).SetRawJsonValueAsync(json);
@@ -368,6 +384,7 @@ public class DatabaseManager : MonoBehaviour
     private IEnumerator LoadUserData()
     {
         EditButton.SetActive(true);
+        BatalEditButton.SetActive(true);
 
         var DBTask = DBreference.Child("users").Child(User.UserId).GetValueAsync();
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
@@ -383,11 +400,13 @@ public class DatabaseManager : MonoBehaviour
             if (snapshot.Exists)
             {
                 Nama.text = userData.username;
+                Email.text = userData.email;
                 Password.text = userData.password;
                 PasswordConfirm.text = userData.password;
                 TanggalLahir.text = userData.tanggalLahir;
 
                 userData.username = snapshot.Child("nama").Value.ToString();
+                userData.email = snapshot.Child("email").Value.ToString();
                 userData.password = snapshot.Child("password").Value.ToString();
                 userData.tanggalLahir = snapshot.Child("tanggalLahir").Value.ToString();
                 userData.pendidikanTerakhir = snapshot.Child("pendidikanTerakhir").Value.ToString();
@@ -413,6 +432,28 @@ public class DatabaseManager : MonoBehaviour
                 {
                     tMenyusui.value = 1;
                 }
+
+                string infoToilet = snapshot.Child("infoToilet").Value.ToString();
+                userData.toilet = infoToilet;
+                if (infoToilet == "Ada")
+                {
+                    tToilet.value = 0;
+                }
+                else
+                {
+                    tToilet.value = 1;
+                }
+
+                string infoAir = snapshot.Child("infoAir").Value.ToString();
+                userData.aksesAir = infoAir;
+                if (infoAir == "Ada")
+                {
+                    tAir.value = 0;
+                }
+                else
+                {
+                    tAir.value = 1;
+                }
             }
             else
             {
@@ -423,10 +464,10 @@ public class DatabaseManager : MonoBehaviour
 
     public void SimpanEdit()
     {
-        StartCoroutine(UpdateUserProfile(Nama.text, Password.text, PasswordConfirm.text, TanggalLahir.text));
+        StartCoroutine(UpdateUserProfile(Nama.text, Email.text, Password.text, PasswordConfirm.text, TanggalLahir.text));
     }
 
-    private IEnumerator UpdateUserProfile(string _username, string _password, string _passwordConfirm, string _tanggalLahir)
+    private IEnumerator UpdateUserProfile(string _username, string _email, string _password, string _passwordConfirm, string _tanggalLahir)
     {
         DateTime tanggal;
         bool isValid = DateTime.TryParseExact(_tanggalLahir, "dd-MM-yyyy",
@@ -434,7 +475,6 @@ public class DatabaseManager : MonoBehaviour
                                               System.Globalization.DateTimeStyles.None,
                                               out tanggal);
 
-        // Validasi input
         if (string.IsNullOrEmpty(_username))
         {
             SetWarning("Nama tidak boleh kosong");
@@ -464,22 +504,27 @@ public class DatabaseManager : MonoBehaviour
             if (ProfileTask.Exception != null)
             {
                 Debug.LogWarning($"Failed to update username: {ProfileTask.Exception}");
-                SetWarning("Gagal memperbarui nama pengguna!");
+                SetWarning("Gagal memperbarui username!");
             }
             else
             {
                 string _pendidikanTerakhir = PendidikanTerakhir.options[PendidikanTerakhir.value].text;
                 string _hamil = tHamil.options[tHamil.value].text;
                 string _menyusui = tMenyusui.options[tMenyusui.value].text;
+                string toilet = tToilet.options[tToilet.value].text;
+                string air = tAir.options[tAir.value].text;
 
                 userData.username = _username;
+                userData.email = _email;
                 userData.password = _password;
                 userData.tanggalLahir = _tanggalLahir;
                 userData.pendidikanTerakhir = _pendidikanTerakhir;
                 userData.hamil = _hamil;
                 userData.menyusui = _menyusui;
+                userData.toilet = toilet;
+                userData.aksesAir = air;
 
-                User customUser = new User(userData.username, userData.password, userData.tanggalLahir, userData.pendidikanTerakhir, userData.hamil, userData.menyusui);
+                User customUser = new User(userData.username, userData.email, userData.password, userData.tanggalLahir, userData.pendidikanTerakhir, userData.hamil, userData.menyusui, userData.toilet, userData.aksesAir);
                 string json = JsonUtility.ToJson(customUser);
 
                 var DBTask = DBreference.Child("users").Child(User.UserId).SetRawJsonValueAsync(json);
@@ -506,6 +551,7 @@ public class DatabaseManager : MonoBehaviour
 
                     PanelManager.instance.SimpanEditProfile();
                     EditButton.SetActive(false);
+                    BatalEditButton.SetActive(false);
                     ClearRegisterFields();
                 }
             }
@@ -517,7 +563,6 @@ public class DatabaseManager : MonoBehaviour
         WarningText.text = message;
         WarningText.color = Color.red;
     }
-
 
     private IEnumerator RekomendasiIbuMenyusui(string _nama, string _umur, string _tAsi, int _beratBadan, string _hasilRekomendasi)
     {
