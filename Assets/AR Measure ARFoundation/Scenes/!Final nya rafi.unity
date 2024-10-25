@@ -5389,7 +5389,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -468481.62}
+  m_AnchoredPosition: {x: 0, y: -3924.505}
   m_SizeDelta: {x: 720, y: 1000}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &164745280
@@ -6024,7 +6024,7 @@ GameObject:
   - component: {fileID: 190000740}
   - component: {fileID: 190000739}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TextUmur
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7436,7 +7436,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Silahkan isi umur
+  m_Text: 
 --- !u!222 &239085916
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8501,7 +8501,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Silahkan isi umur
+  m_Text: 
 --- !u!222 &260922839
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10483,7 +10483,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 314326900}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
   m_Name: 
@@ -12189,7 +12189,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 374293003}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
   m_Name: 
@@ -14325,7 +14325,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -468481.56}
+  m_AnchoredPosition: {x: 0, y: -3924.504}
   m_SizeDelta: {x: 720, y: 1800}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &442602229
@@ -18503,7 +18503,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Silahkan isi nama lengkap
+  m_Text: 
 --- !u!222 &582023026
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19827,7 +19827,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -262872.47}
+  m_AnchoredPosition: {x: 0, y: -505.38315}
   m_SizeDelta: {x: 720, y: 1800}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &611889121
@@ -22154,7 +22154,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Silahkan isi nama lengkap
+  m_Text: 
 --- !u!222 &712713224
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -24185,7 +24185,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -468481.62}
+  m_AnchoredPosition: {x: 0, y: -545934}
   m_SizeDelta: {x: 720, y: 1000}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &797832875
@@ -24250,7 +24250,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -468481.62}
+  m_AnchoredPosition: {x: 0, y: -545934}
   m_SizeDelta: {x: 720, y: 1000}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &800926025
@@ -24864,7 +24864,7 @@ GameObject:
   - component: {fileID: 814014899}
   - component: {fileID: 814014898}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TextUmur
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25046,7 +25046,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -197810.3}
+  m_AnchoredPosition: {x: 0, y: -726449.4}
   m_SizeDelta: {x: 720, y: 1220}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &820142525
@@ -25944,7 +25944,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -4546222.5}
+  m_AnchoredPosition: {x: 0, y: -179933.72}
   m_SizeDelta: {x: 720, y: 1596.132}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &849276722
@@ -26518,7 +26518,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Silahkan isi umur
+  m_Text: 
 --- !u!222 &879930783
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -34471,7 +34471,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Silahkan isi nama lengkap
+  m_Text: 
 --- !u!222 &1234907710
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -34565,7 +34565,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1238493794}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
   m_Name: 
@@ -36820,7 +36820,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1309658718}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
   m_Name: 
@@ -39614,6 +39614,7 @@ MonoBehaviour:
   tToilet: {fileID: 892581026}
   tAir: {fileID: 1993328611}
   WarningText: {fileID: 1651192121}
+  warningBox: {fileID: 0}
   EditButton: {fileID: 2144414823}
   BatalEditButton: {fileID: 2045807805}
   LuserName: {fileID: 1558284394}
@@ -39627,6 +39628,20 @@ MonoBehaviour:
   ToiletText: {fileID: 1070311856}
   AirText: {fileID: 1404832319}
   emailText: {fileID: 1278692622}
+  umurRemajaText: {fileID: 814014898}
+  umurIbuMenyusuiText: {fileID: 1114597977}
+  umurIbuHamilText: {fileID: 190000739}
+  namaRemajaText: {fileID: 1885733315}
+  namaIbuMenyusuiText: {fileID: 474572532}
+  namaIbuHamilText: {fileID: 646620027}
+  bRemaja: {fileID: 0}
+  bIbuHamil: {fileID: 0}
+  bIbuMenyusui: {fileID: 0}
+  bAnakLK: {fileID: 0}
+  bAnakPr: {fileID: 0}
+  popUpMainMenu: {fileID: 0}
+  popUpTextHeader: {fileID: 0}
+  popUpTextContent: {fileID: 0}
   userData: {fileID: 11400000, guid: f0111c27c60f73248b19b3cf61bcf22f, type: 2}
 --- !u!1 &1436004238
 GameObject:
@@ -46245,7 +46260,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1698623268}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
   m_Name: 
@@ -50072,7 +50087,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 1092.3027}
+  m_AnchoredPosition: {x: 0, y: 0.00009934548}
   m_SizeDelta: {x: 720, y: 2159.259}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1871956731
@@ -51990,7 +52005,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0012403, y: -0.000051692623}
+  m_AnchoredPosition: {x: -0.0012403, y: -35621.8}
   m_SizeDelta: {x: 720, y: 1175.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1953678100
@@ -58074,7 +58089,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2138234737}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
   m_Name: 
@@ -58494,7 +58509,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -1581142.6}
+  m_AnchoredPosition: {x: 0, y: -1842547.5}
   m_SizeDelta: {x: 720, y: 924.6}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2142947039

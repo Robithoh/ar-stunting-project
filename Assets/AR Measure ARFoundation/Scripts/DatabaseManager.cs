@@ -45,6 +45,12 @@ public class DatabaseManager : MonoBehaviour
     public Text ToiletText;
     public Text AirText;
     public Text emailText;
+    public Text umurRemajaText;
+    public Text umurIbuMenyusuiText;
+    public Text umurIbuHamilText;
+    public Text namaRemajaText;
+    public Text namaIbuMenyusuiText;
+    public Text namaIbuHamilText;
 
     [Header("Button Main Menu")]
     public Button bRemaja;
@@ -91,7 +97,7 @@ public class DatabaseManager : MonoBehaviour
         }
         LoadProfileData();
 
-         bIbuMenyusui.interactable = false;
+        bIbuMenyusui.interactable = false;
         bIbuHamil.interactable = false;
         bAnakLK.interactable = false;
         bAnakPr.interactable = false;
@@ -159,6 +165,12 @@ public class DatabaseManager : MonoBehaviour
     {
         NamaText.text = userData.username;
         NamaMenuText.text = userData.username;
+        umurRemajaText.text = userData.umur.ToString();
+        umurIbuMenyusuiText.text = userData.umur.ToString();
+        umurIbuHamilText.text = userData.umur.ToString();
+        namaRemajaText.text = userData.username;
+        namaIbuMenyusuiText.text = userData.username;
+        namaIbuHamilText.text = userData.username;
 
         if (userData.menyusui == tMenyusui.options[0].text)
         {
@@ -172,7 +184,6 @@ public class DatabaseManager : MonoBehaviour
         }
 
         PendidikanTerakhirText.text = userData.pendidikanTerakhir;
-
         ToiletText.text = userData.toilet;
         AirText.text = userData.aksesAir;
         emailText.text = userData.email;
@@ -649,6 +660,7 @@ public class DatabaseManager : MonoBehaviour
 
     private IEnumerator RekomendasiIbuMenyusui(string _nama, string _umur, string _tAsi, int _beratBadan, string _hasilRekomendasi)
     {
+        _umur = userData.umur.ToString();
         DataIbuMenyusui rekIbuMenyusui = new DataIbuMenyusui(_nama, _umur, _tAsi, _beratBadan, _hasilRekomendasi);
 
         string json = JsonUtility.ToJson(rekIbuMenyusui);
