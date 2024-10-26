@@ -57,7 +57,6 @@ public class PanelManager : MonoBehaviour
         InitializeCanvas();
         ClearCanvas();
         cLogin.enabled = true;
-        
     }
 
     public void InitializeCanvas()
