@@ -269,13 +269,13 @@ public class Recommendation : MonoBehaviour
                 Debug.Log("Anemia");
                 textRekomendasiAnemia = "- Perbaiki gizi makanan, rutin minum tablet tambah darah, cek HB berkala";
             }
-            else if (usia <= 15 && usia != 0 && hbValue <= 11.9 && hbValue != 0)
+            else if (usia <= 24 && usia != 0 && hbValue <= 11.9 && hbValue != 0)
             {
                 tAnemiaRemaja.text = "Anemia";
                 Debug.Log("Anemia");
                 textRekomendasiAnemia = "- Perbaiki gizi makanan, rutin minum tablet tambah darah, cek HB berkala";
             }
-            else if (usia > 15)
+            else if (usia > 24)
             {
                 tAnemiaRemaja.text = "Tidak termasuk remaja";
                 Debug.Log("Tidak termasuk remaja");

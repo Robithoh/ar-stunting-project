@@ -117,42 +117,42 @@ public class DatabaseManager : MonoBehaviour
                 popUpMainMenu.SetActive(true);
                 isFirstTimePopUp = true;
 
-                if(userData.menyusui == tMenyusui.options[0].text && userData.hamil == tHamil.options[0].text && userData.umur <= 15)
+                if(userData.menyusui == tMenyusui.options[0].text && userData.hamil == tHamil.options[0].text && userData.umur <= 24)
                 {
                     popUpTextHeader.text = "Status Anda adalah Remaja, ibu Hamil, dan Ibu Menyusui, Anda bisa mengakses menu:";
                     popUpTextContent.text = "Remaja\nIbu Hamil\nIbu Menyusui\nAnak Laki-laki\nAnak Perempuan";
                 }
-                else if(userData.menyusui == tMenyusui.options[0].text && userData.hamil == tHamil.options[0].text && userData.umur > 15)
+                else if(userData.menyusui == tMenyusui.options[0].text && userData.hamil == tHamil.options[0].text && userData.umur > 24)
                 {
                     popUpTextHeader.text = "Status Anda adalah ibu Hamil, dan Ibu Menyusui, Anda bisa mengakses menu:";
                     popUpTextContent.text = "Ibu Hamil\nIbu Menyusui\nAnak Laki-laki\nAnak Perempuan";
                 }
-                else if(userData.menyusui == tMenyusui.options[0].text && userData.hamil != tHamil.options[0].text && userData.umur <= 15)
+                else if(userData.menyusui == tMenyusui.options[0].text && userData.hamil != tHamil.options[0].text && userData.umur <= 24)
                 {
                     popUpTextHeader.text = "Status Anda adalah Ibu Menyusui dan Remaja, Anda bisa mengakses menu:";
                     popUpTextContent.text = "Remaja\nIbu Menyusui\nAnak Laki-laki\nAnak Perempuan";
                 }
-                else if(userData.menyusui == tMenyusui.options[0].text && userData.hamil != tHamil.options[0].text && userData.umur > 15)
+                else if(userData.menyusui == tMenyusui.options[0].text && userData.hamil != tHamil.options[0].text && userData.umur > 24)
                 {
                     popUpTextHeader.text = "Status Anda adalah Ibu Menyusui, Anda hanya bisa mengakses menu:";
                     popUpTextContent.text = "Ibu Menyusui\nAnak Laki-laki\nAnak Perempuan";
                 }
-                else if(userData.menyusui != tMenyusui.options[0].text && userData.hamil == tHamil.options[0].text && userData.umur < 15)
+                else if(userData.menyusui != tMenyusui.options[0].text && userData.hamil == tHamil.options[0].text && userData.umur < 24)
                 {
                     popUpTextHeader.text = "Status Anda adalah Ibu Hamil dan Remaja, Anda bisa mengakses menu:";
                     popUpTextContent.text = "Ibu Hamil\nRemaja";
                 }
-                else if(userData.menyusui != tMenyusui.options[0].text && userData.hamil == tHamil.options[0].text && userData.umur > 15)
+                else if(userData.menyusui != tMenyusui.options[0].text && userData.hamil == tHamil.options[0].text && userData.umur > 24)
                 {
                     popUpTextHeader.text = "Status Anda adalah Ibu Hamil, Anda hanya bisa mengakses menu:";
                     popUpTextContent.text = "Ibu Hamil";
                 }
-                else if(userData.menyusui != tMenyusui.options[0].text && userData.hamil != tHamil.options[0].text && userData.umur < 15)
+                else if(userData.menyusui != tMenyusui.options[0].text && userData.hamil != tHamil.options[0].text && userData.umur < 24)
                 {
                     popUpTextHeader.text = "Status Anda adalah Remaja, Anda hanya bisa mengakses menu:";
                     popUpTextContent.text = "Remaja";
                 }
-                else if(userData.menyusui != tMenyusui.options[0].text && userData.hamil != tHamil.options[0].text && userData.umur > 15)
+                else if(userData.menyusui != tMenyusui.options[0].text && userData.hamil != tHamil.options[0].text && userData.umur > 24)
                 {
                     popUpTextHeader.text = "Status Anda tidak ada dalam daftar, Anda hanya bisa mengakses menu:";
                     popUpTextContent.text = "Ukur Tinggi Badan";
@@ -829,7 +829,7 @@ public class DatabaseManager : MonoBehaviour
             bIbuHamil.interactable = false;
         }
 
-        if(userData.umur <= 15 )
+        if(userData.umur <= 24 )
         {
             bRemaja.interactable = true;
         }
