@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DataProfile", menuName = "Profile")]
 public class DataProfile : ScriptableObject
 {
+    public string nama;
     public string username;
     public string email;
     public string password;

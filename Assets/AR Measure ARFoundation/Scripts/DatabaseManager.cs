@@ -17,6 +17,7 @@ public class DatabaseManager : MonoBehaviour
 
     [Header("Register")]
     public InputField Nama;
+    public InputField Username;
     public InputField Email;
     public InputField Password;
     public InputField PasswordConfirm;
@@ -63,8 +64,7 @@ public class DatabaseManager : MonoBehaviour
     public GameObject popUpMainMenu;
     private bool isFirstTimePopUp = false;
     public Text popUpTextHeader;
-    public Text popUpTextContent;
-   
+    public Text popUpTextContent;   
 
     [Header("References")]
     private PanelManager PanelManager;
@@ -163,14 +163,14 @@ public class DatabaseManager : MonoBehaviour
 
     public void LoadProfileData()
     {
-        NamaText.text = userData.username;
-        NamaMenuText.text = userData.username;
+        NamaText.text = userData.nama;
+        NamaMenuText.text = userData.nama;
         umurRemajaText.text = userData.umur.ToString();
         umurIbuMenyusuiText.text = userData.umur.ToString();
         umurIbuHamilText.text = userData.umur.ToString();
-        namaRemajaText.text = userData.username;
-        namaIbuMenyusuiText.text = userData.username;
-        namaIbuHamilText.text = userData.username;
+        namaRemajaText.text = userData.nama;
+        namaIbuMenyusuiText.text = userData.nama;
+        namaIbuHamilText.text = userData.nama;
 
         if (userData.menyusui == tMenyusui.options[0].text)
         {
@@ -206,7 +206,7 @@ public class DatabaseManager : MonoBehaviour
 
     public void StartRegister()
     {
-        StartCoroutine(Register(Nama.text, Email.text, Password.text, PasswordConfirm.text, TanggalLahir.text));
+        StartCoroutine(Register(Nama.text, Username.text, Email.text, Password.text, PasswordConfirm.text, TanggalLahir.text));
     }
 
     public void SimpanRekomendasiIbuMenyusui()
@@ -290,7 +290,28 @@ public class DatabaseManager : MonoBehaviour
         }
         else
         {
-            string loginEmail = _usernameOrEmail.Contains("@") ? _usernameOrEmail : _usernameOrEmail + "@gmail.com";
+            string loginEmail = _usernameOrEmail.Contains("@") ? _usernameOrEmail : null;
+
+            if (loginEmail == null)
+            {
+                var DBTask = DBreference.Child("users").OrderByChild("username").EqualTo(_usernameOrEmail).GetValueAsync();
+                yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+                if (DBTask.Exception != null || DBTask.Result == null)
+                {
+                    Message.text = "Username tidak ditemukan";
+                    Message.color = Color.red;
+                    yield break;
+                }
+                else
+                {
+                    foreach (var childSnapshot in DBTask.Result.Children)
+                    {
+                        loginEmail = childSnapshot.Child("email").Value.ToString();
+                        break;
+                    }
+                }
+            }
 
             Task<AuthResult> LoginTask = auth.SignInWithEmailAndPasswordAsync(loginEmail, _password);
             yield return new WaitUntil(predicate: () => LoginTask.IsCompleted);
@@ -337,7 +358,7 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
-    private IEnumerator Register(string _username, string _email, string _password, string _passwordConfirm, string _tanggalLahir)
+    private IEnumerator Register(string _nama, string _username, string _email, string _password, string _passwordConfirm, string _tanggalLahir)
     {
         DateTime tanggal;
         bool isValid = DateTime.TryParseExact(_tanggalLahir, "dd-MM-yyyy",
@@ -347,7 +368,7 @@ public class DatabaseManager : MonoBehaviour
 
         if (string.IsNullOrEmpty(_username))
         {
-            WarningText.text = "Nama tidak boleh kosong";
+            WarningText.text = "Username tidak boleh kosong";
             WarningText.color = Color.red;
             warningBox.SetActive(true);
         }
@@ -387,7 +408,7 @@ public class DatabaseManager : MonoBehaviour
                 AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
                 warningBox.SetActive(true);
 
-                string message = "Register Failed!";
+                string message = "Register Failed! /n harap cek format email";
                 switch (errorCode)
                 {
                     case AuthError.MissingEmail:
@@ -430,6 +451,7 @@ public class DatabaseManager : MonoBehaviour
                         string toilet = tToilet.options[tToilet.value].text;
                         string air = tAir.options[tAir.value].text;
 
+                        userData.nama = _nama;
                         userData.username = _username;
                         userData.email = _email;
                         userData.password = _password;
@@ -443,7 +465,7 @@ public class DatabaseManager : MonoBehaviour
                         int umur = HitungUmur(tanggal);
                         userData.umur = umur;
 
-                        User customUser = new User(userData.username, userData.email, userData.password, userData.tanggalLahir, userData.pendidikanTerakhir, userData.hamil, userData.menyusui, userData.toilet, userData.aksesAir);
+                        User customUser = new User(userData.nama, userData.username, userData.email, userData.password, userData.tanggalLahir, userData.pendidikanTerakhir, userData.hamil, userData.menyusui, userData.toilet, userData.aksesAir);
                         string json = JsonUtility.ToJson(customUser);
 
                         DBreference.Child("users").Child(User.UserId).SetRawJsonValueAsync(json);
@@ -492,13 +514,15 @@ public class DatabaseManager : MonoBehaviour
 
             if (snapshot.Exists)
             {
-                Nama.text = userData.username;
+                Nama.text = userData.nama;
+                Username.text = userData.username;
                 Email.text = userData.email;
                 Password.text = userData.password;
                 PasswordConfirm.text = userData.password;
                 TanggalLahir.text = userData.tanggalLahir;
 
-                userData.username = snapshot.Child("nama").Value.ToString();
+                userData.nama = snapshot.Child("nama").Value.ToString();
+                userData.username = snapshot.Child("username").Value.ToString();
                 userData.email = snapshot.Child("email").Value.ToString();
                 userData.password = snapshot.Child("password").Value.ToString();
                 userData.tanggalLahir = snapshot.Child("tanggalLahir").Value.ToString();
@@ -557,10 +581,10 @@ public class DatabaseManager : MonoBehaviour
 
     public void SimpanEdit()
     {
-        StartCoroutine(UpdateUserProfile(Nama.text, Email.text, Password.text, PasswordConfirm.text, TanggalLahir.text));
+        StartCoroutine(UpdateUserProfile(Nama.text, Username.text, Email.text, Password.text, PasswordConfirm.text, TanggalLahir.text));
     }
 
-    private IEnumerator UpdateUserProfile(string _username, string _email, string _password, string _passwordConfirm, string _tanggalLahir)
+    private IEnumerator UpdateUserProfile(string _nama, string _username, string _email, string _password, string _passwordConfirm, string _tanggalLahir)
     {
         DateTime tanggal;
         bool isValid = DateTime.TryParseExact(_tanggalLahir, "dd-MM-yyyy",
@@ -607,6 +631,7 @@ public class DatabaseManager : MonoBehaviour
                 string toilet = tToilet.options[tToilet.value].text;
                 string air = tAir.options[tAir.value].text;
 
+                userData.nama = _nama;
                 userData.username = _username;
                 userData.email = _email;
                 userData.password = _password;
@@ -617,7 +642,7 @@ public class DatabaseManager : MonoBehaviour
                 userData.toilet = toilet;
                 userData.aksesAir = air;
 
-                User customUser = new User(userData.username, userData.email, userData.password, userData.tanggalLahir, userData.pendidikanTerakhir, userData.hamil, userData.menyusui, userData.toilet, userData.aksesAir);
+                User customUser = new User(userData.nama, userData.username, userData.email, userData.password, userData.tanggalLahir, userData.pendidikanTerakhir, userData.hamil, userData.menyusui, userData.toilet, userData.aksesAir);
                 string json = JsonUtility.ToJson(customUser);
 
                 var DBTask = DBreference.Child("users").Child(User.UserId).SetRawJsonValueAsync(json);
@@ -632,15 +657,16 @@ public class DatabaseManager : MonoBehaviour
                 {
                     int umur = HitungUmur(tanggal);
                     userData.umur = umur;
+                    LoadProfileData();
 
-                    NamaText.text = _username;
-                    NamaMenuText.text = _username;
+                    //NamaText.text = _username;
+                    //NamaMenuText.text = _username;
 
-                    string menyusuiText = (_menyusui == tMenyusui.options[0].text) ? "Sedang Menyusui" : "Tidak Sedang Menyusui";
-                    TanggalLahirText.text = $"{umur} tahun, {menyusuiText}";
-                    KeteranganMenuText.text = menyusuiText;
+                    //string menyusuiText = (_menyusui == tMenyusui.options[0].text) ? "Sedang Menyusui" : "Tidak Sedang Menyusui";
+                    //TanggalLahirText.text = $"{umur} tahun, {menyusuiText}";
+                    //KeteranganMenuText.text = menyusuiText;
 
-                    PendidikanTerakhirText.text = _pendidikanTerakhir;
+                    //PendidikanTerakhirText.text = _pendidikanTerakhir;
 
                     PanelManager.instance.SimpanEditProfile();
                     EditButton.SetActive(false);
