@@ -97,12 +97,12 @@ public class DatabaseManager : MonoBehaviour
     {
         rekomendasi = FindObjectOfType<Recommendation>();
         PanelManager = FindObjectOfType<PanelManager>();
+        ResetLoginStatusOnStartup();
+        StartCoroutine(CheckLoginStatus());
         if (rekomendasi == null)
         {
             Debug.LogError("Recommendation object not found in the scene!");
         }
-        LoadProfileData();
-
         bIbuMenyusui.interactable = false;
         bIbuHamil.interactable = false;
         bAnakLK.interactable = false;
@@ -112,8 +112,6 @@ public class DatabaseManager : MonoBehaviour
 
     private void Update()
     {
-        LoadProfileData();
-
         if(PanelManager.mainMenu.GetComponent<Canvas>().enabled)
         {
             EnableButtonMainMenu();
@@ -165,41 +163,6 @@ public class DatabaseManager : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void LoadProfileData()
-    {
-        NamaText.text = userData.nama;
-        NamaMenuText.text = userData.nama;
-        // umurRemajaText.text = userData.umur.ToString();
-        // umurIbuMenyusuiText.text = userData.umur.ToString();
-        // umurIbuHamilText.text = userData.umur.ToString();
-        // namaRemajaText.text = userData.nama;
-        // namaIbuMenyusuiText.text = userData.nama;
-        // namaIbuHamilText.text = userData.nama;
-
-        ifUmurRemaja.text = userData.umur.ToString();
-        ifUmurIbuMenyusui.text = userData.umur.ToString();
-        ifUmurIbuHamil.text = userData.umur.ToString();
-        ifNamaRemaja.text = userData.nama;
-        ifNamaIbuMenyusui.text = userData.nama;
-        ifNamaIbuHamil.text = userData.nama;
-
-        if (userData.menyusui == tMenyusui.options[0].text)
-        {
-            TanggalLahirText.text = userData.umur + " tahun, Sedang Menyusui";
-            KeteranganMenuText.text = "Sedang Menyusui";
-        }
-        else
-        {
-            TanggalLahirText.text = userData.umur + " tahun, Tidak Sedang Menyusui";
-            KeteranganMenuText.text = "Tidak Sedang Menyusui";
-        }
-
-        PendidikanTerakhirText.text = userData.pendidikanTerakhir;
-        ToiletText.text = userData.toilet;
-        AirText.text = userData.aksesAir;
-        emailText.text = userData.email;
     }
 
     private void InitializeFirebase()
@@ -310,7 +273,7 @@ public class DatabaseManager : MonoBehaviour
                 var DBTask = DBreference.Child("users").OrderByChild("username").EqualTo(_usernameOrEmail).GetValueAsync();
                 yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
 
-                if (DBTask.Exception != null || DBTask.Result == null)
+                if (DBTask.Exception != null || DBTask.Result == null || !DBTask.Result.HasChildren)
                 {
                     Message.text = "Username tidak ditemukan";
                     Message.color = Color.red;
@@ -363,12 +326,62 @@ public class DatabaseManager : MonoBehaviour
                 if (User != null)
                 {
                     Debug.Log("User logged in successfully");
-
+                    OnUserLoginSuccess();
                     StartCoroutine(LoadUserData());
                     PanelManager.instance.SimpanEditProfile();
                 }
             }
         }
+    }
+
+    private void ResetLoginStatusOnStartup()
+    {
+        PlayerPrefs.SetInt("isLoggedIn", 0);
+        PlayerPrefs.Save();
+    }
+
+    private void OnApplicationQuit()
+    {
+        Logout();
+    }
+
+    private void OnUserLoginSuccess()
+    {
+        PlayerPrefs.SetInt("isLoggedIn", 1);
+        PlayerPrefs.Save();
+    }
+
+    private IEnumerator CheckLoginStatus()
+    {
+        yield return new WaitUntil(() => auth != null && PanelManager.instance != null);
+
+        if (auth == null)
+        {
+            Debug.LogError("FirebaseAuth 'auth' belum diinisialisasi.");
+            yield break;
+        }
+
+        int isLoggedIn = PlayerPrefs.GetInt("isLoggedIn", 0);
+        Debug.Log("isLoggedIn status from PlayerPrefs: " + isLoggedIn);
+
+        if (auth.CurrentUser != null && isLoggedIn == 1)
+        {
+            Debug.Log("User sudah login, langsung masuk ke aplikasi.");
+            StartCoroutine(LoadUserData());
+        }
+        else
+        {
+            Debug.Log("User belum login, arahkan ke layar login.");
+            PanelManager.instance.LoginScreen();
+        }
+    }
+
+    public void Logout()
+    {
+        auth.SignOut();
+        PlayerPrefs.SetInt("isLoggedIn", 0);
+        PlayerPrefs.Save();
+        PanelManager.instance.LoginScreen();
     }
 
     private IEnumerator Register(string _nama, string _username, string _email, string _password, string _passwordConfirm, string _tanggalLahir)
@@ -421,7 +434,7 @@ public class DatabaseManager : MonoBehaviour
                 AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
                 warningBox.SetActive(true);
 
-                string message = "Register Failed! /n harap cek format email";
+                string message = "Register Failed! \n harap cek format email";
                 switch (errorCode)
                 {
                     case AuthError.MissingEmail:
@@ -482,7 +495,8 @@ public class DatabaseManager : MonoBehaviour
                         string json = JsonUtility.ToJson(customUser);
 
                         DBreference.Child("users").Child(User.UserId).SetRawJsonValueAsync(json);
-
+                        
+                        WarningText.text = "";
                         PanelManager.instance.LoginScreen();
                         ClearRegisterFields();
                     }
@@ -513,6 +527,11 @@ public class DatabaseManager : MonoBehaviour
     {
         EditButton.SetActive(true);
         BatalEditButton.SetActive(true);
+        DateTime tanggal;
+        bool isValid = DateTime.TryParseExact(userData.tanggalLahir, "dd-MM-yyyy",
+                                              System.Globalization.CultureInfo.InvariantCulture,
+                                              System.Globalization.DateTimeStyles.None,
+                                              out tanggal);
 
         var DBTask = DBreference.Child("users").Child(User.UserId).GetValueAsync();
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
@@ -527,6 +546,33 @@ public class DatabaseManager : MonoBehaviour
 
             if (snapshot.Exists)
             {
+                int umur = HitungUmur(tanggal);
+                userData.umur = umur;                
+
+                ifUmurRemaja.text = userData.umur.ToString();
+                ifUmurIbuMenyusui.text = userData.umur.ToString();
+                ifUmurIbuHamil.text = userData.umur.ToString();
+                ifNamaRemaja.text = userData.nama;
+                ifNamaIbuMenyusui.text = userData.nama;
+                ifNamaIbuHamil.text = userData.nama;
+
+                NamaText.text = userData.nama;
+                NamaMenuText.text = userData.nama;
+                if (userData.menyusui == tMenyusui.options[0].text)
+                {
+                    TanggalLahirText.text = userData.umur + " tahun, Sedang Menyusui";
+                    KeteranganMenuText.text = userData.umur + " tahun, Sedang Menyusui";
+                }
+                else
+                {
+                    TanggalLahirText.text = userData.umur + " tahun, Tidak Sedang Menyusui";
+                    KeteranganMenuText.text = userData.umur + " tahun, Tidak Sedang Menyusui";
+                }
+                PendidikanTerakhirText.text = userData.pendidikanTerakhir;
+                ToiletText.text = userData.toilet;
+                AirText.text = userData.aksesAir;
+                emailText.text = userData.email;
+
                 Nama.text = userData.nama;
                 Username.text = userData.username;
                 Email.text = userData.email;
@@ -541,49 +587,10 @@ public class DatabaseManager : MonoBehaviour
                 userData.tanggalLahir = snapshot.Child("tanggalLahir").Value.ToString();
                 userData.pendidikanTerakhir = snapshot.Child("pendidikanTerakhir").Value.ToString();
 
-                string hamil = snapshot.Child("statusHamil").Value.ToString();
-                userData.hamil = hamil;
-                if (hamil == "YA")
-                {
-                    tHamil.value = 0;
-                }
-                else
-                {
-                    tHamil.value = 1;
-                }
-
-                string menyusui = snapshot.Child("statusMenyusui").Value.ToString();
-                userData.menyusui = menyusui; 
-                if (menyusui == "YA")
-                {
-                    tMenyusui.value = 0; 
-                }
-                else
-                {
-                    tMenyusui.value = 1;
-                }
-
-                string infoToilet = snapshot.Child("infoToilet").Value.ToString();
-                userData.toilet = infoToilet;
-                if (infoToilet == "Ada")
-                {
-                    tToilet.value = 0;
-                }
-                else
-                {
-                    tToilet.value = 1;
-                }
-
-                string infoAir = snapshot.Child("infoAir").Value.ToString();
-                userData.aksesAir = infoAir;
-                if (infoAir == "Ada")
-                {
-                    tAir.value = 0;
-                }
-                else
-                {
-                    tAir.value = 1;
-                }
+                tHamil.value = snapshot.Child("statusHamil").Value.ToString() == "YA" ? 0 : 1;
+                tMenyusui.value = snapshot.Child("statusMenyusui").Value.ToString() == "YA" ? 0 : 1;
+                tToilet.value = snapshot.Child("infoToilet").Value.ToString() == "Ada" ? 0 : 1;
+                tAir.value = snapshot.Child("infoAir").Value.ToString() == "Ada" ? 0 : 1;
             }
             else
             {
@@ -668,18 +675,8 @@ public class DatabaseManager : MonoBehaviour
                 }
                 else
                 {
-                    int umur = HitungUmur(tanggal);
-                    userData.umur = umur;
-                    LoadProfileData();
-
-                    //NamaText.text = _username;
-                    //NamaMenuText.text = _username;
-
-                    //string menyusuiText = (_menyusui == tMenyusui.options[0].text) ? "Sedang Menyusui" : "Tidak Sedang Menyusui";
-                    //TanggalLahirText.text = $"{umur} tahun, {menyusuiText}";
-                    //KeteranganMenuText.text = menyusuiText;
-
-                    //PendidikanTerakhirText.text = _pendidikanTerakhir;
+                    StartCoroutine(LoadUserData());
+                    WarningText.text = "";
 
                     PanelManager.instance.SimpanEditProfile();
                     EditButton.SetActive(false);
