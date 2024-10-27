@@ -193,6 +193,36 @@ public class Recommendation : MonoBehaviour
 
     }
 
+    private void Update() 
+    {
+        if(panelManager.rekomendasiRemaja.GetComponent<Canvas>().enabled)
+        {
+            Debug.Log("SNTHENSHUEON");
+            Debug.Log(ifNamaRemaja.text);
+            namaLengkap = ifNamaRemaja.text;
+            if (int.TryParse(ifUmurRemaja.text, out usia))
+            {
+                Debug.Log("Usia: " + usia);
+            }
+        }
+        else if(panelManager.rekomendasiIbuHamil.GetComponent<Canvas>().enabled)
+        {
+            namaLengkap = ifNamaIbuHamil.text;
+            if (int.TryParse(ifUmurIbuHamil.text, out usia))
+            {
+                Debug.Log("Usia: " + usia);
+            }
+        }
+        else if(panelManager.rekomendasiIbuMenyusui.GetComponent<Canvas>().enabled)
+        {
+            namaLengkap = ifNamaIbuMenyusui.text;
+            if (int.TryParse(ifUmurIbuMenyusui.text, out usia))
+            {
+                Debug.Log("Usia: " + usia);
+            }
+        }    
+    }
+
     private void IMTCount(float tb, float bb)
     {
         float rightSide = tb / 100;
@@ -793,7 +823,7 @@ public class Recommendation : MonoBehaviour
 
     public void RekomendasiRemaja()
     {
-        if (isNamaValidR && isBBValidR && isTBValidR && isUmurValidR && isLilaValidR && isHemoValidR)
+        if (isBBValidR && isTBValidR && isLilaValidR && isHemoValidR)
         {
             tRekomendasiResult.text = textRekomendasiIMT + "\n" + "\n" + textRekomendasiAnemia + "\n" + "\n" + textRekomendasiLILA;
             tNamaRekomendasi.text = namaLengkap;
@@ -809,7 +839,7 @@ public class Recommendation : MonoBehaviour
 
     public void RekomendasiIbuHamil()
     {
-        if (isNamaValidIH && isBBValidIH && isTBValidIH && isUmurValidIH && isLilaValidIH && isHemoValidIH)
+        if (isBBValidIH && isTBValidIH && isLilaValidIH && isHemoValidIH)
         {
             tRekomendasiResult.text = textRekomendasiIMT + "\n" + "\n" + textRekomendasiAnemia + "\n" + "\n" +  textRekomendasiLILA + "\n" + "\n" + textRekomendasiTB;
             tNamaRekomendasi.text = namaLengkap;
@@ -858,7 +888,7 @@ public class Recommendation : MonoBehaviour
 
     public void RekomendasiIbuMenyusui()
     {
-        if(isNamaValidIM && isUmurValidIM && isBBValidIM)
+        if(isBBValidIM)
         {
             tNamaRekomendasi.text = namaLengkap;
             tUsiaRekomendasi.text = usia + " Tahun";

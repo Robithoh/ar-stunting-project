@@ -7,7 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/AR Measure ARFoundation/Scenes/!Final.unity
-    guid: ecb9d2d5514507e46a7610fe94f79cf2
+    guid: fb5a53687b1703347b14613055e1b097
   - enabled: 1
     path: Assets/AR Measure ARFoundation/Scenes/PackageScene.unity
     guid: 41b2f53fab303ec4b86764a45769720a

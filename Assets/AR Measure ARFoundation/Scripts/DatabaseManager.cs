@@ -52,6 +52,12 @@ public class DatabaseManager : MonoBehaviour
     public Text namaRemajaText;
     public Text namaIbuMenyusuiText;
     public Text namaIbuHamilText;
+    public InputField ifUmurRemaja;
+    public InputField ifUmurIbuMenyusui;
+    public InputField ifUmurIbuHamil;
+    public InputField ifNamaRemaja;
+    public InputField ifNamaIbuMenyusui;
+    public InputField ifNamaIbuHamil;
 
     [Header("Button Main Menu")]
     public Button bRemaja;
@@ -165,12 +171,19 @@ public class DatabaseManager : MonoBehaviour
     {
         NamaText.text = userData.nama;
         NamaMenuText.text = userData.nama;
-        umurRemajaText.text = userData.umur.ToString();
-        umurIbuMenyusuiText.text = userData.umur.ToString();
-        umurIbuHamilText.text = userData.umur.ToString();
-        namaRemajaText.text = userData.nama;
-        namaIbuMenyusuiText.text = userData.nama;
-        namaIbuHamilText.text = userData.nama;
+        // umurRemajaText.text = userData.umur.ToString();
+        // umurIbuMenyusuiText.text = userData.umur.ToString();
+        // umurIbuHamilText.text = userData.umur.ToString();
+        // namaRemajaText.text = userData.nama;
+        // namaIbuMenyusuiText.text = userData.nama;
+        // namaIbuHamilText.text = userData.nama;
+
+        ifUmurRemaja.text = userData.umur.ToString();
+        ifUmurIbuMenyusui.text = userData.umur.ToString();
+        ifUmurIbuHamil.text = userData.umur.ToString();
+        ifNamaRemaja.text = userData.nama;
+        ifNamaIbuMenyusui.text = userData.nama;
+        ifNamaIbuHamil.text = userData.nama;
 
         if (userData.menyusui == tMenyusui.options[0].text)
         {
