@@ -714,7 +714,6 @@ public class DatabaseManager : MonoBehaviour
         }
         else
         {
-            PanelManager.instance.ToResult();
             Debug.Log("Rekomendasi ibu menyusui berhasil disimpan.");
         }
     }
@@ -737,7 +736,6 @@ public class DatabaseManager : MonoBehaviour
         }
         else
         {
-            PanelManager.instance.ToResult();
             Debug.Log("Rekomendasi ibu hamil berhasil disimpan.");
         }
     }
@@ -760,7 +758,6 @@ public class DatabaseManager : MonoBehaviour
         }
         else
         {
-            PanelManager.instance.ToResult();
             Debug.Log("Rekomendasi Remaja berhasil disimpan.");
         }
     }
@@ -781,7 +778,6 @@ public class DatabaseManager : MonoBehaviour
         }
         else
         {
-            PanelManager.instance.ToResult();
             Debug.Log("Rekomendasi Anak laki-laki berhasil disimpan.");
         }
     }
@@ -802,7 +798,6 @@ public class DatabaseManager : MonoBehaviour
         }
         else
         {
-            PanelManager.instance.ToResult();
             Debug.Log("Rekomendasi Anak Perempuan berhasil disimpan.");
         }
     }

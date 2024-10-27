@@ -52,6 +52,8 @@ public class Recommendation : MonoBehaviour
     public Button bRekomendasiRemaja;
     public bool isNamaValidR, isBBValidR, isTBValidR, isLilaValidR, isHemoValidR, isUmurValidR;
     bool isHemoR, isLilaR;
+    public GameObject goPopUpWarningRemaja;
+    public Text tPopUpWarningRemaja;
 
     [Header("UI Rekomendasi Ibu Hamil")]
     public InputField ifNamaIbuHamil;
@@ -68,6 +70,8 @@ public class Recommendation : MonoBehaviour
     public Button bRekomendasiIbuHamil;
     public bool isNamaValidIH, isBBValidIH, isTBValidIH, isLilaValidIH, isHemoValidIH, isUmurValidIH;
     bool isHemoIH, isLilaIH;
+    public GameObject goPopUpWarningIbuHamil;
+    public Text tPopUpWarningIbuHamil;
 
     [Header("UI Rekomendasi Anak Lakilaki")]
     public InputField ifUmurLk;
@@ -75,6 +79,8 @@ public class Recommendation : MonoBehaviour
     public Text tGiziLk;
     public Button bRekomendasiAnakLk;
     public bool isUmurValidLk, isTBValidLk;
+    public GameObject goPopUpWarningLaki;
+    public Text tPopUpWarningLaki;
 
     [Header("UI Rekomendasi Anak Perempuan")]
     public InputField ifUmurPr;
@@ -82,6 +88,8 @@ public class Recommendation : MonoBehaviour
     public Text tGiziPr;
     public Button bRekomendasiAnakPr;
     public bool isUmurValidPr, isTBValidPr;
+    public GameObject goPopUpWarningPerempuan;
+    public Text tPopUpWarningPerempuan;
 
     [Header("UI Rekomendasi Ibu Menyusui")]
     public InputField ifNamaIbuMenyusui;
@@ -91,6 +99,8 @@ public class Recommendation : MonoBehaviour
     public bool isAsi;
     public bool isNamaValidIM, isUmurValidIM, isBBValidIM;
     public Button bRekomendasiIbuMenyusui;
+    public GameObject goPopUpWarningIbuMenyusui;
+    public Text tPopUpWarningIbuMenyusui;
 
     [Header("Rekomendasi Result")]
     public Text tNamaRekomendasi;
@@ -141,6 +151,7 @@ public class Recommendation : MonoBehaviour
         });
 
         DropdownValueHemoChanged(ddHemoRemaja);
+        goPopUpWarningRemaja.SetActive(false);
 
         // Ibu Hamil
 
@@ -166,18 +177,21 @@ public class Recommendation : MonoBehaviour
         });
 
         DropdownValueHemoChanged(ddHemoIbuHamil);
+        goPopUpWarningIbuHamil.SetActive(false);
 
         // Anak Laki-laki 
 
         ifUmurLk.onEndEdit.AddListener(OnInputFieldUmurEdit);
         ifTinggiBadanLk.onEndEdit.AddListener(OnInputFieldTBEdit);
         bRekomendasiAnakLk.onClick.AddListener(RekomendasiAnakLk);
+        goPopUpWarningLaki.SetActive(false);
 
         // Anak Perempuan
 
         ifUmurPr.onEndEdit.AddListener(OnInputFieldUmurEdit);
         ifTinggiBadanPr.onEndEdit.AddListener(OnInputFieldTBEdit);
         bRekomendasiAnakPr.onClick.AddListener(RekomendasiAnakPr);
+        goPopUpWarningPerempuan.SetActive(false);
 
         // Ibu Menyusui
         
@@ -190,6 +204,7 @@ public class Recommendation : MonoBehaviour
 
         ifBeratBadanBayi.onEndEdit.AddListener(OnInputFieldBBEdit);
         bRekomendasiIbuMenyusui.onClick.AddListener(RekomendasiIbuMenyusui);
+        goPopUpWarningIbuMenyusui.SetActive(false);
 
     }
 
@@ -197,7 +212,6 @@ public class Recommendation : MonoBehaviour
     {
         if(panelManager.rekomendasiRemaja.GetComponent<Canvas>().enabled)
         {
-            Debug.Log("SNTHENSHUEON");
             Debug.Log(ifNamaRemaja.text);
             namaLengkap = ifNamaRemaja.text;
             if (int.TryParse(ifUmurRemaja.text, out usia))
@@ -830,10 +844,35 @@ public class Recommendation : MonoBehaviour
             tUsiaRekomendasi.text = usia + " Tahun";
             tInfoStatusRekomendasi.text = "";
             
+            PanelManager.instance.ToResult();
         }
         else
         {
-            Debug.Log("error broh");
+            if (!isBBValidR)
+            {
+                goPopUpWarningRemaja.SetActive(true);
+                tPopUpWarningRemaja.text = "Harap isi berat badan dengan benar";
+            }
+            else if (!isTBValidR)
+            {
+                goPopUpWarningRemaja.SetActive(true);
+                tPopUpWarningRemaja.text = "Harap isi tinggi badan dengan benar";
+            }
+            else if (!isLilaValidR)
+            {
+                goPopUpWarningRemaja.SetActive(true);
+                tPopUpWarningRemaja.text = "Harap isi LILA dengan benar";
+            }
+            else if (!isHemoValidR)
+            {
+                goPopUpWarningRemaja.SetActive(true);
+                tPopUpWarningRemaja.text = "Harap isi Hb dengan benar";
+            }
+            else
+            {
+                goPopUpWarningRemaja.SetActive(true);
+                tPopUpWarningRemaja.text = "Harap isi semua data dengan ";
+            }
         }
     }
 
@@ -845,11 +884,37 @@ public class Recommendation : MonoBehaviour
             tNamaRekomendasi.text = namaLengkap;
             tUsiaRekomendasi.text = usia + " Tahun";
             tInfoStatusRekomendasi.text = "";
+
+            PanelManager.instance.ToResult();
             
         }
         else
         {
-            Debug.Log("error broh");
+            if (!isBBValidIH)
+            {
+                goPopUpWarningIbuHamil.SetActive(true);
+                tPopUpWarningIbuHamil.text = "Harap isi berat badan dengan benar";
+            }
+            else if (!isTBValidIH)
+            {
+                goPopUpWarningIbuHamil.SetActive(true);
+                tPopUpWarningIbuHamil.text = "Harap isi tinggi badan dengan benar";
+            }
+            else if (!isLilaValidIH)
+            {
+                goPopUpWarningIbuHamil.SetActive(true);
+                tPopUpWarningIbuHamil.text = "Harap isi LILA dengan benar";
+            }
+            else if (!isHemoValidIH)
+            {
+                goPopUpWarningIbuHamil.SetActive(true);
+                tPopUpWarningIbuHamil.text = "Harap isi Hb dengan benar";
+            }
+            else
+            {
+                goPopUpWarningIbuHamil.SetActive(true);
+                tPopUpWarningIbuHamil.text = "Harap isi semua data dengan ";
+            }
         }
     }
 
@@ -861,11 +926,26 @@ public class Recommendation : MonoBehaviour
             tNamaRekomendasi.text = "Anak Laki-laki";
             tUsiaRekomendasi.text = usiaBulan + " Bulan";
             tInfoStatusRekomendasi.text = "";
-            
+
+            PanelManager.instance.ToResult();
         }
         else
         {
-            Debug.Log("error broh");
+            if (!isUmurValidLk)
+            {
+                goPopUpWarningLaki.SetActive(true);
+                tPopUpWarningLaki.text = "Harap isi Umur dengan benar";
+            }
+            else if (!isTBValidLk)
+            {
+                goPopUpWarningLaki.SetActive(true);
+                tPopUpWarningLaki.text = "Harap isi tinggi badan dengan benar";
+            }
+            else
+            {
+                goPopUpWarningLaki.SetActive(true);
+                tPopUpWarningLaki.text = "Harap isi semua data dengan ";
+            }
         }
     }
 
@@ -878,11 +958,26 @@ public class Recommendation : MonoBehaviour
             tNamaRekomendasi.text = "Anak Perempuan";
             tUsiaRekomendasi.text = usiaBulan + " Bulan";
             tInfoStatusRekomendasi.text = "";
-            
+
+            PanelManager.instance.ToResult();
         }
         else
         {
-            Debug.Log("error broh");
+            if (!isUmurValidPr)
+            {
+                goPopUpWarningPerempuan.SetActive(true);
+                tPopUpWarningPerempuan.text = "Harap isi Umur dengan benar";
+            }
+            else if (!isTBValidPr)
+            {
+                goPopUpWarningPerempuan.SetActive(true);
+                tPopUpWarningPerempuan.text = "Harap isi tinggi badan dengan benar";
+            }
+            else
+            {
+                goPopUpWarningPerempuan.SetActive(true);
+                tPopUpWarningPerempuan.text = "Harap isi semua data dengan ";
+            }
         }
     }
 
@@ -895,11 +990,44 @@ public class Recommendation : MonoBehaviour
             tInfoStatusRekomendasi.text = "Ibu Menyusui";
             tRekomendasiResult.text = textRekomendasiAsi + "\n" + "\n" + textRekomendasiBBBayi;
             
+            PanelManager.instance.ToResult();
         }
         else
         {
-            Debug.Log("error broh");
+            if (!isBBValidIM)
+            {
+                goPopUpWarningIbuMenyusui.SetActive(true);
+                tPopUpWarningIbuMenyusui.text = "Harap isi berat badan dengan benar";
+            }
+            else
+            {
+                goPopUpWarningIbuMenyusui.SetActive(true);
+                tPopUpWarningIbuMenyusui.text = "Harap isi semua data dengan ";
+            }
         }
     }
 
+    public void ClosePopUpWarning(int panel)
+    {
+        if (panel == 1)
+        {
+            goPopUpWarningRemaja.SetActive(false);
+        }
+        else if (panel == 2)
+        {
+            goPopUpWarningIbuHamil.SetActive(false);
+        }
+        else if (panel == 3)
+        {
+            goPopUpWarningLaki.SetActive(false);
+        }
+        else if (panel == 4)
+        {
+            goPopUpWarningPerempuan.SetActive(false);
+        }
+        else if (panel == 5)
+        {
+            goPopUpWarningIbuMenyusui.SetActive(false);
+        }
+    }
 }
