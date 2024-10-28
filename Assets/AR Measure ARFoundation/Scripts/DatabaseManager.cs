@@ -289,6 +289,13 @@ public class DatabaseManager : MonoBehaviour
                 }
             }
 
+            if (loginEmail == null)
+            {
+                Message.text = "Email tidak ditemukan.";
+                Message.color = Color.red;
+                yield break;
+            }
+
             Task<AuthResult> LoginTask = auth.SignInWithEmailAndPasswordAsync(loginEmail, _password);
             yield return new WaitUntil(predicate: () => LoginTask.IsCompleted);
 
@@ -342,7 +349,17 @@ public class DatabaseManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        Logout();
+        PlayerPrefs.SetInt("isLoggedIn", 0);
+        PlayerPrefs.Save();
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            PlayerPrefs.SetInt("isLoggedIn", 1);
+            PlayerPrefs.Save();
+        }
     }
 
     private void OnUserLoginSuccess()
@@ -376,13 +393,13 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
-    public void Logout()
-    {
-        auth.SignOut();
-        PlayerPrefs.SetInt("isLoggedIn", 0);
-        PlayerPrefs.Save();
-        PanelManager.instance.LoginScreen();
-    }
+    //public void Logout()
+    //{
+    //    auth.SignOut();
+    //    PlayerPrefs.SetInt("isLoggedIn", 0);
+    //    PlayerPrefs.Save();
+    //    PanelManager.instance.LoginScreen();
+    //}
 
     private IEnumerator Register(string _nama, string _username, string _email, string _password, string _passwordConfirm, string _tanggalLahir)
     {
@@ -527,11 +544,6 @@ public class DatabaseManager : MonoBehaviour
     {
         EditButton.SetActive(true);
         BatalEditButton.SetActive(true);
-        DateTime tanggal;
-        bool isValid = DateTime.TryParseExact(userData.tanggalLahir, "dd-MM-yyyy",
-                                              System.Globalization.CultureInfo.InvariantCulture,
-                                              System.Globalization.DateTimeStyles.None,
-                                              out tanggal);
 
         var DBTask = DBreference.Child("users").Child(User.UserId).GetValueAsync();
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
@@ -546,15 +558,31 @@ public class DatabaseManager : MonoBehaviour
 
             if (snapshot.Exists)
             {
-                int umur = HitungUmur(tanggal);
-                userData.umur = umur;                
+                userData.nama = snapshot.Child("nama").Value.ToString();
+                userData.username = snapshot.Child("username").Value.ToString();
+                userData.email = snapshot.Child("email").Value.ToString();
+                userData.password = snapshot.Child("password").Value.ToString();
+                userData.tanggalLahir = snapshot.Child("tanggalLahir").Value.ToString();
+                userData.pendidikanTerakhir = snapshot.Child("pendidikanTerakhir").Value.ToString();
 
-                ifUmurRemaja.text = userData.umur.ToString();
-                ifUmurIbuMenyusui.text = userData.umur.ToString();
-                ifUmurIbuHamil.text = userData.umur.ToString();
-                ifNamaRemaja.text = userData.nama;
-                ifNamaIbuMenyusui.text = userData.nama;
-                ifNamaIbuHamil.text = userData.nama;
+                DateTime tanggal;
+                if (DateTime.TryParseExact(userData.tanggalLahir, "dd-MM-yyyy",
+                                           System.Globalization.CultureInfo.InvariantCulture,
+                                           System.Globalization.DateTimeStyles.None, out tanggal))
+                {
+                    userData.umur = HitungUmur(tanggal);
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid date format for tanggalLahir.");
+                }
+
+                Nama.text = userData.nama;
+                Username.text = userData.username;
+                Email.text = userData.email;
+                Password.text = userData.password;
+                PasswordConfirm.text = userData.password;
+                TanggalLahir.text = userData.tanggalLahir;
 
                 NamaText.text = userData.nama;
                 NamaMenuText.text = userData.nama;
@@ -573,19 +601,19 @@ public class DatabaseManager : MonoBehaviour
                 AirText.text = userData.aksesAir;
                 emailText.text = userData.email;
 
-                Nama.text = userData.nama;
-                Username.text = userData.username;
-                Email.text = userData.email;
-                Password.text = userData.password;
-                PasswordConfirm.text = userData.password;
-                TanggalLahir.text = userData.tanggalLahir;
+                ifUmurRemaja.text = userData.umur.ToString();
+                ifUmurIbuMenyusui.text = userData.umur.ToString();
+                ifUmurIbuHamil.text = userData.umur.ToString();
+                ifNamaRemaja.text = userData.nama;
+                ifNamaIbuMenyusui.text = userData.nama;
+                ifNamaIbuHamil.text = userData.nama;
 
-                userData.nama = snapshot.Child("nama").Value.ToString();
-                userData.username = snapshot.Child("username").Value.ToString();
-                userData.email = snapshot.Child("email").Value.ToString();
-                userData.password = snapshot.Child("password").Value.ToString();
-                userData.tanggalLahir = snapshot.Child("tanggalLahir").Value.ToString();
-                userData.pendidikanTerakhir = snapshot.Child("pendidikanTerakhir").Value.ToString();
+                //userData.nama = snapshot.Child("nama").Value.ToString();
+                //userData.username = snapshot.Child("username").Value.ToString();
+                //userData.email = snapshot.Child("email").Value.ToString();
+                //userData.password = snapshot.Child("password").Value.ToString();
+                //userData.tanggalLahir = snapshot.Child("tanggalLahir").Value.ToString();
+                //userData.pendidikanTerakhir = snapshot.Child("pendidikanTerakhir").Value.ToString();
 
                 tHamil.value = snapshot.Child("statusHamil").Value.ToString() == "YA" ? 0 : 1;
                 tMenyusui.value = snapshot.Child("statusMenyusui").Value.ToString() == "YA" ? 0 : 1;
