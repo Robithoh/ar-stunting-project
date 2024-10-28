@@ -35,10 +35,9 @@ public class PanelManager : MonoBehaviour
     private Canvas cRekomendasiAnakPr;
     private Canvas cRekomendasiIbuMenyusui;
     private Canvas cRekomendasiResult;
+    private Canvas previousPanel;
 
     
-    
-
     private void Awake()
     {
         if (instance == null)
@@ -57,6 +56,52 @@ public class PanelManager : MonoBehaviour
         InitializeCanvas();
         ClearCanvas();
         cLogin.enabled = true;
+    }
+
+    public void RegisterFromLogin()
+    {
+        previousPanel = cLogin;
+        SwitchToPanel(cEditProfile);
+    }
+
+    public void EditprofileFromProfile()
+    {
+        previousPanel = cProfile;
+        SwitchToPanel(cEditProfile);
+    }
+
+    private void SwitchToPanel(Canvas targetPanel)
+    {
+        ClearCanvas();
+        targetPanel.enabled = true;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (cLogin.enabled)
+            {
+                Application.Quit();
+            }
+            if (cMainMenu.enabled)
+            {
+                Application.Quit();
+            }
+            else if (cRegister.enabled)
+            {
+                if (previousPanel != null)
+                {
+                    SwitchToPanel(previousPanel);
+                    previousPanel = null;
+                }
+            }
+            else
+            {
+                ClearCanvas();
+                cMainMenu.enabled = true;
+            }
+        }
     }
 
     public void InitializeCanvas()
@@ -89,25 +134,10 @@ public class PanelManager : MonoBehaviour
         cRekomendasiResult.enabled = false;
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (cMainMenu.enabled)
-            {
-                Application.Quit();
-            }
-            else
-            {
-                ClearCanvas();
-                cMainMenu.enabled = true;
-            }
-        }
-    }
-
     public void LoginButton()
     {
         ClearCanvas();
+        RegisterFromLogin();
         cEditProfile.enabled = true;
     }
 
@@ -126,6 +156,7 @@ public class PanelManager : MonoBehaviour
     public void EditProfileFromProfile()
     {
         ClearCanvas();
+        EditprofileFromProfile();
         cEditProfile.enabled = true;
     }
 
