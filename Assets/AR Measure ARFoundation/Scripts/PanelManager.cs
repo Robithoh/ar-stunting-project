@@ -58,24 +58,6 @@ public class PanelManager : MonoBehaviour
         cLogin.enabled = true;
     }
 
-    public void RegisterFromLogin()
-    {
-        previousPanel = cLogin;
-        SwitchToPanel(cEditProfile);
-    }
-
-    public void EditprofileFromProfile()
-    {
-        previousPanel = cProfile;
-        SwitchToPanel(cEditProfile);
-    }
-
-    private void SwitchToPanel(Canvas targetPanel)
-    {
-        ClearCanvas();
-        targetPanel.enabled = true;
-    }
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -102,6 +84,24 @@ public class PanelManager : MonoBehaviour
                 cMainMenu.enabled = true;
             }
         }
+    }
+
+    public void RegisterFromLogin()
+    {
+        previousPanel = cLogin;
+        SwitchToPanel(cEditProfile);
+    }
+
+    public void EditprofileFromProfile()
+    {
+        previousPanel = cProfile;
+        SwitchToPanel(cEditProfile);
+    }
+
+    private void SwitchToPanel(Canvas targetPanel)
+    {
+        ClearCanvas();
+        targetPanel.enabled = true;
     }
 
     public void InitializeCanvas()

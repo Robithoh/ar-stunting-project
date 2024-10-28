@@ -564,6 +564,10 @@ public class DatabaseManager : MonoBehaviour
                 userData.password = snapshot.Child("password").Value.ToString();
                 userData.tanggalLahir = snapshot.Child("tanggalLahir").Value.ToString();
                 userData.pendidikanTerakhir = snapshot.Child("pendidikanTerakhir").Value.ToString();
+                userData.toilet = snapshot.Child("infoToilet").Value.ToString();
+                userData.aksesAir = snapshot.Child("infoAir").Value.ToString();
+                userData.hamil = snapshot.Child("statusHamil").Value.ToString();
+                userData.menyusui = snapshot.Child("statusMenyusui").Value.ToString();
 
                 DateTime tanggal;
                 if (DateTime.TryParseExact(userData.tanggalLahir, "dd-MM-yyyy",
@@ -577,12 +581,12 @@ public class DatabaseManager : MonoBehaviour
                     Debug.LogWarning("Invalid date format for tanggalLahir.");
                 }
 
-                Nama.text = userData.nama;
-                Username.text = userData.username;
-                Email.text = userData.email;
-                Password.text = userData.password;
-                PasswordConfirm.text = userData.password;
-                TanggalLahir.text = userData.tanggalLahir;
+                ifUmurRemaja.text = userData.umur.ToString();
+                ifUmurIbuMenyusui.text = userData.umur.ToString();
+                ifUmurIbuHamil.text = userData.umur.ToString();
+                ifNamaRemaja.text = userData.nama;
+                ifNamaIbuMenyusui.text = userData.nama;
+                ifNamaIbuHamil.text = userData.nama;
 
                 NamaText.text = userData.nama;
                 NamaMenuText.text = userData.nama;
@@ -601,12 +605,12 @@ public class DatabaseManager : MonoBehaviour
                 AirText.text = userData.aksesAir;
                 emailText.text = userData.email;
 
-                ifUmurRemaja.text = userData.umur.ToString();
-                ifUmurIbuMenyusui.text = userData.umur.ToString();
-                ifUmurIbuHamil.text = userData.umur.ToString();
-                ifNamaRemaja.text = userData.nama;
-                ifNamaIbuMenyusui.text = userData.nama;
-                ifNamaIbuHamil.text = userData.nama;
+                Nama.text = userData.nama;
+                Username.text = userData.username;
+                Email.text = userData.email;
+                Password.text = userData.password;
+                PasswordConfirm.text = userData.password;
+                TanggalLahir.text = userData.tanggalLahir;
 
                 //userData.nama = snapshot.Child("nama").Value.ToString();
                 //userData.username = snapshot.Child("username").Value.ToString();
